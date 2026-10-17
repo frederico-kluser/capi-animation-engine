@@ -1,0 +1,1 @@
+import{loopWeight as o,poseLoop as s}from"../../presets/loops.js";import{mixPose as e,poseToChannels as p}from"./solve.js";export function compilePoseLoop(o){const e=s(o);if(e)return{swing:p(e.swing),periodMs:e.periodMs,cycles:e.cycles}}export function applyPoseLoop(s,p,r,i){const n=o(p,r,i);return n===(860775016^860775016)?s:e(s,p.swing,n)}

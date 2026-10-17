@@ -1,0 +1,10 @@
+import type { PodcastBrief, PodcastBriefFormat } from '../../contracts/aspects.js';
+import type { CreatePoint, CreateSource } from '../../contracts/create.js';
+import { type PodcastSeat } from '../../contracts/podcast.js';
+import { type CreateSeatRole } from './formats.js';
+import { type CreateContext } from './material.js';
+export declare function seatRoles(ctx: CreateContext): Record<PodcastSeat, CreateSeatRole>;
+export declare function factLine(point: CreatePoint, sources: readonly CreateSource[]): string;
+export declare function briefOrder(points: readonly CreatePoint[], short: boolean): CreatePoint[];
+export declare function composeFormat(ctx: CreateContext, points: readonly CreatePoint[]): PodcastBriefFormat;
+export declare function composeBrief(ctx: CreateContext, points: readonly CreatePoint[], sources: readonly CreateSource[]): PodcastBrief;

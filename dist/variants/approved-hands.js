@@ -1,0 +1,1 @@
+import{gloveVersionOf as o}from"../art/glove-kit.js";export const APPROVED_HANDS={};

@@ -1,0 +1,13 @@
+import type { PoseCatalogCard } from '../../contracts/catalog.js';
+import type { ExpressionId } from '../../contracts/face.js';
+import { type PoseId } from '../poses.js';
+export declare function poseCard(id: PoseId): PoseCatalogCard<PoseId, ExpressionId>;
+export { POSE_CARDS } from './poses.js';
+export { COVER_FRACTION, FEATURE_PARALLAX, FIT_IN, FIT_OUT, GLOVE_PROFILE, GLOVE_PROFILE_BACK, GLOVE_SLICES, POSE_FRAME_ASPECTS, REST_RADIUS, TOUCH_FRACTION, WAIST_LINE, faceFeatures, faceToCanvas, gloveOnFace, gloveProfile, gloveSamples, insideGlove, poseFacts, poseFitsSize, poseFrameBox, poseInFrame, poseLooksText, poseMinSize, poseModeIds, } from './pose-facts.js';
+export type { GloveProfile, PoseFrameOptions } from './pose-facts.js';
+export { EXPRESSION_CARDS, expressionCard, expressionFacts, expressionPoses, poseFaces } from './expressions.js';
+export { CAMERA_BUDGET_KINDS, CAMERA_CARDS, CAMERA_CARD_IDS, CAMERA_CARD_LABELS, CAMERA_FAST_MOVES, CAMERA_NEED_IDS, cameraBudgetPerMinute, cameraCard, cameraCardsMissing, cameraCatalogComplete, cameraResourceOf, cameraShapeOf, cameraShotLimits, cameraVocabulary, checkCameraSequence, fitCameraShape, } from './camera.js';
+export type { CameraBudgetKind, CameraNeedId, CameraShape, CameraVocabulary, CameraVocabularyRequest, SequenceIssue, SequencedIntent } from './camera.js';
+export { CAMERA_CATALOG_SECTIONS, CATALOG_SECTIONS, catalogSection } from './sections.js';
+export { cameraCardsOf, cameraCatalogLegend, cameraCatalogText, catalogTextSize, expressionCatalogText, poseCatalogLegend, poseCatalogText, poseCatalogTextFor } from './text.js';
+export type { CameraCatalogRequest, ExpressionCatalogTextOptions, PoseCatalogTextOptions } from './text.js';

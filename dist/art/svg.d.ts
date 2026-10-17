@@ -1,0 +1,10 @@
+import type { Point } from '../contracts/pose.js';
+export declare function fmt(v: number): string;
+export declare function polygonPath(points: readonly Point[]): string;
+export declare function roundedRectPath(x: number, y: number, w: number, h: number, r: number): string;
+export declare function taperedCapsulePath(a: Point, ra: number, b: Point, rb: number): string;
+export declare function matrixAttr(m: readonly number[]): string;
+export declare function circlePath(c: Point, r: number): string;
+export declare function roundedHullPath(points: readonly Point[], r: number): string;
+export declare function outsidePath(points: readonly Point[], reach?: number): string;
+export declare function smoothCurvePath(points: readonly Point[], move?: boolean): string;

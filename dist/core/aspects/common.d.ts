@@ -1,0 +1,10 @@
+import { type CatalogDetail } from '../../contracts/catalog.js';
+import type { ProfileAspect, VideoProfileId } from '../../contracts/profile.js';
+export { extractJsonObject } from '../talk/plan.js';
+export declare function intIn(value: unknown, min: number, max: number, fallback: number): number;
+export declare const priorityOf: (value: unknown) => number;
+export declare function shortText(value: unknown, max?: number): string | undefined;
+export declare const PROMPT_CATALOG_DETAIL: CatalogDetail;
+export declare function promptCatalogDetail(value: unknown): CatalogDetail;
+export declare function promptProfile(value: unknown): VideoProfileId;
+export declare function promptFrameAspect(profile: unknown): ProfileAspect;

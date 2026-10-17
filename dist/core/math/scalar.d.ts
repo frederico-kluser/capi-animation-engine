@@ -1,0 +1,10 @@
+export declare function clamp(v: number, min: number, max: number): number;
+export declare function lerp(a: number, b: number, t: number): number;
+export declare function invLerp(a: number, b: number, v: number): number;
+export declare function smoothstep(t: number): number;
+export declare function degToRad(d: number): number;
+export declare function radToDeg(r: number): number;
+export declare function shortArcDeltaDeg(from: number, to: number): number;
+export declare function approxEq(a: number, b: number, eps?: number): boolean;
+export declare function isFiniteNumber(v: unknown): v is number;
+export declare function sanitizeNumber(v: number, fallback: number): number;

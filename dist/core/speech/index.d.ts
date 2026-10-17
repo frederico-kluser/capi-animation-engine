@@ -1,0 +1,15 @@
+export { VISME_PRIORITY, visemesAreAlike } from './visemes.js';
+export { normalizeVisemeCues } from './normalize.js';
+export { sampleSpeech } from './sample.js';
+export { chunkWords, cardinalPt, isFunctionalWord, normalizeSpeechText, tokenizeScript } from './text.js';
+export { VISIBLE_VISEMES, phonesToString, spokenToPhones, wordToPhones } from './g2p-pt.js';
+export type { G2POptions, PhonesOfWord } from './g2p-pt.js';
+export { detectLanguage, scriptPhones } from './g2p.js';
+export type { SpeechLanguage } from './g2p.js';
+export { analyzeAudio, encodeWav, fft, medianFilter, parseWav, percentile, readWavHeader } from './dsp.js';
+export type { AnalyzeOptions, AudioFeatures, WavData, WavHeader } from './dsp.js';
+export { ACOUSTIC_CLASSES, alignScript } from './align.js';
+export type { AcousticClass, AlignDebug, AlignOptions, AlignOutput } from './align.js';
+export { alignmentToVisemes } from './lipsync.js';
+export type { LipSyncOptions, LipSyncResult } from './lipsync.js';
+export { wordProsody } from './prosody.js';

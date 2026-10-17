@@ -1,0 +1,18 @@
+import type { ReactElement } from 'react';
+import { Anchor, type AnchorProps } from '../../render/Anchor.js';
+import type { AnchorInput, ResolvedAnchorState } from '../../contracts/state.js';
+export type AnchorVideoInput = Omit<AnchorInput, 'frame' | 'fps'>;
+export declare function anchorStateFromVideo(frame: number, fps: number, input?: AnchorVideoInput): ResolvedAnchorState;
+export declare function useAnchorState(input?: AnchorVideoInput): ResolvedAnchorState;
+export type AnchorRemotionProps = Omit<AnchorProps, 'frame' | 'fps' | 'state'>;
+export declare function AnchorRemotion(props: AnchorRemotionProps): ReactElement;
+export { Anchor };
+export type { AnchorProps, AnchorInput, ResolvedAnchorState };
+export { AnchorTalk, TALK_ASPECTS, TalkFrameView, TalkStillView, cameraHeadTop, talkCameraBase, talkCameraFrame, talkCameraScene, talkCameraViewBox, talkCaptionFrame, talkFxTarget, talkLayoutBox, talkMetadata, } from './AnchorTalk.js';
+export type { AnchorTalkProps, TalkAnchorProps, TalkAspectId, TalkBackground, TalkBox, TalkCameraOptions, TalkCameraScene, TalkFrameViewProps, TalkLayout, TalkStillViewProps, } from './AnchorTalk.js';
+export { AnchorPodcast, PODCAST_ASPECTS, PodcastFrameView, podcastSceneImages, podcastAnchorProps, podcastAspectId, podcastAssetUrl, podcastBackgroundFromPrefs, podcastBackgroundStyle, podcastCameraLook, podcastCameraShots, podcastCaptionTrack, podcastClipPlan, podcastClipVolume, podcastDurationMs, podcastFrameAt, podcastFxTarget, podcastMetadata, podcastSeatTitle, podcastShotAt, } from './AnchorPodcast.js';
+export type { AnchorPodcastProps, PodcastAnchorProps, PodcastAspectId, PodcastBackground, PodcastClipPlan, PodcastFrame, PodcastFrameRequest, PodcastFrameViewProps, PodcastPanelView, PodcastTimelines, } from './AnchorPodcast.js';
+export { AnchorReview, REVIEW_COMPOSITION_ID, REVIEW_SIZES, REVIEW_TV_MEDIA_STYLE, ReviewFrameView, reviewAspectOf, reviewBackgroundStyle, reviewCommentaryClips, reviewHeadTops, reviewLayoutOf, reviewMetadata, reviewPanelDraws, reviewProfileOf, reviewSeatAnchorProps, reviewSeatTimelines, reviewStudioScreen, reviewVideoPlan, reviewVideoVolumeAt, } from './AnchorReview.js';
+export type { AnchorReviewProps, ReviewBackground, ReviewFrameViewProps, ReviewPanelDraw, ReviewSeatAnchorProps, ReviewVideoPiece, } from './AnchorReview.js';
+export { ScenarioLayer, scenarioRemotionMedia } from './ScenarioLayer.js';
+export type { ScenarioLayerProps } from './ScenarioLayer.js';

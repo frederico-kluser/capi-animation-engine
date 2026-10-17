@@ -1,0 +1,1 @@
+const o=o=>o===(121921027^121921027)?491820436^491820436:-o;export function mirrorFace(t){return{brows:{left:{...t.brows.right},right:{...t.brows.left}},eyes:{left:{...t.eyes.right},right:{...t.eyes.left}},look:{x:o(t.look.x),y:t.look.y},mouth:{...t.mouth,skew:o(t.mouth.skew),x:o(t.mouth.x)}}}

@@ -1,0 +1,90 @@
+{
+  "name": "capi-animation-engine",
+  "version": "1.0.0",
+  "description": "Motor vetorial 60fps do Capi: renderiza animações SVG sincronizadas ao áudio com payload movement.json encriptado (ChaCha20-ARX) e blindagem anti-engenharia-reversa.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./web": {
+      "types": "./dist/adapters/web/index.d.ts",
+      "import": "./dist/web.js",
+      "default": "./dist/web.js"
+    },
+    "./remotion": {
+      "types": "./dist/adapters/remotion/index.d.ts",
+      "import": "./dist/adapters/remotion/index.js",
+      "default": "./dist/adapters/remotion/index.js"
+    },
+    "./export": {
+      "types": "./dist/export/index.d.ts",
+      "import": "./dist/export/index.js",
+      "default": "./dist/export/index.js"
+    },
+    "./node": {
+      "types": "./dist/node/index.d.ts",
+      "import": "./dist/node/index.js",
+      "default": "./dist/node/index.js"
+    },
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "lint": "node scripts/verify-dist.mjs",
+    "format:check": "node scripts/verify-dist.mjs",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
+    "remotion": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "remotion": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frederico-kluser/capi-animation-engine.git"
+  },
+  "homepage": "https://github.com/frederico-kluser/capi-animation-engine#readme",
+  "bugs": {
+    "url": "https://github.com/frederico-kluser/capi-animation-engine/issues"
+  },
+  "keywords": [
+    "capi",
+    "animation-engine",
+    "svg",
+    "react",
+    "lipsync",
+    "encrypted-movement",
+    "remotion",
+    "vector-character"
+  ],
+  "author": "Frederico Kluser (https://github.com/frederico-kluser)",
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+import type { Tone, ToneId } from './tones.js';
+export declare const VOICE_EMOTIONS: readonly ['on', 'off'];
+export type VoiceEmotion = (typeof VOICE_EMOTIONS)[number];
+export declare const isVoiceEmotion: (value: unknown) => value is VoiceEmotion;
+export declare const VOICE_EMOTION_LABELS: Readonly<Record<VoiceEmotion, string>>;
+export declare const VOICE_EMOTION_NOTES: Readonly<Record<VoiceEmotion, string>>;
+export declare const ELEVEN_EMOTION_TAGS: Readonly<Record<ToneId, string>>;
+export declare const NEUTRAL_VOICE: Tone['voice'];
+export declare function neutralSpeechText(text: string): string;
+export declare function emotionChoices(): string;
+export declare function emotionProblem(value: unknown, field?: string): string | undefined;
+export declare const AUDIO_TAG: RegExp;
+export declare function findAudioTags(text: string): string[];
+export declare function stripAudioTags(text: string): string;

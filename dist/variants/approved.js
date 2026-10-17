@@ -1,0 +1,1 @@
+import{variantDataOf as t}from"../contracts/variant.js";export const APPROVED_POSES={};export const APPROVED_LOOPS={};export const APPROVED_SCRIPTS={};export const APPROVED_IDS={};

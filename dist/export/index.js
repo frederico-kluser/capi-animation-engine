@@ -1,0 +1,1 @@
+import{createElement as r}from"react";import{renderToStaticMarkup as o}from"react-dom/server";import{Anchor as e}from"../render/Anchor.js";export function renderAnchorSvg(n={}){const{xmlDeclaration:i=!0,idPrefix:t="anchor",...c}=n,m=o(r(e,{idPrefix:t,...c}));return i?`<?xml version="1.0" encoding="UTF-8"?>\n${m}`:m}
