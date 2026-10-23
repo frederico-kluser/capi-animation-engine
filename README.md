@@ -22,9 +22,9 @@ npm install capi-animation-engine react react-dom
 
 ## Uso
 
-### 1. Player Web ao vivo com `movement.json` encriptado e sincronização de áudio (`<AnchorLivePlayer>`)
+### 1. Player Web ao vivo com `movement.json` encriptado e áudio embutido (`<AnchorLivePlayer>`)
 
-O componente `<AnchorLivePlayer>` aceita diretamente tanto um objeto `EmbedTalkData` como um envelope encriptado `EncryptedMovementEnvelope` (`movement.json`), sincronizando poses, visemas de lip-sync, piscadas e micro-movimento ao `currentTime` do áudio a 60 fps, com suporte a estado `thinking` (idle orgânico) e modificadores visuais em tempo real:
+O componente `<AnchorLivePlayer>` aceita diretamente tanto um objeto `EmbedTalkData` como um envelope encriptado `EncryptedMovementEnvelope` (`movement.json`). O áudio (`.m4a` AAC) já vai **embutido e cifrado dentro do próprio `movement.json`** (`audio.dataBase64`), pelo que **não é necessário passar `audioUrl` externo** (embora `audioUrl` continue aceite como sobreposição opcional). O player sincroniza poses, visemas de lip-sync, piscadas e micro-movimento ao `currentTime` do áudio a 60 fps, com suporte a estado `thinking` (idle orgânico) e modificadores visuais em tempo real:
 
 ```tsx
 import { useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ export function CapiStage({
   thinking = false,
 }: {
   movementUrl: string;
-  audioUrl: string;
+  audioUrl?: string;
   thinking?: boolean;
 }) {
   const [movement, setMovement] = useState<EncryptedMovementEnvelope | null>(null);
@@ -84,30 +84,39 @@ export function CapiAvatar() {
 }
 ```
 
-### 3. Encriptação e leitura autenticada do `movement.json` (`encryptMovementData` / `readEmbedData`)
+### 3. Encriptação com áudio embutido e leitura autenticada do `movement.json` (`encryptMovementData` / `embedAudioInMovement` / `readEmbedData`)
 
-O motor protege o payload de coreografia, visemas e timeline num envelope autenticado AEAD (`capi-encrypted-movement`), impedindo inspeção em texto claro ou adulteração de instruções:
+O motor protege o payload de coreografia, visemas, timeline e o próprio áudio (`.m4a` em base64) num envelope autenticado AEAD (`capi-encrypted-movement`), impedindo inspeção em texto claro ou adulteração de instruções:
 
 ```ts
 import {
+  embedAudioInMovement,
   encryptMovementData,
+  extractEmbeddedAudio,
   decryptMovementData,
   isEncryptedMovement,
   readEmbedData,
+  resolveEmbedAudioSrc,
 } from 'capi-animation-engine/web';
 
-// 1. Encriptar um payload EmbedTalkData antes de gravar movement.json
-const encryptedEnvelope = encryptMovementData(talkEmbedData);
+// 1. Embutir o áudio (.m4a) e encriptar num único envelope AEAD ChaCha20-ARX
+const encryptedEnvelope = encryptMovementData(talkEmbedData, {
+  seedHint: 'aula-01',
+  audioBytes: mp4AudioUint8Array,
+  audioMimeType: 'audio/mp4',
+});
 console.log(isEncryptedMovement(encryptedEnvelope)); // true
-// JSON.stringify(encryptedEnvelope) não expõe "timeline", "tracks", "pose" nem "audio.m4a"
+// JSON.stringify(encryptedEnvelope) não expõe "timeline", "tracks", "pose" nem o áudio
 
 // 2. Validar e desencriptar automaticamente no cliente ou servidor
 const check = readEmbedData(encryptedEnvelope);
 if (check.ok) {
   console.log(check.data.character, check.data.durationMs);
+  console.log(resolveEmbedAudioSrc(check.data.audio)); // data:audio/mp4;base64,...
 }
 
-// 3. Verificação explícita de integridade AEAD (rejeita qualquer bit alterado em payload/iv/tag)
+// 3. Extrair metadados e bytes do áudio embutido, ou verificar integridade AEAD
+const audioInfo = extractEmbeddedAudio(encryptedEnvelope);
 const result = decryptMovementData(encryptedEnvelope);
 if (!result.ok) {
   console.error(result.problems);
@@ -160,6 +169,10 @@ Os ficheiros `movement.json` produzidos para consumo no player web usam o format
 
 - **Determinismo a 60 fps**: cinemática inversa de braços (`solveElbow`), mistura de expressões faciais (`mixExpression`, `mixMouth`), respiração e micro-movimentos (`sampleAutoIdle`, `sampleMicroMotion`) são funções puras do tempo/frame.
 - **Distribuição blindada (`dist/`)**: o pacote público distribui exclusivamente os 269 módulos `.js` ofuscados (com cofres de strings XOR/base64, control-flow mangling e remoção total de comentários) acompanhados dos 268 ficheiros de definição de tipos `.d.ts`, sem ficheiros `.ts`/`.tsx` crus nem sourcemaps (`.map`), validados continuamente por `scripts/verify-dist.mjs`.
+
+### Skill Global para Agentes de IA (`skills/capi-engine-agent-skill`)
+
+Este repositório inclui a skill global [`capi-engine-agent-skill`](skills/capi-engine-agent-skill/SKILL.md), registada por symlink em todas as raízes globais de skills (`~/.agents/skills`, `~/.dsh/skills`, `~/.claude/skills`, etc.), que ensina qualquer agente a instalar o motor em projetos web e a invocar localmente o estúdio para gerar tanto o `movement.json` criptografado com áudio embutido (`capi-engine.sh movement`) quanto vídeos renderizados (`capi-engine.sh video`).
 
 ## Contribuição
 

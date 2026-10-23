@@ -11,10 +11,12 @@ import {
 } from '../dist/contracts/embed.js';
 import {
   decryptMovementData,
+  embedAudioInMovement,
   ENCRYPTED_MOVEMENT_ALG,
   ENCRYPTED_MOVEMENT_FORMAT,
   ENCRYPTED_MOVEMENT_VERSION,
   encryptMovementData,
+  extractEmbeddedAudio,
   isEncryptedMovement,
   unwrapMovementData,
 } from '../dist/core/embed/crypto.js';
@@ -23,6 +25,7 @@ import {
   embedFrameAt,
   embedFrameCount,
   readEmbedData,
+  resolveEmbedAudioSrc,
   stageFit,
 } from '../dist/core/embed/data.js';
 import { resolveAnchor } from '../dist/core/resolve-anchor.js';
@@ -157,6 +160,31 @@ describe('capi-animation-engine · Encriptação AEAD ChaCha20-ARX (movement.jso
     const embedCheck = readEmbedData(badPayload);
     assert.equal(embedCheck.ok, false);
     assert.ok(Array.isArray(embedCheck.problems) && embedCheck.problems.length > 0);
+  });
+
+  it('embute e cifra o áudio dentro do próprio movement.json encriptado (sem precisar de audio.m4a externo)', () => {
+    const sampleAudioBytes = new Uint8Array([0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x4d, 0x34, 0x41, 0x20]);
+    const envelope = encryptMovementData(SAMPLE_TALK_MOVEMENT, {
+      seedHint: 'capi-embedded-audio',
+      audioBytes: sampleAudioBytes,
+      audioMimeType: 'audio/mp4',
+    });
+    const serialized = JSON.stringify(envelope);
+    assert.equal(serialized.includes('AAAAGGZ0eXBNNEEg'), false, 'base64 do áudio não pode vazar em texto claro');
+    assert.equal(serialized.includes('dataBase64'), false, 'chave dataBase64 não pode vazar em texto claro');
+
+    const extracted = extractEmbeddedAudio(envelope);
+    assert.ok(extracted);
+    assert.equal(extracted.dataBase64, 'AAAAGGZ0eXBNNEEg');
+    assert.equal(extracted.dataUri, 'data:audio/mp4;base64,AAAAGGZ0eXBNNEEg');
+    assert.deepEqual(Array.from(extracted.audioBytes), Array.from(sampleAudioBytes));
+
+    const checked = readEmbedData(envelope);
+    assert.equal(checked.ok, true);
+    assert.equal(resolveEmbedAudioSrc(checked.data.audio), 'data:audio/mp4;base64,AAAAGGZ0eXBNNEEg');
+
+    const withAudio = embedAudioInMovement(SAMPLE_TALK_MOVEMENT, sampleAudioBytes, 'audio/mp4');
+    assert.equal(withAudio.audio.dataBase64, 'AAAAGGZ0eXBNNEEg');
   });
 });
 

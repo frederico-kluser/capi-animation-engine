@@ -1,6 +1,6 @@
 import { type EmbedBackground, type EmbedData, type EmbedKind } from '../../contracts/embed.js';
-import { ENCRYPTED_MOVEMENT_ALG, ENCRYPTED_MOVEMENT_FORMAT, ENCRYPTED_MOVEMENT_VERSION, decryptMovementData, encryptMovementData, isEncryptedMovement, unwrapMovementData, type DecryptMovementResult, type EncryptedMovementEnvelope } from './crypto.js';
-export { ENCRYPTED_MOVEMENT_ALG, ENCRYPTED_MOVEMENT_FORMAT, ENCRYPTED_MOVEMENT_VERSION, decryptMovementData, encryptMovementData, isEncryptedMovement, unwrapMovementData, type DecryptMovementResult, type EncryptedMovementEnvelope, };
+import { ENCRYPTED_MOVEMENT_ALG, ENCRYPTED_MOVEMENT_FORMAT, ENCRYPTED_MOVEMENT_VERSION, decryptMovementData, embedAudioInMovement, encryptMovementData, extractEmbeddedAudio, isEncryptedMovement, unwrapMovementData, type DecryptMovementResult, type EmbeddedAudioInfo, type EncryptMovementOptions, type EncryptedMovementEnvelope } from './crypto.js';
+export { ENCRYPTED_MOVEMENT_ALG, ENCRYPTED_MOVEMENT_FORMAT, ENCRYPTED_MOVEMENT_VERSION, decryptMovementData, embedAudioInMovement, encryptMovementData, extractEmbeddedAudio, isEncryptedMovement, unwrapMovementData, type DecryptMovementResult, type EmbeddedAudioInfo, type EncryptMovementOptions, type EncryptedMovementEnvelope, };
 export declare const EMBED_PLAYER_DEFAULTS: {
     readonly fps: 60;
     readonly seekStepMs: 5000;
@@ -19,6 +19,11 @@ export declare const isEmbedKind: (value: unknown) => value is EmbedKind;
 export declare function readEmbedData(rawValue: unknown): EmbedDataCheck;
 export declare function isKnownEmbedBackground(background: unknown): background is EmbedBackground;
 export declare function embedUrl(src: string, baseUrl?: string): string;
+export declare function resolveEmbedAudioSrc(audio: {
+    src?: string | undefined;
+    type?: string | undefined;
+    dataBase64?: string | undefined;
+} | null | undefined, baseUrl?: string, audioUrlOverride?: string | null): string;
 export declare function embedBaseOf(dataUrl: string): string;
 export declare function embedFrameCount(durationMs: number, fps: number): number;
 export declare function embedFrameAt(timeMs: number, durationMs: number, fps: number): number;
