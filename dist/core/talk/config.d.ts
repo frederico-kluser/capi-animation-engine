@@ -6,6 +6,7 @@ import { type CharacterId } from '../../contracts/character.js';
 import { type Outfit, type OutfitPresetId, type OutfitSlot } from '../../contracts/outfit.js';
 import { type VideoProfileId } from '../../contracts/profile.js';
 import { type ReviewVideoFraming } from '../../contracts/review.js';
+import { type DirectorId } from '../decide/director/ids.js';
 import type { SpeechLanguage } from '../speech/g2p.js';
 import { type VoiceEmotion } from './emotion.js';
 import { type ReasoningEffort } from './tts-models.js';
@@ -57,6 +58,7 @@ export interface TalkConfig {
         talk: TalkAspectId[];
         podcast: PodcastAspectId[];
         catalog: CatalogDetail;
+        director?: DirectorId;
     };
     camera: {
         style: CameraStyle;
@@ -161,6 +163,7 @@ export declare const CONFIG_ENUMS: {
     readonly reviewAttachVideo: readonly ["auto", "always", "never"];
     readonly reviewDuringVideo: readonly ["stage", "tv", "auto"];
     readonly reviewSttProvider: readonly ["openrouter", "openai"];
+    readonly director: readonly ["llm", "jev"];
 };
 export declare const REVIEW_CONFIG_KEYS: {
     readonly analysis: readonly ['effort', 'chunkMinutes', 'proxyHeight', 'proxyFps', 'maxProxyMb', 'samples'];

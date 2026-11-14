@@ -1,12 +1,14 @@
 import type { Point } from './pose.js';
-export type ExpressionId = 'neutral' | 'friendly' | 'excited' | 'laughing' | 'confident' | 'serious' | 'curious' | 'thinking' | 'skeptical' | 'surprised' | 'concerned' | 'sad' | 'wink';
-export declare const EXPRESSION_IDS: readonly ["neutral", "friendly", "excited", "laughing", "confident", "serious", "curious", "thinking", "skeptical", "surprised", "concerned", "sad", "wink"];
+export type ExpressionId = 'neutral' | 'friendly' | 'excited' | 'laughing' | 'confident' | 'serious' | 'curious' | 'thinking' | 'skeptical' | 'surprised' | 'concerned' | 'sad' | 'wink' | 'proud' | 'delighted' | 'relieved' | 'amazed' | 'smug' | 'mischievous' | 'determined' | 'focused' | 'confused' | 'nervous' | 'embarrassed' | 'sympathetic' | 'annoyed' | 'disgusted' | 'bored' | 'sleepy';
+export declare const EXPRESSION_IDS: readonly ["neutral", "friendly", "excited", "laughing", "confident", "serious", "curious", "thinking", "skeptical", "surprised", "concerned", "sad", "wink", "proud", "delighted", "relieved", "amazed", "smug", "mischievous", "determined", "focused", "confused", "nervous", "embarrassed", "sympathetic", "annoyed", "disgusted", "bored", "sleepy"];
 export type VisemeId = 'rest' | 'MBP' | 'FV' | 'TH' | 'TDNL' | 'KG' | 'CHSH' | 'SZ' | 'A' | 'E' | 'O' | 'U';
 export declare const VISME_IDS: readonly ["rest", "MBP", "FV", "TH", "TDNL", "KG", "CHSH", "SZ", "A", "E", "O", "U"];
-export type ExpressiveMouthId = 'smile' | 'open' | 'laugh' | 'grin' | 'flat' | 'frown' | 'smirk' | 'oh' | 'pout';
-export declare const EXPRESSIVE_MOUTH_IDS: readonly ["smile", "open", "laugh", "grin", "flat", "frown", "smirk", "oh", "pout"];
+export type ExpressiveMouthId = 'smile' | 'open' | 'laugh' | 'grin' | 'flat' | 'frown' | 'smirk' | 'oh' | 'pout' | 'bite' | 'chew' | 'chewOpen';
+export declare const EXPRESSIVE_MOUTH_IDS: readonly ["smile", "open", "laugh", "grin", "flat", "frown", "smirk", "oh", "pout", "bite", "chew", "chewOpen"];
+export declare const EATING_MOUTH_IDS: readonly ["bite", "chew", "chewOpen"];
+export type EatingMouthId = (typeof EATING_MOUTH_IDS)[number];
 export type MouthId = ExpressiveMouthId | VisemeId;
-export declare const MOUTH_IDS: readonly ["smile", "open", "laugh", "grin", "flat", "frown", "smirk", "oh", "pout", "rest", "MBP", "FV", "TH", "TDNL", "KG", "CHSH", "SZ", "A", "E", "O", "U"];
+export declare const MOUTH_IDS: readonly ["smile", "open", "laugh", "grin", "flat", "frown", "smirk", "oh", "pout", "bite", "chew", "chewOpen", "rest", "MBP", "FV", "TH", "TDNL", "KG", "CHSH", "SZ", "A", "E", "O", "U"];
 export interface MouthShape {
     w: number;
     corner: number;
@@ -24,6 +26,7 @@ export interface BrowShape {
 export interface EyeShape {
     open: number;
     smile: number;
+    lid?: number;
 }
 export interface Expression {
     brows: Record<'left' | 'right', BrowShape>;

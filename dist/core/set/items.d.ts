@@ -1,6 +1,7 @@
 import { type Point, type Side } from '../../contracts/pose.js';
 import type { SeatSceneObject } from '../../contracts/scene.js';
-import { type DrinkKind, type DrinkSlot, type DrinkSpec, type TableItemKind, type TableItemSpec } from '../../contracts/set.js';
+import { type DrinkKind, type DrinkSlot, type DrinkSpec, type FoodKind, type FoodSlot, type FoodSpec, type TableItemKind, type TableItemSpec } from '../../contracts/set.js';
+import type { CompiledTimeline } from '../../contracts/timeline.js';
 export interface ItemBox {
     x0: number;
     y0: number;
@@ -63,6 +64,26 @@ export declare const ITEM_SIZE: {
     readonly nameplate: {
         readonly width: 128;
         readonly height: 39;
+    };
+    readonly sandwich: {
+        readonly width: 44;
+        readonly height: 40;
+    };
+    readonly apple: {
+        readonly width: 36;
+        readonly height: 37;
+    };
+    readonly cupcake: {
+        readonly width: 36;
+        readonly height: 44;
+    };
+    readonly coxinha: {
+        readonly width: 32;
+        readonly height: 44;
+    };
+    readonly popcorn: {
+        readonly width: 40;
+        readonly height: 56;
     };
 };
 export declare const ITEM_BOUNDS: {
@@ -149,6 +170,36 @@ export declare const ITEM_BOUNDS: {
         readonly y0: -42;
         readonly x1: 67;
         readonly y1: 3;
+    };
+    readonly sandwich: {
+        readonly x0: -31;
+        readonly y0: -47;
+        readonly x1: 25;
+        readonly y1: 2;
+    };
+    readonly apple: {
+        readonly x0: -21;
+        readonly y0: -49;
+        readonly x1: 21;
+        readonly y1: 2;
+    };
+    readonly cupcake: {
+        readonly x0: -21;
+        readonly y0: -58;
+        readonly x1: 21;
+        readonly y1: 2;
+    };
+    readonly coxinha: {
+        readonly x0: -18;
+        readonly y0: -47;
+        readonly x1: 18;
+        readonly y1: 2;
+    };
+    readonly popcorn: {
+        readonly x0: -24;
+        readonly y0: -67;
+        readonly x1: 24;
+        readonly y1: 2;
     };
 };
 export declare const ITEM_SHADOW: {
@@ -250,6 +301,41 @@ export declare const ITEM_SHADOW: {
         readonly reachY: 2;
         readonly lift: 1;
     };
+    readonly sandwich: {
+        readonly rx: 24;
+        readonly ry: 6;
+        readonly reachX: 7;
+        readonly reachY: 2;
+        readonly lift: 1;
+    };
+    readonly apple: {
+        readonly rx: 18;
+        readonly ry: 5.5;
+        readonly reachX: 7;
+        readonly reachY: 2;
+        readonly lift: 1;
+    };
+    readonly cupcake: {
+        readonly rx: 16;
+        readonly ry: 5.5;
+        readonly reachX: 8;
+        readonly reachY: 2;
+        readonly lift: 1;
+    };
+    readonly coxinha: {
+        readonly rx: 16;
+        readonly ry: 5.5;
+        readonly reachX: 8;
+        readonly reachY: 2;
+        readonly lift: 1;
+    };
+    readonly popcorn: {
+        readonly rx: 20;
+        readonly ry: 6;
+        readonly reachX: 11;
+        readonly reachY: 3;
+        readonly lift: 1;
+    };
 };
 export declare const ITEM_GRIP_TIP: {
     readonly mug: {
@@ -308,6 +394,26 @@ export declare const ITEM_GRIP_TIP: {
         readonly x: 40;
         readonly y: -20;
     };
+    readonly sandwich: {
+        readonly x: 9;
+        readonly y: -15;
+    };
+    readonly apple: {
+        readonly x: 9;
+        readonly y: -19;
+    };
+    readonly cupcake: {
+        readonly x: 7;
+        readonly y: -11;
+    };
+    readonly coxinha: {
+        readonly x: 8;
+        readonly y: -17;
+    };
+    readonly popcorn: {
+        readonly x: 8;
+        readonly y: -50;
+    };
 };
 export declare const GRIP_GLOVE_REACH = 110;
 export declare const GRIP_SHAPE: 'grip';
@@ -357,8 +463,9 @@ export interface ItemPlacement {
     scale: number;
     flip: boolean;
     opacity?: number;
+    bites?: number;
 }
-export declare function placeTableItem(spec: TableItemSpec, mirror?: boolean, drink?: DrinkSpec): ItemPlacement;
+export declare function placeTableItem(spec: TableItemSpec, mirror?: boolean, drink?: DrinkSpec, food?: FoodSpec): ItemPlacement;
 export declare function sceneObjectToTableItem(object: SeatSceneObject, mirror?: boolean): TableItemSpec | null;
 export declare function drinkScreenBox(drink: DrinkSpec, mirror?: boolean): ItemBox;
 export declare function heldDrinkPlacement(kind: DrinkKind, hand: Side, wrist: Point, tilt?: number, scale?: number): {
@@ -381,3 +488,174 @@ export declare function drinkPropBox(kind: DrinkKind): {
     w: number;
     h: number;
 };
+export declare const FOOD_ITEM_ID = "food";
+export declare const FOOD_SCALE = 1.9;
+export declare function isFoodKind(kind: unknown): kind is FoodKind;
+export declare const FOOD_MAX_BITES: Readonly<Record<FoodKind, number>>;
+export declare const FOOD_SUPPLIES: ReadonlySet<FoodKind>;
+export declare function foodBites(kind: FoodKind, bites: unknown): number;
+export declare const FOOD_BITE: {
+    readonly sandwich: {
+        readonly x: -2.5;
+        readonly y: -37;
+    };
+    readonly apple: {
+        readonly x: -14;
+        readonly y: -30;
+    };
+    readonly cupcake: {
+        readonly x: -11;
+        readonly y: -37;
+    };
+    readonly coxinha: {
+        readonly x: -8;
+        readonly y: -33;
+    };
+    readonly popcorn: {
+        readonly x: -4;
+        readonly y: -54;
+    };
+};
+export declare const FOOD_BITE_MARKS: {
+    readonly sandwich: readonly [{
+        readonly x: -3;
+        readonly y: -41;
+        readonly normal: 90;
+        readonly r: 5.5;
+    }, {
+        readonly x: -6.1;
+        readonly y: -29.1;
+        readonly normal: 29;
+        readonly r: 5.2;
+    }, {
+        readonly x: -10.8;
+        readonly y: -20.8;
+        readonly normal: 27;
+        readonly r: 5.2;
+    }];
+    readonly apple: readonly [{
+        readonly x: -17;
+        readonly y: -31;
+        readonly normal: 30;
+        readonly r: 5.5;
+    }, {
+        readonly x: -21;
+        readonly y: -19;
+        readonly normal: 5;
+        readonly r: 5.5;
+    }, {
+        readonly x: -18;
+        readonly y: -8;
+        readonly normal: -25;
+        readonly r: 5;
+    }];
+    readonly cupcake: readonly [{
+        readonly x: -14;
+        readonly y: -38;
+        readonly normal: 30;
+        readonly r: 5.5;
+    }, {
+        readonly x: -16.5;
+        readonly y: -32;
+        readonly normal: 15;
+        readonly r: 4.8;
+    }];
+    readonly coxinha: readonly [{
+        readonly x: -9;
+        readonly y: -36;
+        readonly normal: 25;
+        readonly r: 5;
+    }, {
+        readonly x: -15;
+        readonly y: -25;
+        readonly normal: 10;
+        readonly r: 5.5;
+    }, {
+        readonly x: -17;
+        readonly y: -13;
+        readonly normal: -5;
+        readonly r: 5;
+    }];
+    readonly popcorn: readonly [];
+};
+export declare const POPCORN_HANDFUL: {
+    readonly kernels: readonly [{
+        readonly x: -5;
+        readonly y: -53;
+        readonly r: 5.2;
+    }, {
+        readonly x: 2;
+        readonly y: -57;
+        readonly r: 5;
+    }, {
+        readonly x: 9;
+        readonly y: -54;
+        readonly r: 5;
+    }, {
+        readonly x: 1;
+        readonly y: -48.5;
+        readonly r: 5.4;
+    }, {
+        readonly x: -6;
+        readonly y: -46.5;
+        readonly r: 4.4;
+    }, {
+        readonly x: 10;
+        readonly y: -46;
+        readonly r: 4.6;
+    }, {
+        readonly x: 5;
+        readonly y: -62;
+        readonly r: 4.2;
+    }];
+    readonly keepFrom: readonly [number, 4, 9];
+    readonly box: {
+        readonly x0: -14;
+        readonly y0: -70;
+        readonly x1: 18;
+        readonly y1: -39;
+    };
+};
+export declare function heldFoodBounds(kind: FoodKind, scale?: number, flip?: boolean): ItemBox;
+export declare const FOOD_PLATE: {
+    readonly rx: 31;
+    readonly ry: 6.5;
+    readonly rim: 0.72;
+    readonly lift: 1;
+};
+export declare function foodSlotOf(food: Pick<FoodSpec, 'slot'>): {
+    slot: FoodSlot;
+    foot: Point;
+    hand: Side;
+};
+export declare function foodItem(food: FoodSpec): TableItemSpec;
+export declare function foodPickup(food: Pick<FoodSpec, 'kind' | 'slot'>, mirror?: boolean): {
+    hand: Side;
+    wrist: Point;
+    angle: number;
+    shape: typeof GRIP_SHAPE;
+    foot: Point;
+};
+export declare function heldItemPlacement(kind: TableItemKind, hand: Side, wrist: Point, tilt?: number, scale?: number): {
+    foot: Point;
+    flip: boolean;
+    scale: number;
+    rotation: number;
+};
+export declare function heldFoodPlacement(kind: FoodKind, hand: Side, wrist: Point, tilt?: number, scale?: number): {
+    foot: Point;
+    flip: boolean;
+    scale: number;
+    rotation: number;
+};
+export declare function heldFoodBite(kind: FoodKind, hand: Side, wrist: Point, tilt?: number): Point;
+export declare function biteWrist(kind: FoodKind, hand: Side, bite: Point, tilt?: number): Point;
+export declare function foodPropBox(kind: FoodKind): {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+};
+export declare function foodContact(food: FoodSpec, kind: FoodKind, hand: Side, wrist: Point, tilt?: number, mirror?: boolean, scale?: number): HeldDrinkContact;
+export declare function foodScreenBox(food: FoodSpec, mirror?: boolean): ItemBox;
+export declare function tableFoodBites(timeline: CompiledTimeline | undefined, timeMs: number): number | undefined;

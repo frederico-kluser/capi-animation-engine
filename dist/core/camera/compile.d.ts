@@ -24,6 +24,7 @@ export interface CameraSpeech {
     scriptedReaction?: {
         atMs?: number;
     };
+    laughs?: readonly number[];
 }
 export interface CameraTiming {
     durationMs: number;
@@ -55,6 +56,7 @@ export interface CompileCameraOptions {
     cutDelayMs?: number;
     floor?: Partial<CameraFloorRules>;
     drinks?: Partial<Record<PodcastSeat, CameraDrink>>;
+    bothMoments?: boolean;
 }
 export interface CameraSip {
     grabMs: number;

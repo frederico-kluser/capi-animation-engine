@@ -1,4 +1,5 @@
 import type { HeadphonesId } from '../contracts/outfit.js';
+import { type BoxDims } from '../core/head/box3d.js';
 import { type Point3, type TubePoint } from '../core/head/solid.js';
 import { type OutfitItem, type OutfitView, type Tone } from './solid.js';
 export interface PhonesModel {
@@ -55,5 +56,5 @@ export interface PhonesFit {
     };
     spheres?: readonly TubePoint[];
 }
-export declare function bandPoints(fit: PhonesFit | null, model?: PhonesModel): TubePoint[];
+export declare function bandPoints(fit: PhonesFit | null, model?: PhonesModel, box?: BoxDims): TubePoint[];
 export declare function headphonesItems(view: OutfitView, kind: HeadphonesId, fit: PhonesFit | null, occluders?: readonly string[]): OutfitItem[];

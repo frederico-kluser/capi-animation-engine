@@ -5,7 +5,7 @@ import type { CharacterId } from './character.js';
 import type { OutfitInput } from './outfit.js';
 import type { VideoProfileId } from './profile.js';
 import type { PodcastScene } from './scene.js';
-import type { DrinkSpec, PodcastChairId, PodcastMicAdjust, PodcastMicId, SetPieces, TableItemSpec } from './set.js';
+import type { DrinkSpec, FoodSpec, PodcastChairId, PodcastMicAdjust, PodcastMicId, SetPieces, TableItemSpec } from './set.js';
 import type { TimelineSpec } from './timeline.js';
 export declare const PODCAST_SEATS: readonly ['host', 'guest'];
 export type PodcastSeat = (typeof PODCAST_SEATS)[number];
@@ -15,7 +15,7 @@ export type PodcastTurnKind = (typeof PODCAST_TURN_KINDS)[number];
 export declare const PODCAST_MAIN_KINDS: ReadonlySet<PodcastTurnKind>;
 export declare const PODCAST_EYES_MODES: readonly ['auto', 'eachOther', 'camera'];
 export type PodcastEyesMode = (typeof PODCAST_EYES_MODES)[number];
-export declare const PODCAST_ACTION_KINDS: readonly ['drink', 'adjustMic', 'checkNotes', 'checkPhone', 'leanBack', 'sitUp'];
+export declare const PODCAST_ACTION_KINDS: readonly ['drink', 'adjustMic', 'checkNotes', 'checkPhone', 'leanBack', 'sitUp', 'eat'];
 export type PodcastActionKind = (typeof PODCAST_ACTION_KINDS)[number];
 export type PodcastWordRef = string | number;
 export type PodcastStart = {
@@ -68,6 +68,7 @@ export interface PodcastSpeakerInput {
     micAdjust?: PodcastMicAdjust;
     items?: TableItemSpec[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
 }
 export interface PodcastCameraIntentInput {
     on: PodcastWordRef;
@@ -199,6 +200,7 @@ export interface PodcastSeatSpec {
     micAdjust?: PodcastMicAdjust;
     items?: TableItemSpec[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
     mirror: boolean;
     seed: number;
     plan: {

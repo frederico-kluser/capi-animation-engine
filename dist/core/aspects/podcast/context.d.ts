@@ -5,7 +5,7 @@ import type { CharacterId } from '../../../contracts/character.js';
 import type { ProfileAspect, VideoProfileId } from '../../../contracts/profile.js';
 import { type PodcastEyesMode, type PodcastSeat, type PodcastSpec, type PodcastTurnKind } from '../../../contracts/podcast.js';
 import type { ReviewAnchor, ReviewBlockMode } from '../../../contracts/review.js';
-import type { DrinkSpec, PodcastChairId, PodcastMicId, TableItemKind } from '../../../contracts/set.js';
+import type { DrinkSpec, FoodSpec, PodcastChairId, PodcastMicId, TableItemKind } from '../../../contracts/set.js';
 import { type NormalizedPodcastScript } from '../../podcast/script.js';
 import { type SpeechLanguage } from '../../speech/g2p.js';
 export interface AspectTurnTiming {
@@ -70,6 +70,7 @@ export interface AspectSeat {
     micModel?: PodcastMicId;
     items: TableItemKind[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
 }
 export interface AspectMoment {
     kind: OutlineMomentKind;

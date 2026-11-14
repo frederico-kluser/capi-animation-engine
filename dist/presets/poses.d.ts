@@ -1,4 +1,9 @@
-import { type ArmPose, type Point, type Pose } from '../contracts/pose.js';
+import { type ArmPose, type LaptopPropId, type Point, type Pose, type PoseInput } from '../contracts/pose.js';
+export declare const LAPTOP_KEYS_LEFT: ArmPose;
+export declare const LAPTOP_KEYS_RIGHT: ArmPose;
+export declare const LAPTOP_MOUSE_LEFT: ArmPose;
+export declare const LAPTOP_CLICK_LEFT: ArmPose;
+export declare function laptopCarryPose(model: LaptopPropId): Pose;
 export declare const POSES: {
     readonly idle: {
         readonly head: {
@@ -1714,6 +1719,53 @@ export declare const POSES: {
     readonly laptopThinkpadPoint: Pose;
     readonly laptopThinkpadThink: Pose;
     readonly laptopThinkpadThumbsUp: Pose;
+    readonly snackHold: {
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 657;
+                readonly y: 518;
+            };
+            readonly elbow: {
+                readonly x: 760;
+                readonly y: 640;
+            };
+            readonly shape: 'grip';
+            readonly angle: 176;
+            readonly view: 'palm';
+        };
+        readonly prop: {
+            readonly id: 'apple';
+            readonly hand: 'right';
+            readonly angle: 4;
+        };
+    };
+    readonly snackBite: {
+        readonly head: {
+            readonly turn: 17;
+            readonly nod: 4;
+            readonly tilt: -10;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 688;
+                readonly y: 401;
+            };
+            readonly elbow: {
+                readonly x: 756;
+                readonly y: 589;
+            };
+            readonly shape: 'grip';
+            readonly angle: 200;
+            readonly view: 'palm';
+        };
+        readonly prop: {
+            readonly id: 'apple';
+            readonly hand: 'right';
+            readonly angle: -20;
+        };
+    };
 };
 export declare const OFFICIAL_POSES: typeof POSES;
 export declare const DERIVED_POSES: {
@@ -1744,3 +1796,5 @@ export type PoseId = keyof typeof POSES;
 export declare const POSE_IDS: PoseId[];
 export declare const POSE_LABELS: Record<PoseId, string>;
 export declare function isPoseId(value: unknown): value is PoseId;
+export declare const POSE_GAZE: Readonly<Partial<Record<PoseId, Point>>>;
+export declare function poseGaze(input: PoseInput | undefined): Point | undefined;

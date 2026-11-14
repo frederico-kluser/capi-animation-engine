@@ -74,6 +74,8 @@ export interface PoseLoopFacts {
     cycles: number;
     periodMs: number;
     totalMs: number;
+    sustained?: true;
+    readMs?: number;
 }
 export declare const FRAME_FITS: readonly ['in', 'partial', 'out'];
 export type FrameFit = (typeof FRAME_FITS)[number];
@@ -156,7 +158,7 @@ export interface CameraCard<Id extends string = string> {
 }
 export declare const CAMERA_CARD_ORIGINS: readonly ['verified', 'craft'];
 export type CameraCardOrigin = (typeof CAMERA_CARD_ORIGINS)[number];
-export declare const CATALOG_SECTION_IDS: readonly ['poses', 'expressions', 'macros', 'actions', 'cameraFramings', 'cameraSizes', 'cameraAngles', 'cameraMoves', 'cameraTransitions', 'cameraIntents', 'cameraStyles', 'tableItems', 'drinks', 'chairs', 'mics', 'decor', 'characters', 'outfit', 'outfitPresets', 'tones', 'voices', 'formats', 'profiles'];
+export declare const CATALOG_SECTION_IDS: readonly ['poses', 'expressions', 'macros', 'actions', 'cameraFramings', 'cameraSizes', 'cameraAngles', 'cameraMoves', 'cameraTransitions', 'cameraIntents', 'cameraStyles', 'tableItems', 'drinks', 'foods', 'chairs', 'mics', 'decor', 'characters', 'outfit', 'outfitPresets', 'tones', 'voices', 'formats', 'profiles'];
 export type CatalogSectionId = (typeof CATALOG_SECTION_IDS)[number];
 export interface CatalogEntry {
     id: string;

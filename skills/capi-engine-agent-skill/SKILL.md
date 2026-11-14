@@ -38,10 +38,12 @@ S=~/.agents/skills/capi-engine-agent-skill/scripts/capi-engine.sh
 | `$S movement --from out/talk/<execução> --out ./movement.json [opções]` | Re-exporta uma execução já existente para `movement.json` encriptado com áudio embutido (permite trocar `--character`, `--outfit`, `--scenario`, `--short` a custo zero). | **Não** |
 | `$S video "A fala." --out ./video.mp4 [opções]` | Gera e renderiza o **vídeo bruto (`.mp4` / `.webm` / `.mov`)** pelo estúdio local (também aceita `--script <roteiro.json>`, `--video <review.mp4>` ou `--from <execução>`). | Sim (no `--from`, só renderiza) |
 | `$S view "A fala." --out ./pasta-vista [opções]` | Gera a vista selada (`anchor-view.js`) e valida com `$S check <pasta-vista>`. | Sim |
-| `$S build-engine` | Compila `packages/anchor` no estúdio, ofusca os 269 módulos JS (AST scramble + Terser), sincroniza para `/home/ondokai/Projects/capi-animation-engine/dist/` e roda `lint` + `test`. | Não |
+| `$S build-engine` | Compila `packages/anchor` no estúdio, ofusca os 279 módulos JS (AST scramble + Terser), sincroniza para `/home/ondokai/Projects/capi-animation-engine/dist/` e roda `lint` + `test`. | Não |
 | `$S list` | Lista todas as execuções prontas em `out/talk`, `out/podcast` e `out/review`. | Não |
 | `$S voices` · `tones` · `outfits` · `scenarios` · `characters` · `profiles` · `models` | Lista todas as opções disponíveis no estúdio. | Não |
 | `$S help` | Mostra a ajuda completa com todas as flags de geração, voz, corpo, câmara e exportação. | Não |
+
+Para abrir o **estúdio** (o playground com todas as APIs: Fala, Podcast, Review, Criar, Vozes, Cenários) nesta máquina: `npm --prefix <pasta do estúdio> start` — termina quem já estiver na porta 5180, arranca, confere cada API e abre o browser (`-- --port <n>`, `-- --no-open`).
 
 Em todos os comandos de geração:
 - `--dry-run`: calcula o plano, duração estimada e custo sem gastar API nem escrever ficheiros.
@@ -156,7 +158,8 @@ $S video --from out/talk/<execução> --format mp4 --out ./out-video.mp4
 | **Personagem** | `--character capybara\|anchor\|donkey` | `$S characters` |
 | **Voz e Tom** | `--voice <id>` · `--tone animado\|amigavel\|serio\|calmo\|urgente…` · `--emotion on\|off` · `--vary-voice` · `--tts-model <id>` | `$S voices` · `$S tones` · `$S models` |
 | **Prompts de Corpo/Câmara** | `--body "<instruções para o planeador de gestos>"` · `--plan <plan.json>` · `--samples <n>` · `--seed <n>` · `--no-camera` | `$S help` |
-| **Visual (Outfit)** | `--outfit mundodev\|streamer\|none` · `--top hoodie\|tshirt\|suit\|jacket` · `--top-color <cor>` · `--glasses <id>` · `--headphones <id>` · `--hat <id>` · `--hair <id>` | `$S outfits` |
+| **Quem escolhe gestos, cara e câmara** | `--director jev` (a omissão desde 2026-11-03: o Jev decide frase a frase, ≈ 0,4 s por frase) · `--director llm` (os prompts do modelo) | `$S help` |
+| **Visual (Outfit)** | `--outfit mundodev\|casual\|streamer\|sporty\|tech\|scientist\|biker\|none` · `--top <roupa>` (17: `suit`, `hoodie`, `tshirt`, `polo`, `sweater`, `shirt`, `blazer`, `bomber`, `turtleneck`, `jersey`, `vest`, `cardigan`, `denimJacket`, `leatherJacket`, `flannel`, `labCoat`, `trackJacket`) · `--top-color <cor>` (15) · `--glasses <id>` · `--headphones <id>` · `--hat <id>` · `--hair <id>` | `$S outfits` |
 | **Fundo e Cenário** | `--bg transparent\|studio\|chroma\|<imagem\|vídeo>` · `--bg-color #hex` · `--scenario <id\|none>` | `$S scenarios` |
 | **Formato e Legendas** | `--profile video\|short` (`--short` = 9:16 vertical) · `--aspect 16:9\|9:16\|1:1\|4:5` · `--captions auto\|lines\|karaoke\|off` · `--fps <n>` | `$S profiles` |
 | **Controlo e Custo** | `--dry-run` · `--no-llm` · `--fake-tts` · `--json` · `--force` | — |
@@ -165,7 +168,17 @@ Guia completo de todas as flags e prompts: [`references/cli-options.md`](referen
 
 ---
 
-## 4. Manter o Symlink Global em Todas as Raízes
+## 4. O que há de novo no motor (2026-11-03)
+
+- **Digitar no portátil**: as 27 poses `laptop*` digitam com as duas mãos por trás da tampa, ao ritmo de uma pessoa, enquanto a pose durar; o portátil entra e sai pelo colo.
+- **Comer e mastigar**: 5 comidas (`sandwich`, `apple`, `cupcake`, `coxinha`, `popcorn`) com dentadas, as bocas `bite`/`chew`/`chewOpen` e a ação `eat` no podcast (a comida do lugar no roteiro: `food: { "kind": "apple", "slot": "outer", "bites": 0 }`, como a bebida); no modo fala as poses `snackHold`/`snackBite`.
+- **29 expressões** (16 novas, de `proud` a `sleepy`), **17 roupas**, **15 cores** e os visuais `scientist` e `biker`.
+- **O burro** com as orelhas presas à cabeça; a **cabeça Redonda** (cantos de 90) passa a ser a do âncora.
+- **A câmara com os dois** no podcast (interrupções, riso partilhado, olhares) e o **diretor Jev** a escolher gestos, cara e câmara (`--director jev|llm`).
+
+Tudo isto já vem no `dist/` deste repositório (`$S build-engine` refaz-o a partir do estúdio) e no `movement.json` que o estúdio gera — o `<AnchorLivePlayer>` desenha-o sem mudar nada no site.
+
+## 5. Manter o Symlink Global em Todas as Raízes
 
 Esta skill vive no repositório do motor (`/home/ondokai/Projects/capi-animation-engine/skills/capi-engine-agent-skill`), com symlink em `~/Agent-Skills/capi-engine-agent-skill` e em todas as 12 raízes globais de agentes (mesmas raízes da `tavily-agent-skill`):
 

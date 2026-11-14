@@ -1,7 +1,7 @@
 import { type CharacterId } from '../../contracts/character.js';
 import type { ExpressionInput } from '../../contracts/face.js';
 import { type OutfitInput } from '../../contracts/outfit.js';
-import type { Point, PoseChannels, PoseInput } from '../../contracts/pose.js';
+import { type Point, type PoseChannels, type PoseInput } from '../../contracts/pose.js';
 import type { EasingId, TimelineSpec, TimelineTrack, VisemeCue } from '../../contracts/timeline.js';
 export declare const CHOREOGRAPHY: {
     readonly eyesLeadMs: 100;
@@ -58,12 +58,17 @@ export interface RouteStep {
     ease: EasingId;
     holdMs: number;
 }
-export type RouteKind = 'direct' | 'cut' | 'swap' | 'handover' | 'detour';
+export type RouteKind = 'direct' | 'cut' | 'swap' | 'handover' | 'detour' | 'stow';
 export interface Route {
     kind: RouteKind;
     steps: RouteStep[];
     totalMs: number;
 }
+export declare const LAPTOP_ROUTE: {
+    readonly holdMs: 200;
+    readonly lidMs: 360;
+    readonly lapMs: 340;
+};
 export declare function planRoute(from: PoseInput | undefined, to: PoseInput | undefined): Route;
 export declare function choreograph(beats: readonly Beat[], options?: ChoreographOptions): TimelineSpec;
 export interface AnchorScript {

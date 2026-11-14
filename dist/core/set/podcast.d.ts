@@ -327,6 +327,18 @@ export declare const PODCAST_SET: {
             hand: "left";
         };
     };
+    readonly foodSlots: {
+        outer: {
+            x: number;
+            y: number;
+            hand: "left";
+        };
+        inner: {
+            x: number;
+            y: number;
+            hand: "right";
+        };
+    };
 };
 export declare function tableClipY(wristY: number): number;
 export declare function clampMicAdjust(adjust?: PodcastMicAdjust): {

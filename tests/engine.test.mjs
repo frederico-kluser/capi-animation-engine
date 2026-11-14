@@ -33,6 +33,10 @@ import { compileTimeline, sampleTimeline } from '../dist/core/timeline/index.js'
 import { CHARACTERS, resolveCharacter } from '../dist/presets/characters.js';
 import { EXPRESSIONS, MOUTHS, POSES } from '../dist/presets/index.js';
 import { FACTORY_SCENARIOS } from '../dist/presets/scenarios.js';
+import { HEAD_SHAPES } from '../dist/presets/head-shapes.js';
+import { TOP_IDS, TOP_COLOR_IDS, OUTFIT_PRESET_IDS } from '../dist/contracts/outfit.js';
+import { FOOD_PROP_IDS } from '../dist/contracts/pose.js';
+import { DIRECTOR_IDS } from '../dist/core/decide/director/ids.js';
 
 const ROOT_DIR = fileURLToPath(new URL('..', import.meta.url));
 const DIST_DIR = join(ROOT_DIR, 'dist');
@@ -216,6 +220,26 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     assert.deepEqual(EMBED_KINDS, ['talk', 'podcast', 'review']);
   });
 
+  it('o catálogo de 2026-11-03: digitar, comer, 29 expressões, 17 roupas, as formas da cabeça e o diretor', () => {
+    for (const id of ['laptopType', 'laptopMouse', 'laptopThink', 'snackHold', 'snackBite']) assert.ok(POSES[id], `pose ${id}`);
+    assert.equal(Object.keys(EXPRESSIONS).length, 29);
+    for (const id of ['proud', 'amazed', 'mischievous', 'embarrassed', 'sleepy']) assert.ok(EXPRESSIONS[id], `expressão ${id}`);
+    for (const id of ['bite', 'chew', 'chewOpen']) assert.ok(MOUTHS[id], `boca ${id}`);
+    assert.equal(TOP_IDS.length, 17);
+    assert.equal(TOP_COLOR_IDS.length, 15);
+    assert.ok(OUTFIT_PRESET_IDS.includes('scientist') && OUTFIT_PRESET_IDS.includes('biker'));
+    assert.deepEqual([...FOOD_PROP_IDS], ['sandwich', 'apple', 'cupcake', 'coxinha', 'popcorn']);
+    assert.deepEqual(Object.keys(HEAD_SHAPES), ['rounder'], 'fica só a cabeça Redonda');
+    assert.equal(CHARACTERS.anchor.headShape, 'rounder', 'a cabeça do âncora é a Redonda');
+    assert.deepEqual([...DIRECTOR_IDS], ['llm', 'jev']);
+
+    // o exemplo do README (sem React: só o estado resolvido): uma maçã já mordida à boca, cara de orgulho
+    const state = resolveAnchor({ expression: 'proud', pose: { base: 'snackBite', prop: { id: 'apple', hand: 'right', bites: 1 } } });
+    assert.equal(state.pose.prop?.id, 'apple');
+    assert.equal(state.pose.prop?.bites, 1);
+    assert.deepEqual(HEAD_SHAPES.rounder, { radius: 90 }, 'os cantos de 90');
+  });
+
   it('compila e amostra timelines a 60fps com compileTimeline e sampleTimeline', () => {
     const compiled = compileTimeline(SAMPLE_TALK_MOVEMENT.timeline);
     assert.equal(compiled.__compiled, true);
@@ -236,7 +260,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
 });
 
 describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', () => {
-  it('dist/ contém exatamente 269 ficheiros .js ofuscados, 268 .d.ts e zero .map/.ts/.tsx', () => {
+  it('dist/ contém exatamente 279 ficheiros .js ofuscados, 278 .d.ts e zero .map/.ts/.tsx', () => {
     const files = walkFiles(DIST_DIR);
     const jsFiles = files.filter((f) => f.endsWith('.js'));
     const dtsFiles = files.filter((f) => f.endsWith('.d.ts'));
@@ -245,8 +269,8 @@ describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', (
       (f) => (f.endsWith('.ts') && !f.endsWith('.d.ts')) || f.endsWith('.tsx')
     );
 
-    assert.equal(jsFiles.length, 269, 'esperados 269 ficheiros .js em dist/');
-    assert.equal(dtsFiles.length, 268, 'esperados 268 ficheiros .d.ts em dist/');
+    assert.equal(jsFiles.length, 279, 'esperados 279 ficheiros .js em dist/');
+    assert.equal(dtsFiles.length, 278, 'esperados 278 ficheiros .d.ts em dist/');
     assert.equal(mapFiles.length, 0, 'zero ficheiros .map permitidos em dist/');
     assert.equal(rawTsFiles.length, 0, 'zero ficheiros .ts/.tsx crus permitidos em dist/');
 

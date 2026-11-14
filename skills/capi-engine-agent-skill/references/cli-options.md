@@ -49,8 +49,12 @@ O script `scripts/capi-engine.sh` delega para o estúdio local (`/home/ondokai/P
   - `--body "Começa pensativo, aponta para cima no segundo ponto e termina de braços abertos"` — instrução direta em linguagem natural injetada no prompt do planeador LLM de corpo/cara/câmara!
   - `--plan ./meu-plano.json` — usa um plano de gestos ancorado em palavras já editado à mão (não chama o LLM).
   - `--samples 1` — pede 1 amostra ao planeador (mais rápido) em vez de 3 em paralelo.
+- **Quem escolhe os gestos, a cara e a câmara (`--director`)**:
+  - `--director jev` (a omissão desde 2026-11-03): o diretor Jev decide frase a frase a pose, a expressão, a reação de quem ouve e a intenção de câmara (≈ 0,4 s por frase); o modelo de linguagem continua a escrever as falas.
+  - `--director llm`: os prompts do modelo, como antes (numa review é a omissão).
 - **Visual / Roupa (`--outfit`, `--top`, `--top-color`, `--glasses`, `--headphones`, `--hat`, `--hair`)**:
-  - Presets prontos: `--outfit mundodev`, `--outfit streamer`, `--outfit none`.
+  - Presets prontos: `--outfit mundodev`, `casual`, `streamer`, `sporty`, `tech`, `scientist` (bata de laboratório), `biker` (casaco de cabedal), `none`.
+  - Roupas (`--top`, 17): `suit`, `hoodie`, `tshirt`, `polo`, `sweater`, `shirt`, `blazer`, `bomber`, `turtleneck`, `jersey`, `vest`, `cardigan`, `denimJacket`, `leatherJacket`, `flannel`, `labCoat`, `trackJacket`; cores (`--top-color`, 15): `navy`, `black`, `grey`, `white`, `lilac`, `burgundy`, `coral`, `mustard`, `teal`, `orange`, `red`, `pink`, `camel`, `sky`, `denim`.
   - Peça a peça: `--top hoodie --top-color lilac --glasses round --headphones headset --hat capBackwards`. Ver tudo: `$S outfits`.
 - **Fundo e Cenário (`--bg`, `--bg-color`, `--scenario`)**:
   - `--bg transparent` (omissão para web: fundo transparente), `--bg studio`, `--bg-color "#0f172a"`, `--bg ./fundo.png`.

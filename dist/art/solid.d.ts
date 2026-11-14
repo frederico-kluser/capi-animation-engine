@@ -13,12 +13,13 @@ export interface OutfitView {
     ids: (local: string) => string;
     eyeOffset: Point;
     box: BoxDims;
+    fit: BoxDims;
 }
 export declare function makeOutfitView(head: {
     turn: number;
     nod: number;
     tilt: number;
-}, featureShift: Point, ids: (local: string) => string, eyeOffset?: Point, box?: BoxDims): OutfitView;
+}, featureShift: Point, ids: (local: string) => string, eyeOffset?: Point, box?: BoxDims, fit?: BoxDims): OutfitView;
 export declare const at: (view: OutfitView, p: Point3) => Point;
 export declare const depthOf: (view: OutfitView, p: Point3) => number;
 export declare const facingOf: (view: OutfitView, n: Point3) => number;

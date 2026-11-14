@@ -12,10 +12,16 @@ export interface EarShape {
         dy: number;
         z: number;
     };
+    roll?: number;
+    pitch?: number;
+    darkTip?: number;
+    withHat?: Partial<Omit<EarShape, 'withHat'>>;
+    layerFade?: number;
 }
 export declare const EARS: EarShape;
 export declare const CHARACTER_EARS: Partial<Record<CharacterId, Partial<EarShape>>>;
 export declare function earShapeOf(id: CharacterId): EarShape;
+export declare function earShapeFor(shape: EarShape, hatOn: boolean): EarShape;
 export type EarSide = -1 | 1;
 export declare function earCenter(side: EarSide, shape?: EarShape): Point3;
 export declare function earAxes(side: EarSide, shape?: EarShape): {
@@ -30,6 +36,8 @@ export declare function earProfile(t: number, tip: number): {
 export declare function earPlane(dims: BoxDims, side: EarSide, shape?: EarShape): Plane;
 export declare function earSurface(side: EarSide, shape?: EarShape, meridians?: number, parallels?: number): Point3[][];
 export declare function earBeyond(dims: BoxDims, side: EarSide, shape?: EarShape): Point3[];
+export declare function earCut(side: EarSide, shape: EarShape, plane: Plane): Point3[];
+export declare function earTipBeyond(dims: BoxDims, side: EarSide, shape?: EarShape): Point3[];
 export declare function earInner(side: EarSide, shape?: EarShape): {
     origin: Point3;
     u: Point3;

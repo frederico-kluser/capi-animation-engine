@@ -12,6 +12,13 @@
 
 ---
 
+### O catálogo (2026-11-03)
+
+- `POSES` (113, 51 com ciclo — as 27 `laptop*` digitam enquanto a pose durar; `snackHold`/`snackBite` comem), `EXPRESSIONS` (29), `MOUTHS` (24, com `bite`, `chew`, `chewOpen`), as 5 comidas na mão (`prop: { id: 'apple', hand: 'right', bites: 1 }`) e na mesa do podcast.
+- A cabeça do âncora é a **Redonda** (cantos de 90: `HEAD_SHAPES.rounder`, a única forma); a capivara e o burro ficam com a sua.
+
+---
+
 ## 2. Como Funciona o `movement.json` Criptografado com Áudio Embutido
 
 Quando geras um movimento pelo terminal (`capi-engine.sh movement "A fala." --out ./movement.json`), o ficheiro produzido tem o formato autenticado `capi-encrypted-movement`:

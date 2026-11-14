@@ -88,7 +88,7 @@ export interface CapybaraEyeGeometry {
     top: number;
     bottom: number;
 }
-export declare function lidCover(open: number, smile: number, browAngle?: number, lookY?: number, measures?: AnimalFaceMeasures): number;
+export declare function lidCover(open: number, smile: number, browAngle?: number, lookY?: number, measures?: AnimalFaceMeasures, lid?: number): number;
 export declare function capybaraEye(shape: EyeShape, side: 'left' | 'right', browAngle: number, lookY?: number, measures?: AnimalFaceMeasures): CapybaraEyeGeometry;
 export declare function capybaraBrowPath(shape: BrowShape, measures?: AnimalFaceMeasures): string;
 export declare function roundedPolygonPath(points: readonly Point[], radii: readonly number[]): string;

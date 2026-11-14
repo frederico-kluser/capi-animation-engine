@@ -18,6 +18,11 @@ export declare function boxNearest(dims: BoxDims, p: Point3): {
     point: Point3;
     normal: Point3;
 };
+export declare function boxSurfaceNearest(dims: BoxDims, p: Point3): {
+    point: Point3;
+    normal: Point3;
+};
+export declare function boxSupport(dims: BoxDims, n: Point3): number;
 export declare function boxCut(dims: BoxDims, half: HalfSpace): Point3[];
 export interface TubePoint extends Point3 {
     r: number;

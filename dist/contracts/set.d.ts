@@ -13,7 +13,7 @@ export interface PodcastMicAdjust {
     y?: number;
     angle?: number;
 }
-export declare const TABLE_ITEM_KINDS: readonly ['mug', 'papers', 'phone', 'glass', 'bottle', 'cup', 'laptop', 'books', 'plant', 'notebook', 'headphones', 'can', 'lamp', 'nameplate'];
+export declare const TABLE_ITEM_KINDS: readonly ['mug', 'papers', 'phone', 'glass', 'bottle', 'cup', 'laptop', 'books', 'plant', 'notebook', 'headphones', 'can', 'lamp', 'nameplate', 'sandwich', 'apple', 'cupcake', 'coxinha', 'popcorn'];
 export type TableItemKind = (typeof TABLE_ITEM_KINDS)[number];
 export declare const DRINK_KINDS: readonly ["glass", "mug", "bottle", "cup"];
 export type DrinkKind = (typeof DRINK_KINDS)[number];
@@ -22,6 +22,15 @@ export type DrinkSlot = (typeof DRINK_SLOTS)[number];
 export interface DrinkSpec {
     kind: DrinkKind;
     slot?: DrinkSlot;
+}
+export declare const FOOD_KINDS: readonly ["sandwich", "apple", "cupcake", "coxinha", "popcorn"];
+export type FoodKind = (typeof FOOD_KINDS)[number];
+export declare const FOOD_SLOTS: readonly ['outer', 'inner'];
+export type FoodSlot = (typeof FOOD_SLOTS)[number];
+export interface FoodSpec {
+    kind: FoodKind;
+    slot?: FoodSlot;
+    bites?: number;
 }
 export interface TableItemSpec {
     kind: TableItemKind;
@@ -32,6 +41,7 @@ export interface TableItemSpec {
     id?: string;
     flipX?: boolean;
     opacity?: number;
+    bites?: number;
 }
 export interface PodcastSetOptions {
     chairModel?: PodcastChairId;
@@ -39,6 +49,7 @@ export interface PodcastSetOptions {
     micAdjust?: PodcastMicAdjust;
     items?: TableItemSpec[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
     scene?: SeatSceneObject[];
     hiddenItems?: string[];
 }
@@ -55,6 +66,7 @@ export interface ResolvedPodcastSet {
     };
     items: TableItemSpec[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
     scene: SeatSceneObject[];
 }
 export interface ResolvedSet {

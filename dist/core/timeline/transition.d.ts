@@ -16,6 +16,7 @@ export declare const FACE_ZONE: {
 };
 export declare function propCorners(pose: SolvedPose): Point[] | null;
 export declare function heldDrinkFoot(pose: SolvedPose): Point | null;
+export declare function heldFoodFoot(pose: SolvedPose): Point | null;
 export declare function propVisible(pose: SolvedPose): boolean;
 export declare const PICKUP_STILL_PX = 1;
 export declare const PICKUP_SLOT_PX = 1;

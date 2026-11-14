@@ -22,6 +22,7 @@
 #   capi-engine.sh check <pasta-da-vista>                      valida vista selada no Chrome headless
 #   capi-engine.sh build-engine                                compila + ofusca + testa capi-animation-engine
 #   capi-engine.sh list | voices | tones | outfits | scenarios | characters | profiles | models | help
+# Quem escolhe os gestos, a cara e a câmara: --director jev (omissão desde 2026-11-03) | --director llm
 # =============================================================================
 set -uo pipefail
 

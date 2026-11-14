@@ -72,8 +72,10 @@ export type HandView = 'palm' | 'back';
 export declare const HAND_VIEWS: readonly ["palm", "back"];
 export type LaptopPropId = 'laptopOrange' | 'laptopAlien' | 'laptopThinkpad';
 export declare const LAPTOP_PROP_IDS: readonly ["laptopOrange", "laptopAlien", "laptopThinkpad"];
-export type PropId = 'tablet' | 'glass' | 'mug' | 'bottle' | 'cup' | LaptopPropId;
-export declare const PROP_IDS: readonly ["tablet", "glass", "mug", "bottle", "cup", "laptopOrange", "laptopAlien", "laptopThinkpad"];
+export type FoodPropId = 'sandwich' | 'apple' | 'cupcake' | 'coxinha' | 'popcorn';
+export declare const FOOD_PROP_IDS: readonly ["sandwich", "apple", "cupcake", "coxinha", "popcorn"];
+export type PropId = 'tablet' | 'glass' | 'mug' | 'bottle' | 'cup' | LaptopPropId | FoodPropId;
+export declare const PROP_IDS: readonly ["tablet", "glass", "mug", "bottle", "cup", "laptopOrange", "laptopAlien", "laptopThinkpad", "sandwich", "apple", "cupcake", "coxinha", "popcorn"];
 export interface HeadPose {
     turn: number;
     nod: number;
@@ -102,9 +104,13 @@ export interface PropPose {
     hand: Side;
     angle?: number;
     item?: string;
+    carry?: number;
+    bites?: number;
 }
-export type ResolvedPropPose = Omit<Required<PropPose>, 'item'> & {
+export type ResolvedPropPose = Omit<Required<PropPose>, 'item' | 'carry' | 'bites'> & {
     item?: string;
+    carry?: number;
+    bites?: number;
 };
 export interface Pose {
     base?: string;

@@ -6,6 +6,8 @@ export declare const FACE_KIT_IDS: readonly ["human", "capybara"];
 export type EyeStyle = 'solid' | 'catchlight' | 'pupil';
 export declare const EYE_STYLES: readonly ["solid", "catchlight", "pupil"];
 export type CharacterExtra = 'ears';
+export type HeadShapeId = 'rounder';
+export declare const HEAD_SHAPE_IDS: readonly ["rounder"];
 export interface CharacterSpec {
     id: CharacterId;
     face: FaceKitId;
@@ -13,4 +15,5 @@ export interface CharacterSpec {
     humanoid: boolean;
     headRadius: number;
     extras: readonly CharacterExtra[];
+    headShape?: HeadShapeId;
 }
