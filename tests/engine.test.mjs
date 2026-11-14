@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { dirname, join, relative, resolve, sep } from 'node:path';
 import { describe, it } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
@@ -30,16 +30,39 @@ import {
 } from '../dist/core/embed/data.js';
 import { resolveAnchor } from '../dist/core/resolve-anchor.js';
 import { compileTimeline, sampleTimeline } from '../dist/core/timeline/index.js';
-import { CHARACTERS, resolveCharacter } from '../dist/presets/characters.js';
-import { EXPRESSIONS, MOUTHS, POSES } from '../dist/presets/index.js';
+import { CHARACTERS, outfitFor, refusedSlots, resolveCharacter, wearsSlot } from '../dist/presets/characters.js';
+import { STOCK_PERSONAS } from '../dist/presets/cast.js';
+import { EXPRESSIONS, MOUTHS, POSES, POSE_LOOPS } from '../dist/presets/index.js';
 import { FACTORY_SCENARIOS } from '../dist/presets/scenarios.js';
 import { HEAD_SHAPES } from '../dist/presets/head-shapes.js';
-import { TOP_IDS, TOP_COLOR_IDS, OUTFIT_PRESET_IDS } from '../dist/contracts/outfit.js';
+import { CHARACTER_EXTRAS, CHARACTER_IDS, FACE_KIT_IDS, WEARABLE_SLOTS } from '../dist/contracts/character.js';
+import { HAIR_COLOR_IDS, HAIR_IDS, TOP_IDS, TOP_COLOR_IDS, OUTFIT_PRESET_IDS } from '../dist/contracts/outfit.js';
 import { FOOD_PROP_IDS } from '../dist/contracts/pose.js';
 import { DIRECTOR_IDS } from '../dist/core/decide/director/ids.js';
+import { THUMB_FONT } from '../dist/core/thumbs/type.js';
 
 const ROOT_DIR = fileURLToPath(new URL('..', import.meta.url));
 const DIST_DIR = join(ROOT_DIR, 'dist');
+const PKG = JSON.parse(readFileSync(join(ROOT_DIR, 'package.json'), 'utf8'));
+
+/** Os módulos de dist/ alcançáveis por imports estáticos a partir de uma entrada, e quem importa pacotes de fora. */
+function importGraph(entryRel) {
+  const seen = new Set();
+  const external = new Map();
+  const queue = [resolve(DIST_DIR, entryRel)];
+  while (queue.length) {
+    const file = queue.shift();
+    if (seen.has(file) || !existsSync(file)) continue;
+    seen.add(file);
+    const src = readFileSync(file, 'utf8');
+    for (const m of src.matchAll(/(?:import|export)\s*(?:[^'"]*?from\s*)?["']([^"']+)["']/g)) {
+      const spec = m[1];
+      if (spec.startsWith('.')) queue.push(resolve(dirname(file), spec));
+      else external.set(spec, relative(DIST_DIR, file).split(sep).join('/'));
+    }
+  }
+  return { modules: seen.size, external };
+}
 
 function walkFiles(dir) {
   const out = [];
@@ -190,6 +213,16 @@ describe('capi-animation-engine · Encriptação AEAD ChaCha20-ARX (movement.jso
     const withAudio = embedAudioInMovement(SAMPLE_TALK_MOVEMENT, sampleAudioBytes, 'audio/mp4');
     assert.equal(withAudio.audio.dataBase64, 'AAAAGGZ0eXBNNEEg');
   });
+
+  it('o movement.json leva qualquer um dos 9 personagens (cifrado, sem o nome em claro)', () => {
+    for (const character of CHARACTER_IDS) {
+      const envelope = encryptMovementData({ ...SAMPLE_TALK_MOVEMENT, character }, { seedHint: `elenco-${character}` });
+      assert.equal(JSON.stringify(envelope).includes(`"${character}"`), false, `"${character}" não pode ir em claro`);
+      const checked = readEmbedData(envelope);
+      assert.equal(checked.ok, true, `${character}: ${JSON.stringify(checked.problems ?? [])}`);
+      assert.equal(checked.data.character, character);
+    }
+  });
 });
 
 describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', () => {
@@ -240,6 +273,53 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     assert.deepEqual(HEAD_SHAPES.rounder, { radius: 90 }, 'os cantos de 90');
   });
 
+  it('o catálogo de 2026-11-14: nove personagens, rostos de ave e de retrato, peças recusadas e 11 poses', () => {
+    assert.deepEqual([...CHARACTER_IDS], ['anchor', 'capybara', 'donkey', 'dog', 'cat', 'parrot', 'monkey', 'lion', 'einstein']);
+    assert.deepEqual(Object.keys(CHARACTERS), [...CHARACTER_IDS], 'uma ficha por personagem');
+    assert.deepEqual([...FACE_KIT_IDS], ['human', 'capybara', 'bird', 'portrait']);
+    assert.deepEqual([...CHARACTER_EXTRAS], ['ears', 'mane']);
+    assert.deepEqual([...WEARABLE_SLOTS], ['hair', 'hat', 'glasses', 'headphones', 'top']);
+    assert.equal(CHARACTERS.parrot.face, 'bird', 'o papagaio tem bico');
+    assert.equal(CHARACTERS.einstein.face, 'portrait', 'o Einstein é um retrato');
+    assert.equal(CHARACTERS.einstein.eyes, 'pupil');
+    assert.equal(CHARACTERS.einstein.humanoid, true);
+    assert.ok(CHARACTERS.lion.extras.includes('mane'), 'o leão tem juba');
+
+    // a regra das peças recusadas: o leão não usa boné (a juba); um animal não usa cabelo; os acessórios ficam
+    assert.equal(typeof refusedSlots('lion').hat, 'string');
+    assert.equal(wearsSlot('lion', 'hat'), false);
+    assert.equal(wearsSlot('lion', 'glasses'), true);
+    const warnings = [];
+    assert.deepEqual(outfitFor({ hat: 'cap', glasses: 'round' }, 'lion', warnings), { hat: 'none', glasses: 'round' });
+    assert.equal(warnings.length, 1, 'avisa da peça recusada');
+    assert.equal(outfitFor({ hair: 'curly', glasses: 'round' }, 'capybara').hair, 'none', 'cabelo só em humanoides');
+    assert.equal(outfitFor({ hair: 'curly' }, 'einstein').hair, 'curly', 'o retrato é humanoide');
+
+    // as bases são os ids do motor; as personas (leao, gato…) são do estúdio e caem no âncora com aviso
+    assert.equal(resolveCharacter('lion'), 'lion');
+    const unknown = [];
+    assert.equal(resolveCharacter('leao', unknown), 'anchor');
+    assert.equal(unknown.length, 1);
+
+    for (const id of ['explainOneHand', 'explainWide', 'presentBoth', 'steeple', 'sizeWide', 'pointToSelf', 'brushOff', 'fingerWag', 'tapTemple', 'pointAside', 'raiseLevel']) {
+      assert.ok(POSES[id], `pose ${id}`);
+    }
+    assert.equal(Object.keys(POSES).length, 124);
+    for (const id of ['brushOff', 'fingerWag', 'tapTemple']) assert.ok(POSE_LOOPS[id], `ciclo ${id}`);
+    assert.ok(HAIR_IDS.includes('wild') && HAIR_COLOR_IDS.includes('white'), 'o cabelo do Einstein');
+
+    // as 8 personas de base: uma por base desenhada (menos o retrato), com ids únicos
+    assert.equal(STOCK_PERSONAS.length, 8);
+    assert.equal(new Set(STOCK_PERSONAS.map((p) => p.id)).size, 8);
+    for (const p of STOCK_PERSONAS) assert.ok(CHARACTER_IDS.includes(p.base), `${p.id} → ${p.base}`);
+
+    // o estado resolvido é determinístico em todos os personagens, com as poses novas
+    for (const character of CHARACTER_IDS) {
+      const input = { character, pose: 'fingerWag', expression: 'mischievous', frame: 37, fps: 60 };
+      assert.deepEqual(resolveAnchor(input), resolveAnchor(input), `${character} determinístico`);
+    }
+  });
+
   it('compila e amostra timelines a 60fps com compileTimeline e sampleTimeline', () => {
     const compiled = compileTimeline(SAMPLE_TALK_MOVEMENT.timeline);
     assert.equal(compiled.__compiled, true);
@@ -260,7 +340,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
 });
 
 describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', () => {
-  it('dist/ contém exatamente 279 ficheiros .js ofuscados, 278 .d.ts e zero .map/.ts/.tsx', () => {
+  it('dist/ contém exatamente 353 ficheiros .js ofuscados, 352 .d.ts e zero .map/.ts/.tsx', () => {
     const files = walkFiles(DIST_DIR);
     const jsFiles = files.filter((f) => f.endsWith('.js'));
     const dtsFiles = files.filter((f) => f.endsWith('.d.ts'));
@@ -269,8 +349,8 @@ describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', (
       (f) => (f.endsWith('.ts') && !f.endsWith('.d.ts')) || f.endsWith('.tsx')
     );
 
-    assert.equal(jsFiles.length, 279, 'esperados 279 ficheiros .js em dist/');
-    assert.equal(dtsFiles.length, 278, 'esperados 278 ficheiros .d.ts em dist/');
+    assert.equal(jsFiles.length, 353, 'esperados 353 ficheiros .js em dist/');
+    assert.equal(dtsFiles.length, 352, 'esperados 352 ficheiros .d.ts em dist/');
     assert.equal(mapFiles.length, 0, 'zero ficheiros .map permitidos em dist/');
     assert.equal(rawTsFiles.length, 0, 'zero ficheiros .ts/.tsx crus permitidos em dist/');
 
@@ -283,5 +363,36 @@ describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', (
         `sourceMappingURL proibido em ${jsFile}`
       );
     }
+  });
+});
+
+describe('capi-animation-engine · Entradas e assets do pacote', () => {
+  it('./web, ./export e ./node não precisam do Remotion; só ./node usa built-ins do Node', () => {
+    const web = importGraph('web.js');
+    assert.equal(web.modules, 1, 'dist/web.js é um único bundle');
+    assert.deepEqual([...web.external.keys()].sort(), ['react', 'react/jsx-runtime'].filter((k) => web.external.has(k)).sort());
+    for (const entry of ['web.js', 'export/index.js', 'node/index.js']) {
+      const { external } = importGraph(entry);
+      for (const spec of external.keys()) {
+        assert.equal(spec === 'remotion' || spec.startsWith('@remotion/'), false, `${entry} não pode importar ${spec} (via ${external.get(spec)})`);
+      }
+    }
+    for (const entry of ['index.js', 'web.js', 'export/index.js']) {
+      const nodeBuiltins = [...importGraph(entry).external.keys()].filter((s) => s.startsWith('node:'));
+      assert.deepEqual(nodeBuiltins, [], `${entry} tem de correr no browser`);
+    }
+    // a entrada raiz reexporta os leitores web, e esses importam o Remotion: o README di-lo (instalar remotion para ".")
+    assert.ok(importGraph('index.js').external.has('remotion'), 'se isto mudar, atualizar a secção «Requisitos» do README');
+  });
+
+  it('assets/fonts traz a letra das miniaturas (Anton, SIL OFL 1.1) exposta em ./assets/*', () => {
+    const ttf = readFileSync(join(ROOT_DIR, 'assets', 'fonts', 'Anton-Regular.ttf'));
+    assert.ok(ttf.length > 100_000, 'a fonte inteira');
+    assert.deepEqual([...ttf.subarray(0, 4)], [0x00, 0x01, 0x00, 0x00], 'cabeçalho TrueType');
+    const license = readFileSync(join(ROOT_DIR, 'assets', 'fonts', 'OFL-Anton.txt'), 'utf8');
+    assert.match(license, /SIL Open Font License, Version 1\.1/);
+    assert.ok(PKG.files.includes('assets'), 'package.json files inclui assets');
+    assert.equal(PKG.exports['./assets/*'], './assets/*');
+    assert.ok(THUMB_FONT.startsWith("'CapiThumb', Anton"), 'o @font-face que o ThumbView espera');
   });
 });
