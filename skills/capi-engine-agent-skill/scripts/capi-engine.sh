@@ -9,7 +9,7 @@
 #      pronto para `<AnchorLivePlayer movement={movement} />`;
 #    - `video`: gera e renderiza o vídeo bruto (`.mp4` / `.webm` / `.mov`);
 #    - `view` / `check`: gera e valida a vista selada (`anchor-view.js`);
-#    - `build-engine`: compila, ofusca e sincroniza o motor público.
+#    - `build-engine`: compila, ofusca e sincroniza o motor público (e os assets, ex.: a fonte das miniaturas).
 # =============================================================================
 # Uso (funciona de qualquer pasta):
 #   capi-engine.sh where                                       verifica motor + estúdio + chaves
@@ -20,7 +20,7 @@
 #   capi-engine.sh from <execução> --out <destino> [opções]    re-exporta execução pronta (custo zero)
 #   capi-engine.sh view "A fala." --out <pasta> [opções]       gera vista selada React (anchor-view.js)
 #   capi-engine.sh check <pasta-da-vista>                      valida vista selada no Chrome headless
-#   capi-engine.sh build-engine                                compila + ofusca + testa capi-animation-engine
+#   capi-engine.sh build-engine                                compila + ofusca + sincroniza assets + testa o motor
 #   capi-engine.sh list | voices | tones | outfits | scenarios | characters | profiles | models | help
 # Quem escolhe os gestos, a cara e a câmara: --director jev (omissão desde 2026-11-03) | --director llm
 # =============================================================================
@@ -256,7 +256,15 @@ EOF
   build-engine)
     need_studio
     need_engine
-    run_studio build
+    run_studio build || fail "o build do motor falhou no estúdio" "corrige o erro acima (npm --prefix $STUDIO_REPO run build) e repete" 1
+    # os assets que os componentes do motor usam (hoje: a letra Anton das miniaturas, SIL OFL 1.1, com a licença)
+    # vivem no estúdio em scripts/assets/fonts/ — espelham-se em assets/fonts/ do motor (o pacote expõe ./assets/*)
+    if [ -d "$STUDIO_REPO/scripts/assets/fonts" ]; then
+      rm -rf "$ENGINE_REPO/assets/fonts" && mkdir -p "$ENGINE_REPO/assets/fonts" \
+        && cp -f "$STUDIO_REPO"/scripts/assets/fonts/* "$ENGINE_REPO/assets/fonts/" \
+        || fail "não consegui copiar as fontes do estúdio para $ENGINE_REPO/assets/fonts" "confere as permissões das duas pastas" 1
+      echo "assets: $(ls "$ENGINE_REPO/assets/fonts" | tr '\n' ' ')→ $ENGINE_REPO/assets/fonts"
+    fi
     npm --prefix "$ENGINE_REPO" run lint && npm --prefix "$ENGINE_REPO" test ;;
 
   list) need_studio; run_studio view --list "$@" ;;
