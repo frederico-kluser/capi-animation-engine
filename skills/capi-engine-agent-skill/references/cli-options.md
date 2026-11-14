@@ -1,6 +1,6 @@
 # Opções e Prompts de Geração pelo Terminal (`capi-engine.sh`)
 
-O script `scripts/capi-engine.sh` delega para o estúdio local (`/home/ondokai/Projects/animated-chaneel`) resolvendo todos os caminhos relativos à pasta de quem chama.
+O script `scripts/capi-engine.sh` delega para o estúdio local (`~/Projects/capi-animation-studio` ou `~/Projects/animated-chaneel`; `CAPI_REPO=<pasta>` força outro) resolvendo todos os caminhos relativos à pasta de quem chama.
 
 ## 1. Modos de Saída
 
@@ -40,7 +40,9 @@ O script `scripts/capi-engine.sh` delega para o estúdio local (`/home/ondokai/P
 ## 3. Flags de Voz, Tom, Personagem, Visual, Corpo e Câmara
 
 - **Personagem (`--character`)**:
-  `capybara` (a capivara Capi), `anchor` (o âncora humano), `donkey`. Ver lista: `$S characters`.
+  - As 9 **bases** (o desenho; é o que vai no `movement.json`): `anchor` (o âncora, omissão), `capybara` (a Capi), `donkey` (o burro), `dog`, `cat`, `parrot` (rosto de ave), `monkey`, `lion` (juba; recusa o boné) e `einstein` (o retrato, cabelo `wild` branco).
+  - As **personas do elenco** (`characters/` do estúdio: a base + a voz, os estilos e o visual): `indice`, `capi`, `burro`, `cachorro`, `gato`, `papagaio`, `macaco`, `leao`, `albert-einstein` — aceites pelo `talk` (`$S video "…" --character leao`); o `movement`/`view` só aceitam a base (para uma persona no site: gerar com `$S video` e reexportar com `$S movement --from out/talk/<execução>`).
+  - Ver lista: `$S characters`.
 - **Voz e Modelo TTS (`--voice`, `--tts-model`, `--emotion`, `--vary-voice`)**:
   Vozes pt-BR nativas (`openrouter/mai-voice-2.1`: `caio`, `grant`, `pedro`, `rafael`, `harper`, `luana`, etc.). Ver lista: `$S voices` e `$S models`.
 - **Tom (`--tone`)**:
@@ -56,6 +58,7 @@ O script `scripts/capi-engine.sh` delega para o estúdio local (`/home/ondokai/P
   - Presets prontos: `--outfit mundodev`, `casual`, `streamer`, `sporty`, `tech`, `scientist` (bata de laboratório), `biker` (casaco de cabedal), `none`.
   - Roupas (`--top`, 17): `suit`, `hoodie`, `tshirt`, `polo`, `sweater`, `shirt`, `blazer`, `bomber`, `turtleneck`, `jersey`, `vest`, `cardigan`, `denimJacket`, `leatherJacket`, `flannel`, `labCoat`, `trackJacket`; cores (`--top-color`, 15): `navy`, `black`, `grey`, `white`, `lilac`, `burgundy`, `coral`, `mustard`, `teal`, `orange`, `red`, `pink`, `camel`, `sky`, `denim`.
   - Peça a peça: `--top hoodie --top-color lilac --glasses round --headphones headset --hat capBackwards`. Ver tudo: `$S outfits`.
+  - Cabelo (`--hair`, 8: `none`, `tuft`, `spiky`, `curly`, `sidePart`, `bun`, `mundodev-flame`, `wild`) e cor (`--hair-color`, 7: `dark`, `brown`, `blond`, `ginger`, `silver`, `mundodev-orange`, `white`) — só nos humanoides (`anchor`, `einstein`); num animal ignora-se com aviso, e o leão recusa o boné (a juba).
 - **Fundo e Cenário (`--bg`, `--bg-color`, `--scenario`)**:
   - `--bg transparent` (omissão para web: fundo transparente), `--bg studio`, `--bg-color "#0f172a"`, `--bg ./fundo.png`.
   - `--scenario <id>` (cenários vetoriais ou animados da biblioteca). Ver lista: `$S scenarios`.
@@ -67,4 +70,5 @@ O script `scripts/capi-engine.sh` delega para o estúdio local (`/home/ondokai/P
 - **Ensaio sem Custo e Diagnóstico (`--dry-run`, `--no-llm`, `--fake-tts`, `--json`)**:
   - `--dry-run`: mostra estimativa de duração, palavras e custo em USD sem gastar nada.
   - `--no-llm --fake-tts`: gera com voz sintética local e coreografia determinística de reserva (100% grátis e offline).
+  - `RUNS_NO_GIT=1` (variável de ambiente): o estúdio commita sozinho cada execução de `out/<modo>/<nome>` no ramo atual (decisão do dono, 2026-11-10); num ensaio descartável, `RUNS_NO_GIT=1 $S movement "…" --no-llm --fake-tts --out …` não commita — apaga depois a pasta `out/talk/<nome>`.
   - `--json`: devolve o resultado estruturado numa única linha JSON no `stdout`.
