@@ -19,14 +19,22 @@ export interface CritiqueContext {
     duo: boolean;
     profile?: VideoProfileId;
     script?: string;
+    teaching?: {
+        before: string;
+        concepts: readonly string[];
+    };
 }
 export declare function spokenLines(unit: Pick<CritiqueUnit, 'text'>, duo: boolean): string[];
 export declare function longSentences(unit: Pick<CritiqueUnit, 'text'>, duo: boolean, max?: number): number[];
 export declare function shortChecks(units: readonly CritiqueUnit[], duo: boolean): CritiqueIssue[];
 export declare function critiqueRequest(unit: CritiqueUnit, context: CritiqueContext): JevRequest;
+export declare function critiqueRequests(units: readonly CritiqueUnit[], context: Omit<CritiqueContext, 'teaching'> & {
+    concepts?: readonly string[];
+    teaching?: boolean;
+}): JevRequest[];
 export interface CritiqueIssue {
     unit: string;
-    kind: 'spoken' | 'invented' | 'format' | 'hook' | 'captions' | 'focus';
+    kind: 'spoken' | 'invented' | 'format' | 'hook' | 'captions' | 'focus' | 'jargon' | 'numbers' | 'lay';
     text: string;
 }
 export interface CritiqueVerdict {
@@ -38,11 +46,14 @@ export interface CritiqueVerdict {
     captions?: number;
     longestSentence?: number;
     oneIdea?: number;
+    jargon?: number;
+    numbers?: number;
     issues: CritiqueIssue[];
 }
 export declare function readCritique(units: readonly CritiqueUnit[], decisions: ReadonlyArray<Readonly<Record<string, JevAnswer>> | null>, format: CreateFormatId, options?: {
     profile?: VideoProfileId;
     duo?: boolean;
+    checks?: readonly CritiqueIssue[];
 }): CritiqueVerdict[];
 export declare function dialogueUnits(turns: ReadonlyArray<{
     id?: string;

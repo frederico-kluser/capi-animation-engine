@@ -29,23 +29,30 @@ export interface LaptopPlacement {
 export declare function laptopPlacement(prop: Pick<ResolvedPropPose, 'hand' | 'carry'>, wrist: Point): LaptopPlacement;
 export declare const LAPTOP_MOUSE: {
     readonly rest: {
-        readonly x: 404;
-        readonly y: 736;
+        readonly x: 230;
+        readonly y: 748;
     };
     readonly hand: {
-        readonly x: 240;
-        readonly y: 728;
-        readonly angle: 174;
+        readonly x: 234;
+        readonly y: 702;
+        readonly angle: 96;
     };
-    readonly reach: 92;
-    readonly y: 750;
+    readonly y: 748;
     readonly grab: {
         readonly near: 18;
-        readonly far: 130;
+        readonly far: 90;
     };
     readonly press: {
         readonly from: 3.5;
         readonly to: 5.5;
+    };
+    readonly fade: {
+        readonly from: 0.02;
+        readonly to: 0.4;
+    };
+    readonly size: {
+        readonly w: 104;
+        readonly h: 46;
     };
 };
 export declare function laptopCarryOf(prop: Pick<ResolvedPropPose, 'id' | 'carry'> | null | undefined): number;
@@ -54,6 +61,7 @@ export declare function laptopMousePlacement(placement: Pick<LaptopPlacement, 'o
     center: Point;
     grab: number;
     press: number;
+    show: number;
 } | null;
 export declare const PROP_BOX: Record<PropId, {
     x: number;

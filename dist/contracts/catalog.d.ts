@@ -30,6 +30,23 @@ export interface PoseCard<Id extends string = string> {
     };
     hands?: readonly Side[];
 }
+export interface PoseUseCase {
+    line: string;
+    word: string;
+}
+export interface GestureRecipeStep {
+    word: string;
+    pose: string;
+    why: string;
+}
+export interface GestureRecipe {
+    id: string;
+    situation: string;
+    lines: ReadonlyArray<{
+        text: string;
+        gestures: readonly GestureRecipeStep[];
+    }>;
+}
 export declare const POSE_FAMILIES: readonly ['free', 'tabletLeft', 'tabletRight'];
 export type PoseFamily = (typeof POSE_FAMILIES)[number];
 export declare const HAND_ZONES: readonly ['aboveHead', 'head', 'chest', 'waist', 'out'];

@@ -1,7 +1,7 @@
 import type { CameraAngle, CameraMoveKind, CameraTransitionKind, CameraView, ShotFraming, ShotSize } from '../../contracts/camera.js';
 import { type PodcastSeat } from '../../contracts/podcast.js';
 import type { SafeArea, VideoProfileId } from '../../contracts/profile.js';
-import { type ReviewMode, type ReviewReaction, type ReviewRect, type ReviewShot, type ReviewSpec, type ReviewStageLayout, type ReviewTimeline } from '../../contracts/review.js';
+import { type ReviewFocus, type ReviewMode, type ReviewReaction, type ReviewRect, type ReviewShot, type ReviewSpec, type ReviewStageLayout, type ReviewTimeline } from '../../contracts/review.js';
 declare const C: {
     readonly tvAfterMs: 2400;
     readonly tvMinPlayMs: 7000;
@@ -37,6 +37,8 @@ export interface ReviewShotsInput {
     seats?: readonly PodcastSeat[];
     options?: Partial<Record<keyof typeof C | 'cameraMs' | 'cameraMinMs', number>>;
     warnings?: string[];
+    focus?: readonly ReviewFocus[];
+    videoAspect?: number;
 }
 type Look = Omit<ReviewShot, 'fromMs' | 'toMs'>;
 export declare function translateCommentaryShot(shot: ReviewCommentaryShot, mode: ReviewMode, context: 'pause' | 'over', zooms?: boolean, notes?: string[]): Look;
@@ -44,6 +46,7 @@ export declare function reviewShots(input: ReviewShotsInput): ReviewShot[];
 export declare function reviewShotIndexAt(shots: readonly ReviewShot[], timeMs: number): number;
 export declare function reviewShotAt(shots: readonly ReviewShot[], timeMs: number): ReviewShot | undefined;
 export declare function tvCropBox(layout: Pick<ReviewStageLayout, 'width' | 'height' | 'screen' | 'bezel'>): ReviewRect;
+export declare function reviewFocusCrop(layout: Pick<ReviewStageLayout, 'width' | 'height' | 'screen' | 'bezel'>): ReviewRect;
 export interface ReviewCropOptions {
     headTops?: Partial<Record<PodcastSeat, number>>;
     profile?: VideoProfileId;

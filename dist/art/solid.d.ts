@@ -109,6 +109,7 @@ export declare function boxSilhouette(view: OutfitView): Point[];
 export declare function shellFrontHalf(view: OutfitView, spec: ShellSpec): string;
 export declare function polyline3(view: OutfitView, points: readonly Point3[]): string;
 export declare const OUTFIT_ORDER: {
+    readonly mane: -2;
     readonly ears: -1;
     readonly hair: 0;
     readonly glasses: 1;

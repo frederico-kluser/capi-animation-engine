@@ -1,4 +1,4 @@
-import type { PodcastBriefStyle } from '../../contracts/aspects.js';
+import type { BriefPacingId, PodcastBriefStyle } from '../../contracts/aspects.js';
 import type { CameraStyle } from '../../contracts/camera.js';
 import type { CreateAudience, CreateEngine, CreateFormatId, CreateFormatOption, CreateLensId, CreatePointRole, CreateResearchMode } from '../../contracts/create.js';
 import type { PodcastSeat } from '../../contracts/podcast.js';
@@ -54,6 +54,7 @@ export interface CreateFormatSpec {
     pointRoles: readonly CreatePointRole[];
     options: readonly CreateOptionSpec[];
     short: CreateShortSpec;
+    pacing?: Exclude<BriefPacingId, 'conversation'>;
 }
 export declare const SOLO_WORDS_PER_MINUTE = 150;
 export declare const AUDIENCE_TEXT: Readonly<Record<CreateAudience, {
@@ -62,6 +63,7 @@ export declare const AUDIENCE_TEXT: Readonly<Record<CreateAudience, {
 }>>;
 export declare const LENS_LABELS: Readonly<Record<CreateLensId, string>>;
 export declare const POINT_ROLE_LABELS: Readonly<Record<CreatePointRole, string>>;
+export declare function formatPacing(format: Pick<CreateFormatSpec, 'pacing'>, audience?: CreateAudience, profile?: VideoProfileId): BriefPacingId;
 export declare const CREATE_FORMATS: Readonly<Record<CreateFormatId, CreateFormatSpec>>;
 export declare const createFormat: (id: string) => CreateFormatSpec | undefined;
 export declare function formatEngine(format: CreateFormatSpec, presenters: 1 | 2): CreateEngine;

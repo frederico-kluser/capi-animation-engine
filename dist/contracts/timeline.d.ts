@@ -1,5 +1,6 @@
 import type { Expression, ExpressionInput, MouthShape, VisemeId } from './face.js';
 import type { BodyPose, HeadPose, Point, PoseChannels, PoseInput, Side } from './pose.js';
+import type { CaptureCue, CaptureSample, CompiledCaptureCue } from './capture.js';
 export type EasingId = 'linear' | 'easeIn' | 'easeOut' | 'easeInOut' | 'easeOutBack' | 'easeInOutSine';
 export declare const EASING_IDS: readonly ["linear", "easeIn", "easeOut", "easeInOut", "easeOutBack", "easeInOutSine"];
 interface CueBase {
@@ -87,9 +88,13 @@ export interface SpeechTrack extends TrackBase {
     kind: 'speech';
     cues: VisemeCue[];
 }
-export type TimelineTrack = PoseTrack | ExpressionTrack | LookTrack | HeadTrack | BodyTrack | BlinkTrack | SpeechTrack;
+export interface CaptureTrack extends TrackBase {
+    kind: 'capture';
+    cues: CaptureCue[];
+}
+export type TimelineTrack = PoseTrack | ExpressionTrack | LookTrack | HeadTrack | BodyTrack | BlinkTrack | SpeechTrack | CaptureTrack;
 export type TrackKind = TimelineTrack['kind'];
-export declare const TRACK_KINDS: readonly ["pose", "expression", "look", "head", "body", "blink", "speech"];
+export declare const TRACK_KINDS: readonly ["pose", "expression", "look", "head", "body", "blink", "speech", "capture"];
 export interface TimelineSpec {
     tracks: TimelineTrack[];
     durationMs?: number;
@@ -138,6 +143,7 @@ export interface CompiledTimeline {
     readonly blink: readonly Required<BlinkEvent>[];
     readonly speech: readonly VisemeCue[];
     readonly speechBlendMs: number;
+    readonly capture?: readonly CompiledCaptureCue[];
     readonly warnings: readonly string[];
 }
 export interface TimelineSample {
@@ -152,6 +158,7 @@ export interface TimelineSample {
         right: number;
     };
     speech?: SpeechSample;
+    capture?: CaptureSample[];
 }
 export interface TimelineBase {
     pose: PoseChannels;

@@ -154,6 +154,7 @@ export declare const PODCAST_SCRIPT_LIMITS: {
 };
 export declare const PODCAST_REACTION_MACROS: readonly GestureMacro[];
 export declare function parsePodcastScript(raw: unknown): PodcastScriptCheck;
+export declare function calmPace(rawPace: unknown): boolean;
 export declare function seatItemKinds(seat: PodcastSeat, speakers: Readonly<Record<PodcastSeat, Pick<PodcastScriptSpeaker, 'items'>>>, scene?: PodcastScene): Set<TableItemKind>;
 export declare function podcastActionProblem(kind: PodcastActionKind, seat: PodcastSeat, speaker: Pick<PodcastScriptSpeaker, 'drink' | 'micModel'> & {
     food?: FoodSpec | undefined;

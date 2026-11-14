@@ -1,6 +1,7 @@
 import type { AspectRecordId } from '../../contracts/aspects.js';
 import { type CreateLensId, type CreateNote, type CreatePoint, type CreateSource } from '../../contracts/create.js';
 import { intIn } from '../aspects/common.js';
+import type { BriefPacingId } from '../../contracts/aspects.js';
 import type { VideoProfileId } from '../../contracts/profile.js';
 import { type JevAnswer, type JevRequest } from '../decide/jev.js';
 import { type CreateFormatSpec } from './formats.js';
@@ -82,6 +83,7 @@ export interface CreateQuery {
     q: string;
     angle: string;
 }
+export declare const AUTHOR_MATERIAL_HEAD_CHARS = 1500;
 export declare function buildQueriesMessages(ctx: CreateContext, count: number): {
     system: string;
     user: string;
@@ -147,11 +149,12 @@ export declare const INTEREST_LEVELS: readonly ['Off-topic, or filler that nobod
 export declare function numbersIn(textValue: string): string[];
 export declare function evidenceFor(point: Pick<CreatePoint, 'text' | 'sources'>, notes: readonly CreateNote[]): string;
 export declare function pointRequest(point: CreatePoint, ctx: CreateContext, notes: readonly CreateNote[]): JevRequest;
-export declare function pointBudget(minutes: number, profile?: VideoProfileId): {
+export declare const POINTS_PER_MINUTE: Readonly<Record<BriefPacingId, number>>;
+export declare function pointBudget(minutes: number, profile?: VideoProfileId, pacing?: BriefPacingId): {
     points: number;
 };
 export declare function samePoint(a: Pick<CreatePoint, 'text' | 'sources'>, b: Pick<CreatePoint, 'text' | 'sources'>): boolean;
 export declare function selectPoints(points: readonly CreatePoint[], decisions: ReadonlyArray<Readonly<Record<string, JevAnswer>> | null>, ctx: CreateContext): CreatePoint[];
-export declare function lensesFor(format: CreateFormatSpec, profile?: VideoProfileId): CreateLensId[];
+export declare function lensesFor(format: CreateFormatSpec, profile?: VideoProfileId, pacing?: BriefPacingId): CreateLensId[];
 export declare const countNote: (n: number, one: string, many: string) => string;
 export { intIn };

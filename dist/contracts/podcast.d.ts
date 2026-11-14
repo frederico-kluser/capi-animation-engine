@@ -222,6 +222,10 @@ export interface PodcastCameraSpec {
     multiSeat?: boolean;
     zooms?: boolean;
     plan?: CameraIntent[];
+    seams?: PodcastCameraSeam[];
+}
+export interface PodcastCameraSeam {
+    turns: string[];
 }
 export interface PodcastManualCut {
     atMs: number;

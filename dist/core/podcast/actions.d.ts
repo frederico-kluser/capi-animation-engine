@@ -52,7 +52,7 @@ export declare const PODCAST_ACTIONS: {
             readonly upper: 0.6;
             readonly fore: 1.1;
             readonly minUpper: 0.35;
-            readonly micUpper: 0.32;
+            readonly micUpper: 0.31;
             readonly clearance: 12;
         };
         readonly sipHead: {

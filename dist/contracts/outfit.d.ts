@@ -1,7 +1,7 @@
-export type HairId = 'none' | 'tuft' | 'spiky' | 'curly' | 'sidePart' | 'bun' | 'mundodev-flame';
-export declare const HAIR_IDS: readonly ["none", "tuft", "spiky", "curly", "sidePart", "bun", "mundodev-flame"];
-export type HairColorId = 'dark' | 'brown' | 'blond' | 'ginger' | 'silver' | 'mundodev-orange';
-export declare const HAIR_COLOR_IDS: readonly ["dark", "brown", "blond", "ginger", "silver", "mundodev-orange"];
+export type HairId = 'none' | 'tuft' | 'spiky' | 'curly' | 'sidePart' | 'bun' | 'mundodev-flame' | 'wild';
+export declare const HAIR_IDS: readonly ["none", "tuft", "spiky", "curly", "sidePart", "bun", "mundodev-flame", "wild"];
+export type HairColorId = 'dark' | 'brown' | 'blond' | 'ginger' | 'silver' | 'mundodev-orange' | 'white';
+export declare const HAIR_COLOR_IDS: readonly ["dark", "brown", "blond", "ginger", "silver", "mundodev-orange", "white"];
 export type HatId = 'none' | 'cap' | 'capBackwards';
 export declare const HAT_IDS: readonly ["none", "cap", "capBackwards"];
 export type GlassesId = 'none' | 'round' | 'square' | 'sunglasses' | 'mundodev-glasses';
@@ -30,8 +30,8 @@ export type OutfitInput = Partial<Outfit> & {
 };
 export declare const DEFAULT_OUTFIT: Outfit;
 export declare const OUTFIT_OPTIONS: {
-    readonly hair: readonly ["none", "tuft", "spiky", "curly", "sidePart", "bun", "mundodev-flame"];
-    readonly hairColor: readonly ["dark", "brown", "blond", "ginger", "silver", "mundodev-orange"];
+    readonly hair: readonly ["none", "tuft", "spiky", "curly", "sidePart", "bun", "mundodev-flame", "wild"];
+    readonly hairColor: readonly ["dark", "brown", "blond", "ginger", "silver", "mundodev-orange", "white"];
     readonly hat: readonly ["none", "cap", "capBackwards"];
     readonly glasses: readonly ["none", "round", "square", "sunglasses", "mundodev-glasses"];
     readonly headphones: readonly ["none", "over", "headset", "mundodev-headphones"];

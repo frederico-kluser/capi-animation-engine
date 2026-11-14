@@ -13,7 +13,7 @@ export declare const MICRO_MOTION: {
     };
     readonly body: {
         readonly lean: 0.1;
-        readonly turn: 1.4;
+        readonly turn: 2.1;
         readonly y: 1;
         readonly knotMs: readonly [3300, 2900, 3700];
     };
@@ -53,9 +53,9 @@ export declare const MICRO_MOTION: {
         readonly ms: readonly [950, 1350];
     };
     readonly hand: {
-        readonly x: 4;
-        readonly y: 4;
-        readonly angle: 3;
+        readonly x: 5;
+        readonly y: 5.5;
+        readonly angle: 4;
         readonly knotMs: readonly [2100, 2400, 2300];
     };
     readonly pointDrift: 0.6;
@@ -71,12 +71,28 @@ export declare const MICRO_MOTION: {
     };
     readonly onsetMs: 1500;
 };
+export declare const GESTURE_POSTURE: {
+    readonly turn: 3.2;
+    readonly lean: 0.55;
+    readonly lift: 3;
+    readonly nodDip: 0.45;
+    readonly turnFollow: 0.25;
+    readonly beatDip: 2.5;
+    readonly beatTilt: 0.9;
+    readonly beatRest: 0.35;
+    readonly raise: 220;
+    readonly reach: 170;
+    readonly lateral: 320;
+};
+export declare function gesturePosture(pose: SolvedPose): {
+    body: BodyPose;
+};
 export declare const MICRO_LIMITS: {
     readonly body: {
         readonly x: 1.5;
         readonly y: number;
         readonly lean: number;
-        readonly turn: 1.4;
+        readonly turn: 2.1;
     };
     readonly head: {
         readonly turn: number;
@@ -87,9 +103,9 @@ export declare const MICRO_LIMITS: {
         readonly y: 5;
     };
     readonly hand: {
-        readonly x: 4;
-        readonly y: 4;
-        readonly angle: 3;
+        readonly x: 5;
+        readonly y: 5.5;
+        readonly angle: 4;
     };
 };
 export interface HandDrift {

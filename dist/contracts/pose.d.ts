@@ -173,6 +173,11 @@ export declare const POSE_LIMITS: {
         readonly max: 1.45;
     };
 };
+export interface HandMorph {
+    from: HandShape;
+    to: HandShape;
+    t: number;
+}
 export interface ArmChannels {
     upperAngle: number;
     upperLen: number;
@@ -184,6 +189,8 @@ export interface ArmChannels {
     view: HandView;
     behind: boolean;
     roll?: number;
+    pitch?: number;
+    morph?: HandMorph;
 }
 export interface PoseChannels {
     head: HeadPose;
@@ -203,12 +210,17 @@ export interface SolvedArm {
     view: HandView;
     behind: boolean;
     roll?: number;
+    pitch?: number;
+    morph?: HandMorph;
+}
+export interface SolvedBody extends BodyPose {
+    accompany?: number;
 }
 export interface SolvedPose {
     head: HeadPose & {
         center: Point;
     };
-    body: BodyPose;
+    body: SolvedBody;
     neckBase: Point;
     arms: Record<Side, SolvedArm>;
     prop: ResolvedPropPose | null;

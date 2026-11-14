@@ -6,6 +6,7 @@ import type { Point, PoseInput } from './pose.js';
 import type { VideoProfileId } from './profile.js';
 import type { SetInput } from './set.js';
 import type { TimelineSpec } from './timeline.js';
+import type { CompiledTutorial, TutorialFrame, TutorialOverlay } from './tutorial.js';
 export declare const REVIEW_MODES: readonly ['talk', 'podcast'];
 export type ReviewMode = (typeof REVIEW_MODES)[number];
 export declare const REVIEW_ASPECTS: readonly ['16:9', '9:16', '1:1'];
@@ -191,6 +192,16 @@ export interface ReviewBlockInput {
     why?: string;
     turns?: PodcastTurnInput[];
     text?: string;
+    focus?: ReviewFocusSpec;
+}
+export interface ReviewFocusSpec {
+    region: ReviewRect;
+    to?: ReviewRect;
+    holdMs?: number;
+    why?: string;
+}
+export interface ReviewFocusInput extends ReviewFocusSpec {
+    at: number;
 }
 export declare const REVIEW_REACTION_MACROS: readonly ['agree', 'deny', 'laugh'];
 export type ReviewReactionMacro = (typeof REVIEW_REACTION_MACROS)[number];
@@ -233,6 +244,7 @@ export interface ReviewScript {
     speakers: Partial<Record<PodcastSeat, PodcastSpeakerInput>>;
     blocks: ReviewBlockInput[];
     reactions?: ReviewReactionInput[];
+    focus?: ReviewFocusInput[];
     camera?: ReviewCameraInput;
     subtitles?: ReviewSubtitleOptions;
     audio?: ReviewAudioOptions;
@@ -242,6 +254,11 @@ export interface ReviewScript {
     };
     eyes?: PodcastEyesMode;
     densityNote?: string;
+    blockGapMs?: number;
+    minPlayMs?: number;
+    pace?: {
+        gapMs?: [number, number];
+    };
 }
 export interface ReviewPlaySegment {
     kind: 'play';
@@ -317,10 +334,15 @@ export interface ReviewStageLayout {
     }>>;
     table: boolean;
 }
-export declare const REVIEW_FRAMINGS: readonly ['stage', 'tv', 'seat'];
+export declare const REVIEW_FRAMINGS: readonly ['stage', 'tv', 'seat', 'focus'];
 export type ReviewFraming = (typeof REVIEW_FRAMINGS)[number];
-export declare const REVIEW_SHOT_SOURCES: readonly ['auto', 'commentary', 'reaction', 'manual'];
+export declare const REVIEW_SHOT_SOURCES: readonly ['auto', 'commentary', 'reaction', 'manual', 'focus'];
 export type ReviewShotSource = (typeof REVIEW_SHOT_SOURCES)[number];
+export interface ReviewShotFocus {
+    region?: ReviewRect;
+    to?: ReviewRect;
+    aspect?: number;
+}
 export interface ReviewShot {
     fromMs: number;
     toMs: number;
@@ -337,6 +359,7 @@ export interface ReviewShot {
     view?: CameraView;
     transition?: CameraTransitionKind;
     transitionMs?: number;
+    focus?: ReviewShotFocus;
 }
 export interface ReviewManualCut {
     atMs: number;
@@ -347,6 +370,16 @@ export interface ReviewManualCut {
     move?: CameraMoveKind;
     angle?: CameraAngle;
     transition?: CameraTransitionKind;
+    region?: ReviewRect;
+    to?: ReviewRect;
+}
+export interface ReviewFocus {
+    fromMs: number;
+    toMs: number;
+    region: ReviewRect;
+    to?: ReviewRect;
+    block?: string;
+    why?: string;
 }
 export interface ReviewReaction {
     atMs: number;
@@ -394,6 +427,7 @@ export interface ReviewSpec {
     };
     timeline: ReviewTimeline;
     reactions: ReviewReaction[];
+    focus?: ReviewFocus[];
     profile?: VideoProfileId;
     layout: {
         aspect: ReviewAspect;
@@ -433,6 +467,7 @@ export interface ReviewSpec {
         prompt?: string;
         engine?: string;
     };
+    tutorial?: TutorialOverlay;
 }
 export type ReviewCommentary = {
     kind: 'talk';
@@ -478,6 +513,7 @@ export interface CompiledReview {
     captions: ReviewCaption[];
     warnings: string[];
     profile?: VideoProfileId;
+    tutorial?: CompiledTutorial;
 }
 export interface ReviewPanel {
     seat: PodcastSeat;
@@ -497,6 +533,7 @@ export interface ReviewFrameLayer {
     bezel: ReviewRect;
     panels: ReviewPanel[];
     roll?: number;
+    screenView?: ReviewRect;
 }
 export interface ReviewFrame {
     timeMs: number;
@@ -525,4 +562,6 @@ export interface ReviewFrame {
     fx?: CameraFx;
     under?: ReviewFrameLayer;
     opacity?: number;
+    screenView?: ReviewRect;
+    tutorial?: TutorialFrame;
 }

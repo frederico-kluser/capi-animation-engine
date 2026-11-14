@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import type { CharacterId } from '../contracts/character.js';
 import { type Outfit, type TopColorId, type TopId } from '../contracts/outfit.js';
 import { type SolvedPose } from '../contracts/pose.js';
 import { type SleeveTone, type SleeveWear } from './arm.js';
@@ -37,10 +38,20 @@ export interface Wear {
     sleeve: SleeveWear;
     suit?: SuitTone | undefined;
 }
-export declare function wearOf(outfit: Pick<Outfit, 'top' | 'topColor'> | undefined, palette?: Palette): Wear | undefined;
+export interface CharacterWardrobe {
+    color: TopColorId;
+    tie: {
+        base: string;
+        shade: string;
+    };
+    tieStripe?: string;
+}
+export declare const CHARACTER_WARDROBE: Partial<Record<CharacterId, CharacterWardrobe>>;
+export declare function wearOf(outfit: Pick<Outfit, 'top' | 'topColor'> | undefined, palette?: Palette, character?: CharacterId): Wear | undefined;
 export interface WearProps {
     wear: Wear | undefined;
     turn: number;
+    accompany?: number | undefined;
     ids: (local: string) => string;
     shade: TorsoShade;
 }

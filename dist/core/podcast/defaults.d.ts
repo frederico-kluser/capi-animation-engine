@@ -8,6 +8,8 @@ export declare const PODCAST_DEFAULTS: {
         readonly selfGapMs: readonly [number, number];
         readonly selfMinGapMs: 120;
         readonly longGapMs: 1200;
+        readonly calmMinMs: 250;
+        readonly calmLongGapMs: 4500;
         readonly longOverlapMs: 1500;
     };
     readonly interrupt: {

@@ -83,6 +83,9 @@ export declare const LAPTOP_THINKPAD_CLICK_SWING: Pose;
 export declare const LAPTOP_THINKPAD_LOOK_SWING: Pose;
 export declare const LAPTOP_THINKPAD_EXPLAIN_SWING: Pose;
 export declare const LAPTOP_THINKPAD_POINT_SWING: Pose;
+export declare const BRUSH_OFF_SWING: Pose;
+export declare const FINGER_WAG_SWING: Pose;
+export declare const TAP_TEMPLE_SWING: Pose;
 export declare const POSE_LOOPS: Partial<Record<PoseId, PoseLoop>>;
 export declare const OFFICIAL_POSE_LOOPS: Readonly<Partial<Record<PoseId, PoseLoop>>>;
 export declare const DERIVED_LOOPS: Readonly<Partial<Record<PoseId, {

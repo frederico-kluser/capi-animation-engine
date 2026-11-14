@@ -14,6 +14,12 @@ export declare const FACE_ZONE: {
     readonly x: 118;
     readonly y: 104;
 };
+export declare function faceZoneBelow(mouthY?: number): number;
+export declare const HAND_TURN_MS: {
+    readonly base: 140;
+    readonly perDeg: 1.1;
+    readonly flipDeg: 130;
+};
 export declare function propCorners(pose: SolvedPose): Point[] | null;
 export declare function heldDrinkFoot(pose: SolvedPose): Point | null;
 export declare function heldFoodFoot(pose: SolvedPose): Point | null;
@@ -30,4 +36,6 @@ export declare const GLOVE_OVER_MIN = 2;
 export declare function gloveOverPlate(pose: SolvedPose, side: Side): number;
 export declare function gloveOnHead(pose: SolvedPose, side: Side): number;
 export declare function gloveCrossesFace(from: PoseInput | PoseChannels | undefined, to: PoseInput | PoseChannels | undefined, side: Side): boolean;
-export declare function analyzeTransition(from: PoseInput | PoseChannels | undefined, to: PoseInput | PoseChannels | undefined): TransitionAnalysis;
+export declare function analyzeTransition(from: PoseInput | PoseChannels | undefined, to: PoseInput | PoseChannels | undefined, options?: {
+    mouthY?: number;
+}): TransitionAnalysis;

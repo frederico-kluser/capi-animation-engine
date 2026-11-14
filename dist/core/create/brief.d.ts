@@ -6,5 +6,9 @@ import { type CreateContext } from './material.js';
 export declare function seatRoles(ctx: CreateContext): Record<PodcastSeat, CreateSeatRole>;
 export declare function factLine(point: CreatePoint, sources: readonly CreateSource[]): string;
 export declare function briefOrder(points: readonly CreatePoint[], short: boolean): CreatePoint[];
-export declare function composeFormat(ctx: CreateContext, points: readonly CreatePoint[]): PodcastBriefFormat;
-export declare function composeBrief(ctx: CreateContext, points: readonly CreatePoint[], sources: readonly CreateSource[]): PodcastBrief;
+export declare function conceptLines(points: readonly CreatePoint[], sources: readonly CreateSource[]): string[];
+export declare function composeFormat(ctx: CreateContext, points: readonly CreatePoint[], sources?: readonly CreateSource[], extraRules?: readonly string[]): PodcastBriefFormat;
+export declare function composeBrief(ctx: CreateContext, points: readonly CreatePoint[], sources: readonly CreateSource[], options?: {
+    minutes?: number;
+    extraRules?: readonly string[];
+}): PodcastBrief;

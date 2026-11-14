@@ -1,0 +1,41 @@
+import type { ThumbScheme } from '../contracts/thumbs.js';
+export interface ThumbSchemeTones {
+    bgCenter: string;
+    bgEdge: string;
+    stripe: string;
+    highlight: string;
+    text: string;
+    outline: string;
+    kicker: string;
+    glow: string;
+}
+export declare const THUMB_SCHEME_TONES: Record<ThumbScheme, ThumbSchemeTones>;
+export declare const THUMB_PALETTE: {
+    readonly badgeBg: '#FFD23F';
+    readonly badgeText: '#151A33';
+    readonly badgeEdge: '#7A5A00';
+    readonly termBg: '#0E131B';
+    readonly termBar: '#1C2433';
+    readonly termEdge: '#3B4A66';
+    readonly termDotRed: '#FF5F57';
+    readonly termDotYellow: '#FEBC2E';
+    readonly termDotGreen: '#28C840';
+    readonly termPrompt: '#C792EA';
+    readonly termText: '#EAF2FF';
+    readonly termCursor: '#5AA2FF';
+    readonly bubbleBg: '#FFFFFF';
+    readonly bubbleEdge: '#0B0F1E';
+    readonly bubbleQuestion: '#6A48BC';
+    readonly bubbleExclaim: '#E0565F';
+    readonly sticker: '#FFFFFF';
+    readonly tvBezel: '#10141F';
+    readonly tvEdge: '#2C3550';
+    readonly tvScreen: '#1B2340';
+    readonly tvPlay: '#FFFFFF';
+    readonly versusLeft: '#2F6BFF';
+    readonly versusRight: '#FF4D5E';
+    readonly versusBadge: '#FFD23F';
+    readonly versusBadgeText: '#151A33';
+    readonly versusLine: '#FFFFFF';
+    readonly shadow: '#000000';
+};

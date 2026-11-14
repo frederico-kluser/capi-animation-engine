@@ -1,4 +1,4 @@
-export declare const CREATE_MODEL_ROLES: readonly ['queries', 'notes', 'lenses', 'write', 'critique', 'aspects'];
+export declare const CREATE_MODEL_ROLES: readonly ['queries', 'notes', 'lenses', 'write', 'critique', 'aspects', 'video'];
 export type CreateModelRole = (typeof CREATE_MODEL_ROLES)[number];
 export type CreateModelChoices = Partial<Record<CreateModelRole, string>>;
 export declare const LLM_EFFORTS: readonly ['max', 'xhigh', 'high', 'medium', 'low', 'minimal', 'none'];
@@ -22,6 +22,8 @@ export interface LlmCatalogEntry {
     priceOut: number;
     effortMax: LlmEffort;
     reasoning: boolean;
+    inputModalities?: readonly string[];
+    videoInput?: 'native' | 'frames';
     benchmarks: LlmBenchmarks;
     note?: string;
 }

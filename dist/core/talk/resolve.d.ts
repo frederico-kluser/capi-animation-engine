@@ -14,6 +14,11 @@ export interface ResolveOptions {
     restLook?: Point;
     restPose?: PoseId;
     skipSilentGaps?: boolean;
+    retractTo?: readonly PoseId[] | false;
+    seamWords?: readonly {
+        from: number;
+        to: number;
+    }[];
 }
 export type GestureStatus = 'kept' | 'moved' | 'pose-dropped' | 'dropped';
 export interface ResolvedGesture {
@@ -46,6 +51,12 @@ export interface ResolveResult {
     decisions: string[];
 }
 export declare const MACRO_HOLD_MS: Readonly<Record<GestureMacro, number>>;
+export declare const RETRACT: {
+    readonly holdMs: 2000;
+    readonly minRestMs: 1600;
+    readonly loopTailMs: 300;
+};
+export declare const TALK_REST_POSES: readonly PoseId[];
 export declare function gestureMacroTracks(macro: GestureMacro | undefined, atMs: number, id?: number | string): TimelineTrack[];
 export interface ResolveInput {
     plan: TalkPlan;

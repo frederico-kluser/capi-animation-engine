@@ -1,4 +1,4 @@
-import { type DialogueAspectValue, type EpisodeOutline, type OutlineMomentKind, type OutlineSegment, type PodcastBrief, type PodcastBriefFormat, type PodcastBriefStyle } from '../../../contracts/aspects.js';
+import { type BriefPacingId, type DialogueAspectValue, type EpisodeOutline, type OutlineMomentKind, type OutlineSegment, type PodcastBrief, type PodcastBriefFormat, type PodcastBriefStyle } from '../../../contracts/aspects.js';
 import type { CameraStyle } from '../../../contracts/camera.js';
 import { type CharacterId } from '../../../contracts/character.js';
 import { type PodcastScript, type PodcastSeat, type PodcastTurnInput } from '../../../contracts/podcast.js';
@@ -6,6 +6,7 @@ import type { VideoProfileId } from '../../../contracts/profile.js';
 import { type DrinkSpec } from '../../../contracts/set.js';
 import { type PodcastScriptCheck } from '../../podcast/script.js';
 import { foldWord } from '../../podcast/words.js';
+import { type BriefTurns } from './pacing.js';
 import { type AspectParseResult, type PodcastAspectTask } from './shared.js';
 export declare const WRITER_WORDS_PER_MINUTE = 172;
 export declare const BRIEF_MINUTES: {
@@ -86,10 +87,16 @@ export declare const BRIEF_FORMAT_LIMITS: {
     readonly item: 320;
     readonly material: 40;
     readonly materialItem: 420;
+    readonly concepts: 12;
+    readonly conceptItem: 420;
 };
 export declare function readBriefFormat(raw: unknown): PodcastBriefFormat | undefined;
+export declare const briefPacing: (brief: Pick<NormalizedBrief, 'format' | 'profile'>) => BriefPacingId;
+export declare const briefTurns: (brief: Pick<NormalizedBrief, 'format' | 'profile'>) => BriefTurns | undefined;
+export declare function conceptTerms(concepts: readonly string[] | undefined): string[];
 export declare function briefRecord(brief: NormalizedBrief): PodcastBrief;
 export declare function formatText(brief: NormalizedBrief): string[];
+export declare function teachingText(brief: Pick<NormalizedBrief, 'format' | 'profile'>): string[];
 export declare const OPENING_MIN_WORDS = 45;
 export declare const CLOSING_MIN_WORDS = 30;
 export declare function edgeWords(brief: Pick<NormalizedBrief, 'profile' | 'words'> & {
@@ -124,7 +131,7 @@ export declare function segmentEnds(outline: EpisodeOutline, index: number): {
     closer?: PodcastSeat;
 };
 export declare const askedWords: (target: number) => number;
-export declare function dialogueShape(words: number, short?: boolean): {
+export declare function dialogueShape(words: number, short?: boolean, turns?: BriefTurns): {
     main: number;
     back: number;
 };
@@ -135,10 +142,11 @@ export declare function buildDialogueMessages(brief: NormalizedBrief, outline: E
 export declare function dropOwnVocative(text: string, ownName: string): string;
 export declare function parseDialogue(content: string, brief: NormalizedBrief, outline: EpisodeOutline, segmentId: string): AspectParseResult<DialogueValue>;
 export declare const KEY_MOMENTS: ReadonlySet<OutlineMomentKind>;
+export declare function trimForTeaching(turns: DialogueTurnDraft[], teach: BriefTurns, problems: string[]): void;
 export declare function wordRefAt(words: readonly {
     core: string;
 }[], index: number): string;
-export declare function scoreDialogue(value: DialogueValue, outline: EpisodeOutline, problems?: readonly string[]): number;
+export declare function scoreDialogue(value: DialogueValue, outline: EpisodeOutline, problems?: readonly string[], teach?: BriefTurns): number;
 export declare function dialogueTask(brief: NormalizedBrief, outline: EpisodeOutline, segmentId: string, options?: {
     samples?: number;
     repair?: {
@@ -182,12 +190,19 @@ export interface StitchedScript {
     bySegment: Record<string, string[]>;
     global: string[];
     notes: string[];
+    pauses?: {
+        brief: Pick<NormalizedBrief, 'format' | 'profile'>;
+        seed: number;
+    };
 }
 export declare function stitchPodcastScript(input: StitchInput): StitchedScript;
+export declare function placeTeachingPauses(turns: PodcastTurnInput[], segments: ReadonlyArray<{
+    turns: readonly string[];
+}>, brief: Pick<NormalizedBrief, 'format' | 'profile'>, seed: number): void;
 export declare function sameQuestion(a: string, b: string): boolean;
 export declare function dropSelfAck(text: string): string;
 export declare function degradeDialogue(value: DialogueValue): DialogueValue;
-export declare function lengthHints(previous: string, outline: EpisodeOutline, segmentId: string): string[];
+export declare function lengthHints(previous: string, outline: EpisodeOutline, segmentId: string, teach?: BriefTurns): string[];
 export declare function dialogueWords(value: DialogueAspectValue): number;
 export declare const foldRef: typeof foldWord;
 export interface PolishValue {

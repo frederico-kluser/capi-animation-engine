@@ -1,4 +1,5 @@
 import type { ExpressionId, ExpressionInput, MouthId, MouthShape, ResolvedFace, VisemeId } from './face.js';
+import type { CaptureHands3D, CaptureSample } from './capture.js';
 import type { CharacterId } from './character.js';
 import type { ResolvedSet, SetInput } from './set.js';
 import type { Outfit, OutfitInput } from './outfit.js';
@@ -27,6 +28,7 @@ export interface AnchorInput {
     look?: Point;
     blink?: BlinkInput;
     speech?: SpeechInput;
+    capture?: CaptureSample;
     auto?: AutoMotion | false;
     timeline?: CompiledTimeline;
     frame?: number;
@@ -63,5 +65,6 @@ export interface ResolvedAnchorState {
     character: CharacterId;
     mirror: boolean;
     set: ResolvedSet;
+    hands3d?: CaptureHands3D;
     meta: ResolveMeta;
 }
