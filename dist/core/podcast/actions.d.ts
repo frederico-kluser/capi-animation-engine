@@ -2,7 +2,7 @@ import type { CharacterId } from '../../contracts/character.js';
 import { type ExpressionId } from '../../contracts/face.js';
 import { type PodcastAction, type PodcastActionKind, type PodcastSeat } from '../../contracts/podcast.js';
 import { type HandShape, type HandView, type Point, type Pose, type Side, type SolvedPose } from '../../contracts/pose.js';
-import type { DrinkKind, DrinkSlot, DrinkSpec, PodcastMicAdjust, PodcastMicId, TableItemSpec } from '../../contracts/set.js';
+import type { DrinkKind, DrinkSlot, DrinkSpec, FoodKind, FoodSpec, PodcastMicAdjust, PodcastMicId, TableItemSpec } from '../../contracts/set.js';
 import { type MicZone } from '../set/mic-zone.js';
 import type { TimelineTrack } from '../../contracts/timeline.js';
 import { type Beat } from '../timeline/choreograph.js';
@@ -52,7 +52,7 @@ export declare const PODCAST_ACTIONS: {
             readonly upper: 0.6;
             readonly fore: 1.1;
             readonly minUpper: 0.35;
-            readonly micUpper: 0.32;
+            readonly micUpper: 0.31;
             readonly clearance: 12;
         };
         readonly sipHead: {
@@ -123,6 +123,66 @@ export declare const PODCAST_ACTIONS: {
         };
         readonly holdMs: 300;
     };
+    readonly eat: {
+        readonly reachShape: HandShape;
+        readonly gripShape: HandShape;
+        readonly gripView: HandView;
+        readonly reachOpen: 10;
+        readonly biteTilt: {
+            sandwich: number;
+            apple: number;
+            cupcake: number;
+            coxinha: number;
+            popcorn: number;
+        };
+        readonly holdTilt: {
+            sandwich: number;
+            apple: number;
+            cupcake: number;
+            coxinha: number;
+            popcorn: number;
+        };
+        readonly biteFromMouth: {
+            readonly x: -6;
+            readonly y: 4;
+        };
+        readonly holdAt: 0.5;
+        readonly holdFore: 0.85;
+        readonly minHoldFore: 0.44;
+        readonly elbow: {
+            readonly upper: 0.6;
+            readonly fore: 0.95;
+            readonly minUpper: 0.35;
+            readonly micUpper: 0.32;
+            readonly clearance: 12;
+        };
+        readonly biteHead: {
+            readonly nod: 4;
+            readonly tilt: -3;
+            readonly turnRight: 2;
+            readonly turnLeft: 10;
+        };
+        readonly biteNod: 3;
+        readonly swallowNod: 3;
+        readonly biteHoldMs: 340;
+        readonly afterBiteMs: 240;
+        readonly afterSwallowMs: 360;
+        readonly chews: {
+            sandwich: number;
+            apple: number;
+            cupcake: number;
+            coxinha: number;
+            popcorn: number;
+        };
+        readonly bitesPerAction: readonly number[];
+        readonly quickChews: 2;
+        readonly minChews: 3;
+        readonly chewEyes: {
+            readonly open: 0.82;
+            readonly smile: 0.3;
+        };
+        readonly swallowEyes: 0.7;
+    };
 };
 export declare function mouthPoint(head: SolvedPose['head'], character?: CharacterId): Point;
 export declare function facePoint(head: SolvedPose['head'], p: Point): Point;
@@ -152,6 +212,7 @@ export interface ActionSeat {
     table?: boolean | undefined;
     mic?: boolean | undefined;
     drink?: DrinkSpec | undefined;
+    food?: FoodSpec | undefined;
     items?: readonly TableItemSpec[] | undefined;
     micModel?: PodcastMicId | undefined;
     micAdjust?: PodcastMicAdjust | undefined;
@@ -199,6 +260,21 @@ export declare function checkTouch(item: TableItemSpec, side: Side, seat: Action
     tips: Point;
     elbow: Point;
 } | null;
+export interface EatPoses {
+    hand: Side;
+    kind: FoodKind;
+    foot: Point;
+    grip: Point;
+    reach: Pose;
+    grab: (bites: number) => Pose;
+    hold: (bites: number) => Pose;
+    mouth: (bites: number) => Pose;
+}
+export declare function eatPoses(food: FoodSpec, restPose: string, character?: CharacterId, mic?: MicZone | null): EatPoses;
+export declare function foodBitesLeft(food: FoodSpec): number;
+export declare function eatScript(food: FoodSpec, ctx: ActionContext, bites: number, options?: {
+    quick?: boolean;
+}): ActionScript;
 export declare function actionScript(kind: PodcastActionKind, ctx: ActionContext): ActionResult;
 export declare function stretchStep(script: ActionScript, label: string, extraMs: number): ActionScript;
 export declare const ACTION_PLACEMENT: {

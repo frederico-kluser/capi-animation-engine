@@ -1,0 +1,10 @@
+import { type PodcastSeat } from '../../contracts/podcast.js';
+import type { ReviewAspect, ReviewRect, ReviewStageLayout } from '../../contracts/review.js';
+import type { SetInput } from '../../contracts/set.js';
+import { type ReviewStageNumbers } from '../review/stage.js';
+export type TutorialCastShape = 'solo' | 'duo';
+export declare const TUTORIAL_STAGE: Readonly<Record<ReviewAspect, ReviewStageNumbers>>;
+export declare function tutorialStageLayout(cast: TutorialCastShape, aspect?: ReviewAspect): ReviewStageLayout;
+export declare function tutorialSeatSet(base?: SetInput): SetInput;
+export declare function tutorialOcclusion(layout: Pick<ReviewStageLayout, 'seats' | 'screen'>): ReviewRect[];
+export declare function tutorialDriver(layout: Pick<ReviewStageLayout, 'seats'>, wanted?: PodcastSeat): PodcastSeat;

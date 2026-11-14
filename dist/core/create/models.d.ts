@@ -17,9 +17,12 @@ export interface ModelRoleSpec {
 export declare const MODEL_ROLES: readonly ModelRoleSpec[];
 export declare function modelRole(role: CreateModelRole): ModelRoleSpec;
 export declare function llmById(id: string): LlmCatalogEntry | undefined;
+export declare function llmSupportsVideo(id: string): boolean;
 export declare function llmLabel(id: string): string;
 export declare function llmShortLabel(id: string): string;
 export declare const LLM_ID: RegExp;
+export declare const AZURE_LLM_ID = "azure/gpt-6.1-sol";
+export declare function azureModelChoices(): CreateModelChoices;
 export declare function llmEffort(id: string): PlannerEffort;
 export declare function llmMetrics(entry: LlmCatalogEntry): Partial<Record<LlmFitMetric, number>>;
 export interface LlmFit {

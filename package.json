@@ -1,7 +1,7 @@
 {
   "name": "capi-animation-engine",
-  "version": "1.0.0",
-  "description": "Motor vetorial 60fps do Capi: renderiza animações SVG sincronizadas ao áudio com payload movement.json encriptado (ChaCha20-ARX) e blindagem anti-engenharia-reversa.",
+  "version": "1.1.0",
+  "description": "Motor vetorial 60fps do Capi e do elenco (âncora, capivara, burro, cachorro, gato, papagaio, macaco, leão e Einstein): renderiza animações SVG sincronizadas ao áudio a partir do movement.json encriptado (ChaCha20-ARX) com o áudio embutido, e blindagem anti-engenharia-reversa.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -32,6 +32,7 @@
       "default": "./dist/node/index.js"
     },
     "./package.json": "./package.json",
+    "./assets/*": "./assets/*",
     "./*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/*.js",
@@ -40,6 +41,7 @@
   },
   "files": [
     "dist",
+    "assets",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
@@ -83,7 +85,10 @@
     "lipsync",
     "encrypted-movement",
     "remotion",
-    "vector-character"
+    "vector-character",
+    "avatar",
+    "talking-head",
+    "podcast"
   ],
   "author": "Frederico Kluser (https://github.com/frederico-kluser)",
   "license": "MIT"

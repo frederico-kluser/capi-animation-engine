@@ -11,9 +11,11 @@ export interface ShotOptions {
     layoutMs?: number;
     sips?: Partial<Record<PodcastSeat, readonly CameraSip[]>>;
     profile?: VideoProfileId;
+    bothMoments?: boolean;
 }
 export declare function drinkSipsOf(timeline: TimelineSpec | undefined): CameraSip[];
-export declare function podcastCameraTiming(turns: readonly EffectiveTurn[], durationMs: number): CameraTiming;
+export declare function podcastLaughs(spec: PodcastSpec, turns: readonly EffectiveTurn[]): Map<string, number[]>;
+export declare function podcastCameraTiming(turns: readonly EffectiveTurn[], durationMs: number, laughs?: ReadonlyMap<string, readonly number[]>): CameraTiming;
 export declare function podcastCameraOptions(spec: PodcastSpec, profile?: VideoProfileId): {
     intents: CameraIntent[];
     options: CompileCameraOptions;

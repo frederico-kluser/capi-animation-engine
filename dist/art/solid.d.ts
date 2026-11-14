@@ -13,12 +13,13 @@ export interface OutfitView {
     ids: (local: string) => string;
     eyeOffset: Point;
     box: BoxDims;
+    fit: BoxDims;
 }
 export declare function makeOutfitView(head: {
     turn: number;
     nod: number;
     tilt: number;
-}, featureShift: Point, ids: (local: string) => string, eyeOffset?: Point, box?: BoxDims): OutfitView;
+}, featureShift: Point, ids: (local: string) => string, eyeOffset?: Point, box?: BoxDims, fit?: BoxDims): OutfitView;
 export declare const at: (view: OutfitView, p: Point3) => Point;
 export declare const depthOf: (view: OutfitView, p: Point3) => number;
 export declare const facingOf: (view: OutfitView, n: Point3) => number;
@@ -108,6 +109,7 @@ export declare function boxSilhouette(view: OutfitView): Point[];
 export declare function shellFrontHalf(view: OutfitView, spec: ShellSpec): string;
 export declare function polyline3(view: OutfitView, points: readonly Point3[]): string;
 export declare const OUTFIT_ORDER: {
+    readonly mane: -2;
     readonly ears: -1;
     readonly hair: 0;
     readonly glasses: 1;

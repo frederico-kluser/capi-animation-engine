@@ -4,7 +4,7 @@ import type { OutfitInput } from '../../contracts/outfit.js';
 import type { AnchorPlayerHandle } from './PlayerShell.js';
 export interface AnchorLivePlayerProps {
     movement: EmbedTalkData | EncryptedMovementEnvelope | null;
-    audioUrl: string | null;
+    audioUrl?: string | null;
     thinking?: boolean;
     autoPlay?: boolean;
     character?: CharacterId;

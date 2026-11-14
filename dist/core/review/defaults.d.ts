@@ -39,6 +39,22 @@ export declare const REVIEW_DEFAULTS: {
         readonly transitionOverVideoMs: 200;
         readonly transitionMinMs: 80;
     };
+    readonly focus: {
+        readonly holdMs: 3600;
+        readonly minMs: 1200;
+        readonly maxMs: 15000;
+        readonly attachMs: 400;
+        readonly showMs: 420;
+        readonly rampBaseMs: 650;
+        readonly rampPerLnMs: 520;
+        readonly rampShare: 0.45;
+        readonly dwellMs: 900;
+        readonly breathe: 0.04;
+        readonly padding: 0.12;
+        readonly minZoom: 1.25;
+        readonly maxZoom: 2.6;
+        readonly minSize: 0.05;
+    };
     readonly subtitles: {
         readonly maxChars: 42;
         readonly maxLines: 2;
@@ -58,6 +74,19 @@ export declare const REVIEW_DEFAULTS: {
         readonly maxMergeDriftMs: 5000;
     };
     readonly stage: {
+        readonly footprint: {
+            readonly head: {
+                readonly x0: 268;
+                readonly x1: 742;
+                readonly y0: 4;
+                readonly y1: 390;
+            };
+            readonly body: {
+                readonly x0: 252;
+                readonly x1: 748;
+                readonly y0: 456;
+            };
+        };
         readonly lookReach: {
             readonly x: 3;
             readonly y: 1.5;

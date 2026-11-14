@@ -18,6 +18,7 @@ export interface EmbedMedia {
     type?: string;
     bytes?: number;
     durationMs?: number;
+    dataBase64?: string;
 }
 export declare const EMBED_BACKGROUND_KINDS: readonly ['transparent', 'color', 'studio', 'image', 'scenario'];
 export type EmbedBackgroundKind = (typeof EMBED_BACKGROUND_KINDS)[number];

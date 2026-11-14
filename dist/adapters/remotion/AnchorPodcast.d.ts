@@ -33,6 +33,7 @@ export interface PodcastPanelView {
     view?: CameraView;
     inset?: boolean;
     state?: ResolvedAnchorState;
+    bridge?: true;
 }
 export interface PodcastFrame {
     timeMs: number;
@@ -77,12 +78,36 @@ export declare function podcastAnchorProps(spec: PodcastSpec, compiled: Compiled
 }): PodcastAnchorProps;
 export declare function podcastCameraShots(compiled: CompiledPodcast): CameraShot[];
 export declare function podcastFrameAt(spec: PodcastSpec, compiled: CompiledPodcast, timelines: PodcastTimelines, request: PodcastFrameRequest): PodcastFrame;
+export interface PodcastSeamBridge {
+    seat: PodcastSeat;
+    rect: CameraBox;
+    box: CameraBox;
+    state: ResolvedAnchorState;
+}
+export declare function seatReach(state: ResolvedAnchorState, keep?: {
+    x0: number;
+    x1: number;
+}): {
+    x0: number;
+    x1: number;
+};
+export declare function podcastSeamBridges(panels: readonly CameraPanel[], options: {
+    pixels?: {
+        width: number;
+        height: number;
+    };
+    keeps?: Partial<Record<PodcastSeat, {
+        x0: number;
+        x1: number;
+    }>>;
+    stateOf: (seat: PodcastSeat) => ResolvedAnchorState;
+}): PodcastSeamBridge[];
 export declare function podcastCaptionTrack(spec: PodcastSpec, compiled: CompiledPodcast, asked?: {
     captions?: CaptionStyleId | undefined;
     profile?: VideoProfileId | undefined;
 }): CaptionTrack | null;
 export declare function podcastFxTarget(background: Pick<PodcastBackground, 'kind'> | undefined): 'frame' | 'content';
-export declare function podcastCameraLook(spec: PodcastSpec, compiled: CompiledPodcast): Pick<CameraFrameOptions, 'drinks' | 'headTops'>;
+export declare function podcastCameraLook(spec: PodcastSpec, compiled: CompiledPodcast): Pick<CameraFrameOptions, 'drinks' | 'headTops' | 'keeps' | 'worldFloor'>;
 export declare function podcastSceneImages(scene: PodcastScene | undefined): string[];
 export declare function podcastClipPlan(clip: PodcastAudioClip, fps: number): PodcastClipPlan;
 export declare function podcastClipVolume(plan: PodcastClipPlan, frame: number): number;

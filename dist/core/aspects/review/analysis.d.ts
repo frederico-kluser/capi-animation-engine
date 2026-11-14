@@ -35,12 +35,21 @@ export interface AnalysisPartInput {
     names?: Partial<Record<PodcastSeat, string>>;
     language?: string;
     fileName?: string;
+    context?: string;
 }
 export declare const ANALYSIS_SCHEMA_TEXT = "{\n  \"title\": \"what the clip is, in a few words\",\n  \"summary\": \"3-6 sentences: what happens, who, how it goes\",\n  \"language\": \"the language spoken in the clip (pt, en, es\u2026) or null if nobody speaks\",\n  \"genre\": \"tutorial | news | vlog | ad | interview | music | gameplay | talk | sketch | other\u2026\",\n  \"tone\": \"a few words (didactic and upbeat, tense, ironic\u2026)\",\n  \"audience\": \"who it is for\",\n  \"topics\": [\"2-6 short topics\"],\n  \"segments\": [\n    { \"from\": 0.0, \"to\": 34.5, \"title\": \"short title\", \"summary\": \"2-4 sentences\", \"visual\": \"what is SEEN (shots, people, on-screen text, graphics)\", \"speech\": \"what is SAID, summarised\", \"mood\": \"a word or two\" }\n  ],\n  \"moments\": [\n    { \"at\": 12.3, \"to\": 14.0, \"kind\": \"<kind>\", \"description\": \"what happens\", \"quote\": \"exact words, if it is speech\", \"why\": \"why it deserves a comment\", \"intensity\": 1-5, \"speechFree\": false, \"angle\": \"joke | context | counterpoint | question | praise\u2026, in a few words\" }\n  ],\n  \"entities\": [ { \"name\": \"as said or written in the clip\", \"kind\": \"person | brand | product | place | work | other\", \"note\": \"who/what it is, only from the clip\" } ],\n  \"claims\": [ { \"at\": 51.0, \"claim\": \"the statement, as made\", \"verify\": \"what would be worth checking\" } ],\n  \"onScreenText\": [ { \"at\": 3.0, \"text\": \"titles, burned-in captions, slides \u2014 as written\" } ],\n  \"angle\": \"the angle this review could take, in the light of the request\"\n}";
 export declare function buildAnalysisMessages(input: AnalysisPartInput): {
     system: string;
     user: string;
 };
+export declare function analysisSeenContext(previous: readonly {
+    offsetMs: number;
+    durationMs: number;
+    analysis: ReviewAnalysis | null;
+}[], options?: {
+    maxChars?: number;
+    perBlockChars?: number;
+}): string;
 export interface AnalysisParseOptions {
     offsetMs: number;
     durationMs: number;

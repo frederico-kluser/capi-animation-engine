@@ -1,5 +1,6 @@
-import type { Expression, ExpressionInput, VisemeId } from './face.js';
+import type { Expression, ExpressionInput, MouthShape, VisemeId } from './face.js';
 import type { BodyPose, HeadPose, Point, PoseChannels, PoseInput, Side } from './pose.js';
+import type { CaptureCue, CaptureSample, CompiledCaptureCue } from './capture.js';
 export type EasingId = 'linear' | 'easeIn' | 'easeOut' | 'easeInOut' | 'easeOutBack' | 'easeInOutSine';
 export declare const EASING_IDS: readonly ["linear", "easeIn", "easeOut", "easeInOut", "easeOutBack", "easeInOutSine"];
 interface CueBase {
@@ -87,9 +88,13 @@ export interface SpeechTrack extends TrackBase {
     kind: 'speech';
     cues: VisemeCue[];
 }
-export type TimelineTrack = PoseTrack | ExpressionTrack | LookTrack | HeadTrack | BodyTrack | BlinkTrack | SpeechTrack;
+export interface CaptureTrack extends TrackBase {
+    kind: 'capture';
+    cues: CaptureCue[];
+}
+export type TimelineTrack = PoseTrack | ExpressionTrack | LookTrack | HeadTrack | BodyTrack | BlinkTrack | SpeechTrack | CaptureTrack;
 export type TrackKind = TimelineTrack['kind'];
-export declare const TRACK_KINDS: readonly ["pose", "expression", "look", "head", "body", "blink", "speech"];
+export declare const TRACK_KINDS: readonly ["pose", "expression", "look", "head", "body", "blink", "speech", "capture"];
 export interface TimelineSpec {
     tracks: TimelineTrack[];
     durationMs?: number;
@@ -104,21 +109,41 @@ export interface CompiledPoseLoop {
     swing: PoseChannels;
     periodMs: number;
     cycles: number;
+    taps?: readonly {
+        atMs: number;
+        part: 'head' | 'body' | 'armLeft' | 'armRight';
+        amp?: number;
+        ms?: number;
+    }[];
+    pressMs?: number;
+    sustain?: boolean;
 }
 export type CompiledPoseCue = CompiledCue<PoseChannels> & {
     loop?: CompiledPoseLoop;
+};
+export interface CompiledMouthLoop {
+    swing: MouthShape;
+    periodMs: number;
+    cycles: number;
+    grind: number;
+    taper: readonly number[];
+    stopAfterMs?: number;
+}
+export type CompiledExpressionCue = CompiledCue<Expression> & {
+    loop?: CompiledMouthLoop;
 };
 export interface CompiledTimeline {
     readonly __compiled: true;
     readonly durationMs: number;
     readonly pose: readonly CompiledPoseCue[];
-    readonly expression: readonly CompiledCue<Expression>[];
+    readonly expression: readonly CompiledExpressionCue[];
     readonly look: readonly CompiledCue<Point>[];
     readonly head: readonly CompiledCue<HeadPose>[];
     readonly body: readonly CompiledCue<BodyPose>[];
     readonly blink: readonly Required<BlinkEvent>[];
     readonly speech: readonly VisemeCue[];
     readonly speechBlendMs: number;
+    readonly capture?: readonly CompiledCaptureCue[];
     readonly warnings: readonly string[];
 }
 export interface TimelineSample {
@@ -133,6 +158,7 @@ export interface TimelineSample {
         right: number;
     };
     speech?: SpeechSample;
+    capture?: CaptureSample[];
 }
 export interface TimelineBase {
     pose: PoseChannels;

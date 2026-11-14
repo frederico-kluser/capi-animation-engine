@@ -83,7 +83,7 @@ export interface ReviewVideoPiece {
 export type ReviewSeatAnchorProps = Pick<AnchorProps, 'timeline' | 'frame' | 'fps' | 'seed' | 'character' | 'outfit' | 'mirror' | 'set' | 'pose' | 'expression' | 'title'>;
 export declare function reviewAspectOf(spec: Pick<ReviewSpec, 'layout'> | undefined, aspect?: ReviewAspect, profile?: VideoProfileId): ReviewAspect;
 export declare function reviewProfileOf(spec: Pick<ReviewSpec, 'profile'> | undefined, profile?: VideoProfileId): VideoProfileId | undefined;
-export declare function reviewLayoutOf(spec: Pick<ReviewSpec, 'layout' | 'mode'> | undefined, commentary: Pick<ReviewCommentary, 'kind'> | undefined, aspect?: ReviewAspect): ReviewStageLayout;
+export declare function reviewLayoutOf(spec: Pick<ReviewSpec, 'layout' | 'mode' | 'tutorial'> | undefined, commentary: Pick<ReviewCommentary, 'kind'> | undefined, aspect?: ReviewAspect): ReviewStageLayout;
 export declare function reviewMetadata(props: Pick<AnchorReviewProps, 'spec' | 'commentary' | 'aspect' | 'profile'>): {
     durationInFrames: number;
     fps: number;
@@ -122,5 +122,9 @@ export declare function reviewPanelDraws(frame: Pick<ReviewFrame, 'panels' | 'cr
     width: number;
     height: number;
 }): ReviewPanelDraw[];
+export declare function screenZoomStyle(view: ReviewRect): CSSProperties;
+export declare function tutorialCardRect(layout: Pick<ReviewStageLayout, 'width' | 'height' | 'seats'>, card?: {
+    overScreen?: boolean;
+}): ReviewRect;
 export declare function ReviewFrameView(props: ReviewFrameViewProps): ReactElement;
 export declare const AnchorReview: (props: AnchorReviewProps) => ReactElement;

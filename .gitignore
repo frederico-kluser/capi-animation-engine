@@ -3,3 +3,7 @@ node_modules/
 *.log
 .npmrc
 coverage/
+
+# Artefactos do pnpm (o projeto usa npm; sem lockfile versionado aqui)
+pnpm-lock.yaml
+pnpm-workspace.yaml

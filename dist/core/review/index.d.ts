@@ -7,9 +7,12 @@ export { commentaryCaptions, cueAt, cuesFromWords, cuesToOutput, parseSubtitleTi
 export type { CommentaryWord, SubtitleBuildOptions } from './subtitles.js';
 export { REVIEW_SCRIPT_FIELDS, REVIEW_SCRIPT_LIMITS, normalizeReviewScript, podcastReviewBlocks, toPodcastScript, toTalkBlocks, } from './script.js';
 export type { NormalizeReviewOptions, NormalizedReviewBlock, NormalizedReviewTurn, ReviewScriptCheck } from './script.js';
-export { REVIEW_STAGE, rectsOverlap, reviewBezelRect, reviewHeadZone, reviewScreenSide, reviewSeatHead, reviewSeatShoulders, reviewStageLayout, reviewSubtitleRect, reviewWatchHeadTop, seatToStage, stageToSeatBox, tvGaze, } from './stage.js';
-export type { ReviewStageNumbers } from './stage.js';
-export { reviewCrop, reviewShortSafe, reviewShotAt, reviewShotIndexAt, reviewShotView, reviewShots, reviewViewSeat, translateCommentaryShot, tvCropBox } from './camera.js';
+export { REVIEW_STAGE, buildReviewStageLayout, rectsOverlap, reviewBezelRect, reviewHeadZone, reviewScreenSide, reviewSeatFootprint, reviewSeatHead, reviewSeatShoulders, reviewStageLayout, reviewSubtitleRect, reviewWatchHeadTop, seatToStage, stageSeatPlacement, stageToSeatBox, tvGaze, } from './stage.js';
+export type { ReviewSeatFootprint, ReviewStageNumbers } from './stage.js';
+export { reviewCompiledLayout } from './layout.js';
+export { focusContentBox, focusStateOf, placeReviewFocus, readFocusRect, reviewFocusView } from './focus.js';
+export type { FocusRectRead, FocusState } from './focus.js';
+export { reviewCrop, reviewFocusCrop, reviewShortSafe, reviewShotAt, reviewShotIndexAt, reviewShotView, reviewShots, reviewViewSeat, translateCommentaryShot, tvCropBox } from './camera.js';
 export type { ReviewCommentaryShot, ReviewCropOptions, ReviewCropWarp, ReviewShotView, ReviewShotsInput } from './camera.js';
 export { REVIEW_REACT_TRACK, REVIEW_WATCH_TRACK, overlayReactions, overlayWatch, placeReviewReactions, retargetTvGlances, talkManifestTvLook, watchWindows, } from './overlay.js';
 export type { OverlayReactionsOptions, OverlayWatchOptions, ReviewSpan } from './overlay.js';

@@ -68,7 +68,9 @@ export declare const ACTION_SPECS: Readonly<Record<PodcastActionKind, {
     text: string;
 }>>;
 export declare const ACTION_MARGIN_MS = 900;
-export declare function actionsCatalog(): string;
+export declare function actionsCatalog(options?: {
+    food?: boolean;
+}): string;
 export declare function cameraBudget(style: CameraStyle, durationMs: number): {
     emphasis: number;
     punchline: number;

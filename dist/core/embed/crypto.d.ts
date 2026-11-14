@@ -17,7 +17,22 @@ export type DecryptMovementResult = {
     ok: false;
     problems: string[];
 };
+export interface EncryptMovementOptions {
+    seedHint?: string;
+    audioBytes?: Uint8Array | ArrayBuffer | string;
+    audioMimeType?: string;
+}
+export interface EmbeddedAudioInfo {
+    src: string;
+    type: string;
+    bytes?: number;
+    dataBase64?: string;
+    dataUri?: string;
+    audioBytes?: Uint8Array;
+}
 export declare function isEncryptedMovement(value: unknown): value is EncryptedMovementEnvelope;
-export declare function encryptMovementData(data: unknown, seedHint?: string): EncryptedMovementEnvelope;
+export declare function embedAudioInMovement<T>(data: T, audioBytes: Uint8Array | ArrayBuffer | string, mimeType?: string): T;
+export declare function extractEmbeddedAudio(movement: unknown): EmbeddedAudioInfo | null;
+export declare function encryptMovementData(data: unknown, seedHintOrOptions?: string | EncryptMovementOptions): EncryptedMovementEnvelope;
 export declare function decryptMovementData(value: unknown): DecryptMovementResult;
 export declare function unwrapMovementData<T = Record<string, unknown>>(value: unknown): T | null;

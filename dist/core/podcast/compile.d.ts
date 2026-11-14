@@ -5,6 +5,7 @@ import { type VideoProfileId } from '../../contracts/profile.js';
 import type { TimelineSpec } from '../../contracts/timeline.js';
 import { type PoseId } from '../../presets/poses.js';
 import { type ResolveResult } from '../talk/resolve.js';
+import { type KeepSpan } from '../camera/keep.js';
 import { type Beat } from '../timeline/choreograph.js';
 import { type TimelineIssue } from '../timeline/lint.js';
 import { type ListenLayer } from './listen.js';
@@ -45,9 +46,12 @@ export declare const PODCAST_TV_LOOK: Readonly<Point>;
 export interface PodcastCompileOptions {
     tvLook?: Point;
     profile?: VideoProfileId;
+    listenGaze?: boolean;
+    bothMoments?: boolean;
 }
 export declare function podcastProfile(spec: Pick<PodcastSpec, 'render'> | null | undefined, asked?: unknown): VideoProfileId;
 export declare const PODCAST_FIT_PROFILES: readonly VideoProfileId[];
+export declare function podcastMicKeeps(spec: PodcastSpec): Partial<Record<PodcastSeat, KeepSpan>>;
 export declare function compilePodcastDetailed(spec: PodcastSpec, options?: PodcastCompileOptions): PodcastCompileDetail;
 export declare function compilePodcast(spec: PodcastSpec, options?: PodcastCompileOptions): CompiledPodcast;
 export interface PodcastCaptionWord {

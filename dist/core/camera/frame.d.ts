@@ -13,6 +13,11 @@ export interface CameraFrameOptions {
     safe?: SafeArea;
     heads?: Partial<Record<PodcastSeat, CameraHead>>;
     head?: CameraHead;
+    keeps?: Partial<Record<PodcastSeat, {
+        x0: number;
+        x1: number;
+    }>>;
+    worldFloor?: number;
 }
 export interface CameraHead {
     x: number;
@@ -69,9 +74,17 @@ export declare function slideSingleBox(box: CameraBox, shiftX: number, limits: {
 export declare function shiftAt(shots: readonly CameraShotLike[], timeMs: number): number;
 export declare function isVerticalRatio(ratio: number): boolean;
 export declare function isNarrowRatio(ratio: number): boolean;
-export declare function worldBox(ratio: number, framing: 'two' | 'wide', zoom: number, driftX?: number, driftY?: number): CameraBox;
+export declare function worldBox(ratio: number, framing: 'two' | 'wide', zoom: number, driftX?: number, driftY?: number, floor?: number): CameraBox;
 export declare function favorBox(ratio: number, seat: PodcastSeat, zoom: number, driftX?: number, driftY?: number, top?: number): CameraBox;
 export declare function splitBox(panelRatio: number, seat: PodcastSeat, zoom: number, driftX?: number, top?: number, driftY?: number): CameraBox;
+export declare function clearSplitOfMic(box: CameraBox, mic: {
+    x0: number;
+    x1: number;
+}, seat: PodcastSeat, now?: CameraHead): CameraBox;
+export declare function splitMicShift(boxes: readonly CameraBox[], mic: {
+    x0: number;
+    x1: number;
+}, seat: PodcastSeat, now?: CameraHead): number;
 export declare function pipBox(windowRatio: number, seat: PodcastSeat, top?: number): CameraBox;
 export declare function pipRect(ratio: number, seat: PodcastSeat, safe?: SafeArea): {
     rect: CameraBox;

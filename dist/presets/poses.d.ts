@@ -1,4 +1,9 @@
-import { type ArmPose, type Point, type Pose } from '../contracts/pose.js';
+import { type ArmPose, type LaptopPropId, type Point, type Pose, type PoseInput } from '../contracts/pose.js';
+export declare const LAPTOP_KEYS_LEFT: ArmPose;
+export declare const LAPTOP_KEYS_RIGHT: ArmPose;
+export declare const LAPTOP_MOUSE_LEFT: ArmPose;
+export declare const LAPTOP_CLICK_LEFT: ArmPose;
+export declare function laptopCarryPose(model: LaptopPropId): Pose;
 export declare const POSES: {
     readonly idle: {
         readonly head: {
@@ -277,15 +282,15 @@ export declare const POSES: {
         };
         readonly armRight: {
             readonly hand: {
-                readonly x: 596;
-                readonly y: 470;
+                readonly x: 566;
+                readonly y: 500;
             };
             readonly elbow: {
-                readonly x: 674;
+                readonly x: 672;
                 readonly y: 690;
             };
-            readonly shape: 'lShape';
-            readonly angle: -95;
+            readonly shape: 'fist';
+            readonly angle: -100;
         };
         readonly front: 'right';
     };
@@ -443,8 +448,8 @@ export declare const POSES: {
         readonly armLeft: ArmPose;
         readonly armRight: {
             readonly hand: {
-                readonly x: 710;
-                readonly y: 330;
+                readonly x: 700;
+                readonly y: 334;
             };
             readonly elbow: {
                 readonly x: 790;
@@ -812,8 +817,8 @@ export declare const POSES: {
         };
         readonly armLeft: {
             readonly hand: {
-                readonly x: 400;
-                readonly y: 646;
+                readonly x: 418;
+                readonly y: 634;
             };
             readonly elbow: Point;
             readonly shape: 'flat';
@@ -822,8 +827,8 @@ export declare const POSES: {
         };
         readonly armRight: {
             readonly hand: {
-                readonly x: 600;
-                readonly y: 646;
+                readonly x: 582;
+                readonly y: 634;
             };
             readonly elbow: Point;
             readonly shape: 'flat';
@@ -1418,27 +1423,28 @@ export declare const POSES: {
         };
         readonly armLeft: {
             readonly hand: {
-                readonly x: 482;
-                readonly y: 634;
+                readonly x: 474;
+                readonly y: 648;
             };
             readonly elbow: {
                 readonly x: 336;
                 readonly y: 732;
             };
             readonly shape: 'flat';
-            readonly angle: -56;
+            readonly angle: -84;
+            readonly view: 'back';
         };
         readonly armRight: {
             readonly hand: {
-                readonly x: 518;
-                readonly y: 634;
+                readonly x: 526;
+                readonly y: 648;
             };
             readonly elbow: {
                 readonly x: 664;
                 readonly y: 732;
             };
             readonly shape: 'flat';
-            readonly angle: -124;
+            readonly angle: -96;
             readonly view: 'back';
         };
         readonly front: 'right';
@@ -1687,6 +1693,261 @@ export declare const POSES: {
         };
         readonly armRight: ArmPose;
     };
+    readonly explainOneHand: {
+        readonly head: {
+            readonly turn: 14;
+            readonly tilt: -5;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 668;
+                readonly y: 600;
+            };
+            readonly elbow: {
+                readonly x: 690;
+                readonly y: 736;
+            };
+            readonly shape: 'palmUp';
+            readonly angle: -36;
+        };
+    };
+    readonly explainWide: {
+        readonly head: {
+            readonly turn: 13;
+            readonly tilt: -3;
+            readonly nod: -2;
+        };
+        readonly armLeft: {
+            readonly hand: {
+                readonly x: 312;
+                readonly y: 640;
+            };
+            readonly elbow: {
+                readonly x: 318;
+                readonly y: 752;
+            };
+            readonly shape: 'palmUp';
+            readonly angle: 214;
+        };
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 690;
+                readonly y: 616;
+            };
+            readonly elbow: {
+                readonly x: 684;
+                readonly y: 742;
+            };
+            readonly shape: 'palmUp';
+            readonly angle: -36;
+        };
+    };
+    readonly presentBoth: {
+        readonly armLeft: {
+            readonly hand: {
+                readonly x: 586;
+                readonly y: 640;
+            };
+            readonly elbow: {
+                readonly x: 374;
+                readonly y: 714;
+            };
+            readonly shape: 'palmUp';
+            readonly angle: -12;
+        };
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 800;
+                readonly y: 566;
+            };
+            readonly elbow: {
+                readonly x: 716;
+                readonly y: 648;
+            };
+            readonly shape: 'palmUp';
+            readonly angle: -22;
+        };
+        readonly front: 'left';
+    };
+    readonly steeple: {
+        readonly head: {
+            readonly tilt: -4;
+            readonly nod: 3;
+        };
+        readonly armLeft: {
+            readonly hand: {
+                readonly x: 434;
+                readonly y: 630;
+            };
+            readonly elbow: {
+                readonly x: 290;
+                readonly y: 730;
+            };
+            readonly shape: 'flat';
+            readonly angle: -64;
+            readonly view: 'back';
+        };
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 566;
+                readonly y: 630;
+            };
+            readonly elbow: {
+                readonly x: 710;
+                readonly y: 730;
+            };
+            readonly shape: 'flat';
+            readonly angle: -116;
+            readonly view: 'back';
+        };
+    };
+    readonly sizeWide: {
+        readonly head: {
+            readonly tilt: -3;
+            readonly nod: -2;
+        };
+        readonly armLeft: {
+            readonly hand: {
+                readonly x: 236;
+                readonly y: 592;
+            };
+            readonly elbow: {
+                readonly x: 262;
+                readonly y: 736;
+            };
+            readonly shape: 'cupHand';
+            readonly angle: -28;
+        };
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 764;
+                readonly y: 592;
+            };
+            readonly elbow: {
+                readonly x: 738;
+                readonly y: 736;
+            };
+            readonly shape: 'cupHand';
+            readonly angle: -152;
+        };
+    };
+    readonly pointToSelf: {
+        readonly head: {
+            readonly tilt: 5;
+            readonly nod: 3;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 612;
+                readonly y: 626;
+            };
+            readonly elbow: {
+                readonly x: 726;
+                readonly y: 736;
+            };
+            readonly shape: 'point';
+            readonly angle: -154;
+        };
+    };
+    readonly brushOff: {
+        readonly head: {
+            readonly turn: 10;
+            readonly tilt: 6;
+            readonly nod: -3;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 706;
+                readonly y: 640;
+            };
+            readonly elbow: {
+                readonly x: 652;
+                readonly y: 752;
+            };
+            readonly shape: 'relaxed';
+            readonly angle: 24;
+            readonly view: 'back';
+        };
+    };
+    readonly fingerWag: {
+        readonly head: {
+            readonly tilt: -4;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 744;
+                readonly y: 452;
+            };
+            readonly elbow: {
+                readonly x: 760;
+                readonly y: 640;
+            };
+            readonly shape: 'point';
+            readonly angle: -92;
+        };
+    };
+    readonly tapTemple: {
+        readonly head: {
+            readonly turn: 10;
+            readonly tilt: -6;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 770;
+                readonly y: 330;
+            };
+            readonly elbow: {
+                readonly x: 820;
+                readonly y: 500;
+            };
+            readonly shape: 'point';
+            readonly angle: -120;
+        };
+    };
+    readonly pointAside: {
+        readonly head: {
+            readonly turn: 16;
+            readonly tilt: -6;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 820;
+                readonly y: 498;
+            };
+            readonly elbow: {
+                readonly x: 748;
+                readonly y: 596;
+            };
+            readonly shape: 'point';
+            readonly angle: -40;
+        };
+    };
+    readonly raiseLevel: {
+        readonly head: {
+            readonly nod: -3;
+            readonly tilt: -3;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 798;
+                readonly y: 240;
+            };
+            readonly elbow: {
+                readonly x: 712;
+                readonly y: 318;
+            };
+            readonly shape: 'flat';
+            readonly angle: -8;
+            readonly view: 'back';
+        };
+    };
     readonly laptopType: Pose;
     readonly laptopMouse: Pose;
     readonly laptopClick: Pose;
@@ -1714,6 +1975,53 @@ export declare const POSES: {
     readonly laptopThinkpadPoint: Pose;
     readonly laptopThinkpadThink: Pose;
     readonly laptopThinkpadThumbsUp: Pose;
+    readonly snackHold: {
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 657;
+                readonly y: 518;
+            };
+            readonly elbow: {
+                readonly x: 760;
+                readonly y: 640;
+            };
+            readonly shape: 'grip';
+            readonly angle: 176;
+            readonly view: 'palm';
+        };
+        readonly prop: {
+            readonly id: 'apple';
+            readonly hand: 'right';
+            readonly angle: 4;
+        };
+    };
+    readonly snackBite: {
+        readonly head: {
+            readonly turn: 17;
+            readonly nod: 4;
+            readonly tilt: -10;
+        };
+        readonly armLeft: ArmPose;
+        readonly armRight: {
+            readonly hand: {
+                readonly x: 688;
+                readonly y: 401;
+            };
+            readonly elbow: {
+                readonly x: 756;
+                readonly y: 589;
+            };
+            readonly shape: 'grip';
+            readonly angle: 200;
+            readonly view: 'palm';
+        };
+        readonly prop: {
+            readonly id: 'apple';
+            readonly hand: 'right';
+            readonly angle: -20;
+        };
+    };
 };
 export declare const OFFICIAL_POSES: typeof POSES;
 export declare const DERIVED_POSES: {
@@ -1744,3 +2052,5 @@ export type PoseId = keyof typeof POSES;
 export declare const POSE_IDS: PoseId[];
 export declare const POSE_LABELS: Record<PoseId, string>;
 export declare function isPoseId(value: unknown): value is PoseId;
+export declare const POSE_GAZE: Readonly<Partial<Record<PoseId, Point>>>;
+export declare function poseGaze(input: PoseInput | undefined): Point | undefined;

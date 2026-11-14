@@ -6,6 +6,7 @@ import { type CharacterId } from '../../contracts/character.js';
 import { type Outfit, type OutfitPresetId, type OutfitSlot } from '../../contracts/outfit.js';
 import { type VideoProfileId } from '../../contracts/profile.js';
 import { type ReviewVideoFraming } from '../../contracts/review.js';
+import { type DirectorId } from '../decide/director/ids.js';
 import type { SpeechLanguage } from '../speech/g2p.js';
 import { type VoiceEmotion } from './emotion.js';
 import { type ReasoningEffort } from './tts-models.js';
@@ -57,6 +58,7 @@ export interface TalkConfig {
         talk: TalkAspectId[];
         podcast: PodcastAspectId[];
         catalog: CatalogDetail;
+        director?: DirectorId;
     };
     camera: {
         style: CameraStyle;
@@ -82,7 +84,23 @@ export interface TalkConfig {
         verifyGiven: boolean;
     };
     review: ReviewConfig;
+    tutorial: TutorialAuthorConfig;
 }
+export interface TutorialAuthorConfig {
+    model: string;
+    effort: PlannerEffort;
+    maxTokens: number;
+    provider?: {
+        order?: string[];
+        ignore?: string[];
+        allowFallbacks?: boolean;
+        requireParameters?: boolean;
+    };
+    reviewModel?: string;
+    reviewEffort?: PlannerEffort;
+}
+export declare const DEFAULT_TUTORIAL_AUTHOR: TutorialAuthorConfig;
+export declare const TUTORIAL_MAX_TOKENS_LIMIT = 262144;
 export declare const REVIEW_DENSITIES: readonly ['light', 'normal', 'heavy'];
 export type ReviewDensity = (typeof REVIEW_DENSITIES)[number];
 export declare const REVIEW_ATTACH_VIDEO: readonly ['auto', 'always', 'never'];
@@ -102,6 +120,8 @@ export interface ReviewConfig {
         proxyHeight: number;
         proxyFps: number;
         maxProxyMb: number;
+        maxImages: number;
+        frameSeconds: number;
         samples: number;
     };
     writer: {
@@ -161,9 +181,10 @@ export declare const CONFIG_ENUMS: {
     readonly reviewAttachVideo: readonly ["auto", "always", "never"];
     readonly reviewDuringVideo: readonly ["stage", "tv", "auto"];
     readonly reviewSttProvider: readonly ["openrouter", "openai"];
+    readonly director: readonly ["llm", "jev"];
 };
 export declare const REVIEW_CONFIG_KEYS: {
-    readonly analysis: readonly ['effort', 'chunkMinutes', 'proxyHeight', 'proxyFps', 'maxProxyMb', 'samples'];
+    readonly analysis: readonly ['effort', 'chunkMinutes', 'proxyHeight', 'proxyFps', 'maxProxyMb', 'maxImages', 'frameSeconds', 'samples'];
     readonly writer: readonly ['effort', 'samples', 'density', 'attachVideo'];
     readonly stt: readonly ['provider', 'model', 'language'];
     readonly audio: readonly ['videoGainDb', 'duckDb', 'targetLufs'];
@@ -187,6 +208,14 @@ export declare const REVIEW_CONFIG_LIMITS: {
     readonly maxProxyMb: {
         readonly min: 5;
         readonly max: 100;
+    };
+    readonly maxImages: {
+        readonly min: 1;
+        readonly max: 200;
+    };
+    readonly frameSeconds: {
+        readonly min: 0.1;
+        readonly max: 5;
     };
     readonly analysisSamples: {
         readonly min: 1;

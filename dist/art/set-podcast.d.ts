@@ -5,6 +5,7 @@ import { type SleeveWear } from './arm.js';
 import { type Palette } from './palette.js';
 export { ChairArt, type ChairArtProps } from './set-chairs.js';
 type Ids = (local: string) => string;
+export declare function armTableClipY(pose: SolvedPose, side: Side): number;
 export interface TableArtProps {
     pose: SolvedPose;
     ids: Ids;

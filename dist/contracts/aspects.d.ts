@@ -24,6 +24,8 @@ export interface PodcastBrief {
     format?: PodcastBriefFormat;
     profile?: VideoProfileId;
 }
+export declare const BRIEF_PACING_IDS: readonly ['conversation', 'explainer', 'lesson'];
+export type BriefPacingId = (typeof BRIEF_PACING_IDS)[number];
 export interface PodcastBriefFormat {
     id: string;
     label: string;
@@ -33,6 +35,8 @@ export interface PodcastBriefFormat {
     structure?: string[];
     rules?: string[];
     material?: string[];
+    concepts?: string[];
+    pacing?: BriefPacingId;
 }
 export declare const OUTLINE_MOMENT_KINDS: readonly ['hook', 'punchline', 'reveal', 'question', 'topicShift', 'emotional', 'callback', 'disagreement'];
 export type OutlineMomentKind = (typeof OUTLINE_MOMENT_KINDS)[number];

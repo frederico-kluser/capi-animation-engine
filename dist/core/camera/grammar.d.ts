@@ -11,6 +11,7 @@ export interface CameraVariety {
     longMoves: readonly CameraMoveKind[];
     handheld: boolean;
     turnAngleEvery: number;
+    question: readonly CameraResource[];
     questionFavor: boolean;
     topicTransitions: readonly CameraTransitionKind[];
     closingTransition: CameraTransitionKind;
@@ -45,12 +46,14 @@ export declare const CAMERA_GRAMMAR: {
             readonly y: 300;
         };
     };
-    readonly twoWidth: 1500;
+    readonly twoWidth: 1780;
     readonly wideWidth: 2100;
     readonly worldCenter: {
         readonly x: 1000;
         readonly bottom: 800;
     };
+    readonly worldHeadRow: 0.4;
+    readonly worldFloor: 1080;
     readonly insertZoom: 2.4;
     readonly minShotMs: 1600;
     readonly maxShotMs: 22000;
@@ -197,8 +200,16 @@ export declare const CAMERA_GRAMMAR: {
     readonly revealMs: readonly [number, number];
     readonly insertMs: readonly [number, number];
     readonly overlapMs: readonly [number, number];
-    readonly overlapTwoMinMs: 700;
+    readonly overlapTwoMinMs: 400;
+    readonly bothBefore: {
+        readonly overlapTwoMinMs: 700;
+    };
+    readonly interruptTwoMinMs: 150;
+    readonly interruptTwoMs: readonly [number, number];
     readonly overlapHoldMs: 500;
+    readonly laughDelayMs: 120;
+    readonly laughMs: readonly [number, number];
+    readonly bothSpacing: 0.3;
     readonly pingPongTurnMs: 2600;
     readonly pingPongMinTurns: 3;
     readonly rewideGapMs: 500;
@@ -208,6 +219,7 @@ export declare const CAMERA_GRAMMAR: {
     readonly styleRhythm: {
         calm: {
             rewideEveryMs: number;
+            bothEveryMs: number;
             drift: true;
             driftMinMs: number;
             overlapFraming: "two";
@@ -218,6 +230,7 @@ export declare const CAMERA_GRAMMAR: {
         };
         interview: {
             rewideEveryMs: number;
+            bothEveryMs: number;
             drift: true;
             driftMinMs: number;
             overlapFraming: "two";
@@ -228,6 +241,7 @@ export declare const CAMERA_GRAMMAR: {
         };
         dynamic: {
             rewideEveryMs: number;
+            bothEveryMs: number;
             drift: false;
             driftMinMs: number;
             overlapFraming: "split";
@@ -238,6 +252,7 @@ export declare const CAMERA_GRAMMAR: {
         };
         live: {
             rewideEveryMs: number;
+            bothEveryMs: number;
             drift: false;
             driftMinMs: number;
             overlapFraming: "two";
@@ -248,6 +263,7 @@ export declare const CAMERA_GRAMMAR: {
         };
         cinematic: {
             rewideEveryMs: number;
+            bothEveryMs: number;
             drift: true;
             driftMinMs: number;
             overlapFraming: "two";
@@ -272,10 +288,14 @@ export declare const CAMERA_GRAMMAR: {
     readonly insertGrabLeadMs: 700;
     readonly insertGrabTailMs: 500;
     readonly splitBottom: 780;
+    readonly splitMicMargin: 14;
+    readonly splitHeadRoom: 0;
+    readonly shortSplitBottom: 640;
+    readonly shortSplitMaxWidth: 1.15;
     readonly verticalRatio: 1.2;
     readonly stackedWideRatio: 0.85;
-    readonly stackedWideZoom: 0.85;
-    readonly bothHeadsWidth: 1420;
+    readonly stackedWideZoom: 0.78;
+    readonly bothHeadsWidth: 1500;
     readonly verticalZoomBoost: 1.3;
     readonly closeFocusRow: 0.42;
     readonly splitDivider: 0.006;
@@ -368,8 +388,8 @@ export declare const CAMERA_GRAMMAR: {
             lead: number;
         };
     };
-    readonly favorWidth: 1380;
-    readonly favorCenter: 0.33;
+    readonly favorWidth: 1185;
+    readonly favorCenter: 0.28;
     readonly pipWidth: 0.26;
     readonly pipWidthVertical: 0.32;
     readonly pipRatio: 1.25;
@@ -491,6 +511,7 @@ export declare const CAMERA_GRAMMAR: {
             longMoves: "drift"[];
             handheld: false;
             turnAngleEvery: number;
+            question: "two"[];
             questionFavor: false;
             topicTransitions: never[];
             closingTransition: "dissolve";
@@ -506,6 +527,7 @@ export declare const CAMERA_GRAMMAR: {
             longMoves: "drift"[];
             handheld: false;
             turnAngleEvery: number;
+            question: ("favor" | "two")[];
             questionFavor: false;
             topicTransitions: never[];
             closingTransition: "cut";
@@ -521,6 +543,7 @@ export declare const CAMERA_GRAMMAR: {
             longMoves: never[];
             handheld: false;
             turnAngleEvery: number;
+            question: ("favor" | "two")[];
             questionFavor: false;
             topicTransitions: ("flash" | "whip" | "zoom")[];
             closingTransition: "cut";
@@ -536,6 +559,7 @@ export declare const CAMERA_GRAMMAR: {
             longMoves: never[];
             handheld: true;
             turnAngleEvery: number;
+            question: ("favor" | "two")[];
             questionFavor: true;
             topicTransitions: never[];
             closingTransition: "cut";
@@ -551,6 +575,7 @@ export declare const CAMERA_GRAMMAR: {
             longMoves: ("drift" | "pull" | "push")[];
             handheld: false;
             turnAngleEvery: number;
+            question: ("favor" | "two")[];
             questionFavor: false;
             topicTransitions: ("dip" | "dissolve")[];
             closingTransition: "dissolve";

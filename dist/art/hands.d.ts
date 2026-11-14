@@ -15,6 +15,7 @@ export interface HandArtProps {
     palette?: Palette | undefined;
 }
 export declare function rollWidth(arm: SolvedArm): number;
+export declare function pitchLength(arm: SolvedArm): number;
 export declare function HandArt({ arm, side, ids, palette }: HandArtProps): ReactElement;
 export declare function GloveSilhouette({ arm }: {
     arm: SolvedArm;

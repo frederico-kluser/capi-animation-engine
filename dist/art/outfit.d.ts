@@ -3,7 +3,8 @@ import type { CharacterSpec } from '../contracts/character.js';
 import { type Outfit } from '../contracts/outfit.js';
 import { type Point } from '../contracts/pose.js';
 import type { BoxDims } from '../core/head/box3d.js';
-import type { EarShape } from '../core/head/ears.js';
+import { type EarShape } from '../core/head/ears.js';
+import type { ManeShape } from '../core/head/mane.js';
 import type { Palette } from './palette.js';
 import { type BoundCircle, type OutfitItem } from './solid.js';
 export declare function hasOutfit(outfit: Outfit | undefined): outfit is Outfit;
@@ -18,6 +19,8 @@ export interface SceneCharacter {
     box: BoxDims;
     eyeOffset: Point;
     ears: EarShape;
+    mane: ManeShape;
+    fit?: BoxDims;
 }
 export declare function outfitScene(outfit: Outfit | undefined, head: {
     turn: number;

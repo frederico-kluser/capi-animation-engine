@@ -7,7 +7,7 @@ export interface HairTone extends Tone {
     shine: string;
 }
 export declare const HAIR_TONES: Record<HairColorId, HairTone>;
-export declare const LOOSE_HAIR_IDS: readonly ["mundodev-flame"];
+export declare const LOOSE_HAIR_IDS: readonly ["mundodev-flame", "wild"];
 export type ShellHairId = Exclude<HairId, 'none' | (typeof LOOSE_HAIR_IDS)[number]>;
 export declare function hasHairShell(hair: HairId): hair is ShellHairId;
 export declare const HAIR_SHELLS: Record<ShellHairId, ShellSpec>;

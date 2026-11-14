@@ -8,6 +8,8 @@ export declare const PODCAST_DEFAULTS: {
         readonly selfGapMs: readonly [number, number];
         readonly selfMinGapMs: 120;
         readonly longGapMs: 1200;
+        readonly calmMinMs: 250;
+        readonly calmLongGapMs: 4500;
         readonly longOverlapMs: 1500;
     };
     readonly interrupt: {
@@ -73,6 +75,18 @@ export declare const PODCAST_DEFAULTS: {
             readonly maxHoldMs: 8000;
             readonly poses: readonly string[];
             readonly faces: Readonly<Record<string, string>>;
+        };
+        readonly gaze: {
+            readonly look: {
+                readonly x: 1;
+                readonly y: 0.06;
+            };
+            readonly turnDeg: 9;
+            readonly delayMs: 220;
+            readonly inMs: 520;
+            readonly outMs: 440;
+            readonly joinMs: 1500;
+            readonly minSpanMs: 2000;
         };
         readonly laughPose: 'laughLean';
         readonly laughHoldMs: 2400;

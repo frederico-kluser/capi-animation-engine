@@ -1,9 +1,24 @@
-import { type CharacterId, type CharacterSpec } from '../contracts/character.js';
+import { type CharacterId, type CharacterSpec, type WearableSlot } from '../contracts/character.js';
+import { type OutfitSlot } from '../contracts/outfit.js';
 export declare const CHARACTERS: Record<CharacterId, CharacterSpec>;
 export declare const CHARACTER_LABELS: Record<CharacterId, string>;
 export declare function isCharacterId(value: unknown): value is CharacterId;
-export declare function outfitFor<T extends {
+export declare const NOT_HUMANOID_HAIR = "o cabelo s\u00F3 serve a personagens humanoides";
+export declare function wearableOf(slot: OutfitSlot): WearableSlot;
+export declare function refusedSlots(character: CharacterId | CharacterSpec): Partial<Record<WearableSlot, string>>;
+export declare function wearsSlot(character: CharacterId | CharacterSpec, slot: OutfitSlot): boolean;
+export declare function refusalOf(character: CharacterId | CharacterSpec, slot: OutfitSlot): string | null;
+export declare const WEARABLE_PHRASES: Record<WearableSlot, string>;
+export declare function wearSummary(character: CharacterId | CharacterSpec): string;
+type OutfitLike = {
     hair: string;
     hairColor?: string;
-}>(outfit: T, character: CharacterId, warnings?: string[]): T;
+    hat?: string;
+    glasses?: string;
+    headphones?: string;
+    top?: string;
+    topColor?: string;
+};
+export declare function outfitFor<T extends OutfitLike>(outfit: T, character: CharacterId, warnings?: string[]): T;
 export declare function resolveCharacter(input: unknown, warnings?: string[]): CharacterId;
+export {};

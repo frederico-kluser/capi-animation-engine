@@ -14,7 +14,7 @@ export { joinTurnWords, seatWords } from './seat-words.js';
 export type { PodcastSeatWords } from './seat-words.js';
 export { listenLayer } from './listen.js';
 export type { ListenBeat, ListenEvent, ListenInput, ListenLayer } from './listen.js';
-export { ACTION_PLACEMENT, PODCAST_ACTIONS, DRINK_LIP, actionScript, checkTouch, drinkHand, drinkPoses, foldElbow, heldLip, lintAction, facePoint, lipWrist, mouthPoint, lowElbow, placeSeatActions, restElbow, stretchStep, } from './actions.js';
+export { ACTION_PLACEMENT, PODCAST_ACTIONS, DRINK_LIP, actionScript, checkTouch, drinkHand, drinkPoses, eatPoses, eatScript, foodBitesLeft, foldElbow, heldLip, lintAction, facePoint, lipWrist, mouthPoint, lowElbow, placeSeatActions, restElbow, stretchStep, } from './actions.js';
 export type { ActionBeat, ActionContext, ActionPlacement, ActionPlacementInput, ActionResult, ActionScript, ActionSeat, ActionStep, DrinkPoses, PlacedAction } from './actions.js';
 export { computeShots } from './camera.js';
 export type { ShotOptions } from './camera.js';

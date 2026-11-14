@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import type { Point } from '../contracts/pose.js';
-import type { DrinkSpec, TableItemKind, TableItemSpec } from '../contracts/set.js';
+import type { DrinkSpec, FoodSpec, TableItemKind, TableItemSpec } from '../contracts/set.js';
 import { type HeldDrinkContact } from '../core/set/items.js';
 import { type Palette } from './palette.js';
 type Ids = (local: string) => string;
@@ -12,6 +12,7 @@ export interface ItemArtProps {
     seat: ItemSeat;
     ink: number;
     tilt: number;
+    bites?: number | undefined;
 }
 export declare const itemInk: (scale: number) => number;
 export declare const ITEM_ART: Record<TableItemKind, (props: ItemArtProps) => ReactElement>;
@@ -27,8 +28,9 @@ export interface PlacedItemArtProps {
     pivot?: Point;
     level?: number;
     opacity?: number;
+    bites?: number | undefined;
 }
-export declare function PlacedItemArt({ kind, at, rotation, scale, flip, ids, seat, palette, pivot, level, opacity }: PlacedItemArtProps): ReactElement;
+export declare function PlacedItemArt({ kind, at, rotation, scale, flip, ids, seat, palette, pivot, level, opacity, bites }: PlacedItemArtProps): ReactElement;
 export interface TableItemsArtProps {
     ids: Ids;
     items: readonly TableItemSpec[];
@@ -54,4 +56,21 @@ export interface DrinkShadowArtProps {
 }
 export declare function DrinkShadowArt({ ids, item, drink, mirror, held }: DrinkShadowArtProps): ReactElement | null;
 export declare function itemSilhouettePath(kind: TableItemKind, flip?: boolean): string;
+export interface FoodItemArtProps {
+    ids: Ids;
+    item: TableItemSpec;
+    food: FoodSpec;
+    mirror: boolean;
+    held: boolean;
+    palette?: Palette | undefined;
+}
+export declare function FoodItemArt({ ids, item, food, mirror, held, palette }: FoodItemArtProps): ReactElement;
+export interface FoodShadowArtProps {
+    ids: Ids;
+    item: TableItemSpec;
+    food: FoodSpec;
+    mirror: boolean;
+    held?: HeldDrinkContact | null | undefined;
+}
+export declare function FoodShadowArt({ ids, item, food, mirror, held }: FoodShadowArtProps): ReactElement | null;
 export {};

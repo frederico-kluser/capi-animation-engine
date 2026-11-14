@@ -1,5 +1,5 @@
 import { type PodcastScript, type PodcastTurnInput } from '../../contracts/podcast.js';
-import { type ReviewAnchor, type ReviewBlockMode, type ReviewMode, type ReviewScript, type ReviewSubtitles, type SubtitleCue } from '../../contracts/review.js';
+import { type ReviewAnchor, type ReviewBlockMode, type ReviewFocusSpec, type ReviewMode, type ReviewScript, type ReviewSubtitles, type SubtitleCue } from '../../contracts/review.js';
 export interface NormalizedReviewTurn extends PodcastTurnInput {
     id: string;
 }
@@ -13,6 +13,7 @@ export interface NormalizedReviewBlock {
     turns: NormalizedReviewTurn[];
     text: string;
     words: number;
+    focus?: ReviewFocusSpec;
 }
 export interface ReviewScriptCheck {
     script: ReviewScript | null;
@@ -26,11 +27,12 @@ export interface NormalizeReviewOptions {
     mode: ReviewMode;
 }
 export declare const REVIEW_SCRIPT_FIELDS: {
-    readonly script: readonly ['version', 'kind', 'mode', 'title', 'language', 'seed', 'prompt', 'speakers', 'blocks', 'reactions', 'camera', 'subtitles', 'audio', 'layout', 'eyes', 'densityNote'];
-    readonly block: readonly ['id', 'at', 'mode', 'moment', 'why', 'turns', 'text'];
+    readonly script: readonly ['version', 'kind', 'mode', 'title', 'language', 'seed', 'prompt', 'speakers', 'blocks', 'reactions', 'focus', 'camera', 'subtitles', 'audio', 'layout', 'eyes', 'densityNote', 'blockGapMs', 'minPlayMs', 'pace'];
+    readonly block: readonly ['id', 'at', 'mode', 'moment', 'why', 'turns', 'text', 'focus'];
     readonly reaction: readonly ['at', 'seat', 'expression', 'macro', 'look', 'holdMs', 'camera', 'why'];
+    readonly focus: readonly ['at', 'region', 'to', 'holdMs', 'why'];
     readonly camera: readonly ['style', 'duringVideo', 'zooms', 'cuts'];
-    readonly cut: readonly ['atMs', 'framing', 'seat', 'size', 'zoom', 'move', 'angle', 'transition'];
+    readonly cut: readonly ['atMs', 'framing', 'seat', 'size', 'zoom', 'move', 'angle', 'transition', 'region', 'to'];
     readonly subtitles: readonly ['video', 'commentary'];
     readonly audio: readonly ['videoGainDb', 'duckDb'];
     readonly layout: readonly ['aspect', 'side'];

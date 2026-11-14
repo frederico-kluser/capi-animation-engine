@@ -1,5 +1,6 @@
 import type { CameraStyle } from './camera.js';
 import type { CharacterId } from './character.js';
+import type { OutfitInput } from './outfit.js';
 import type { CreateModelChoices } from './models.js';
 import type { PodcastSeat } from './podcast.js';
 import type { VideoProfileId } from './profile.js';
@@ -25,6 +26,12 @@ export interface CreateSpeakerInput {
     personality?: string;
     voice?: string;
     tone?: string;
+    outfit?: OutfitInput;
+}
+export interface CreateVideoInput {
+    video: string;
+    name?: string;
+    caption?: string;
 }
 export interface CreateRequest {
     version: 1;
@@ -38,15 +45,18 @@ export interface CreateRequest {
     audience?: CreateAudience;
     presenters?: 1 | 2;
     research?: CreateResearchMode;
+    pacing?: 'conversation' | 'explainer' | 'lesson';
     sources?: CreateSourceInput[];
     options?: Record<string, string | boolean>;
     speakers?: Partial<Record<PodcastSeat, CreateSpeakerInput>>;
     cameraStyle?: CameraStyle;
     emotion?: 'on' | 'off';
     varyVoice?: boolean;
+    cta?: boolean;
     scenario?: string;
     video?: string;
     subtitles?: string;
+    videos?: CreateVideoInput[];
     until?: CreateUntil;
     models?: CreateModelChoices;
 }
@@ -106,9 +116,9 @@ export interface CreateNote {
     kind: CreateNoteKind;
     text: string;
 }
-export declare const CREATE_LENS_IDS: readonly ['facts', 'story', 'analogies', 'audience', 'tension', 'pro', 'con', 'steps', 'verdict'];
+export declare const CREATE_LENS_IDS: readonly ['facts', 'story', 'analogies', 'audience', 'tension', 'pro', 'con', 'steps', 'verdict', 'concepts'];
 export type CreateLensId = (typeof CREATE_LENS_IDS)[number];
-export declare const CREATE_POINT_ROLES: readonly ['hook', 'core', 'example', 'depth', 'objection', 'pro', 'con', 'takeaway', 'off'];
+export declare const CREATE_POINT_ROLES: readonly ['hook', 'core', 'example', 'depth', 'objection', 'pro', 'con', 'takeaway', 'concept', 'off'];
 export type CreatePointRole = (typeof CREATE_POINT_ROLES)[number];
 export interface CreatePoint {
     id: string;
@@ -124,6 +134,44 @@ export interface CreatePoint {
     score: number;
     selected: boolean;
 }
+export declare const CREATE_FACET_IDS: readonly ['subject', 'problem', 'mechanism', 'evidence', 'limits', 'context'];
+export type CreateFacetId = (typeof CREATE_FACET_IDS)[number];
+export interface CreateMaterialCheck {
+    verdict: 'ok' | 'thin' | 'refused';
+    specific: boolean;
+    facets: Array<{
+        id: CreateFacetId;
+        label: string;
+        vital: boolean;
+        covered: boolean;
+        by: 'jev' | 'rules';
+        p?: number;
+    }>;
+    counts: {
+        textSources: number;
+        videoSources: number;
+        searchSources: number;
+        notes: number;
+        points: number;
+        concepts: number;
+    };
+    enoughP?: number;
+    capacityMinutes: number;
+    signals?: string[];
+    gaps: string[];
+    advice: string[];
+}
+export interface CreateDurationPlan {
+    requestedMinutes: number;
+    minutes: number;
+    pacing: 'conversation' | 'explainer' | 'lesson';
+    words: number;
+    concepts: number;
+    points: number;
+    neededSeconds: number;
+    reason: string;
+    dropped?: string[];
+}
 export interface CreateManifest {
     version: 1;
     name: string;
@@ -135,7 +183,9 @@ export interface CreateManifest {
         dir: string;
         name: string;
     };
-    reached: CreateUntil | 'done';
+    reached: CreateUntil | 'done' | 'refused';
+    material?: CreateMaterialCheck;
+    plan?: CreateDurationPlan;
     layers: CreateLayerRecord[];
     counts: {
         sources: number;
@@ -146,6 +196,6 @@ export interface CreateManifest {
     };
     cost: number;
     elapsedMs: number;
-    files: Partial<Record<'request' | 'intake' | 'research' | 'sources' | 'notes' | 'points' | 'brief' | 'script' | 'critique' | 'report', string>>;
+    files: Partial<Record<'request' | 'intake' | 'research' | 'sources' | 'notes' | 'points' | 'brief' | 'script' | 'critique' | 'report' | 'videos' | 'cuts' | 'material', string>>;
     warnings: string[];
 }

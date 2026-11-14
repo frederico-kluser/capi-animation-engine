@@ -1,5 +1,5 @@
 import { type SeatSceneObject } from '../contracts/scene.js';
-import { type DrinkSlot, type DrinkSpec, type PodcastChairId, type PodcastMicId, type ResolvedPodcastSet, type ResolvedSet, type SetId, type SetInput, type SetPiece, type TableItemKind, type TableItemSpec } from '../contracts/set.js';
+import { type DrinkSlot, type DrinkSpec, type FoodSlot, type FoodSpec, type PodcastChairId, type PodcastMicId, type ResolvedPodcastSet, type ResolvedSet, type SetId, type SetInput, type SetPiece, type TableItemKind, type TableItemSpec } from '../contracts/set.js';
 export declare const SET_LABELS: Record<SetId, string>;
 export declare const SET_PIECE_LABELS: Record<SetPiece, string>;
 export declare const PODCAST_CHAIR_LABELS: Record<PodcastChairId, string>;
@@ -13,8 +13,10 @@ export declare const isTableItemKind: (value: unknown) => value is TableItemKind
 export declare const isDrinkSlot: (value: unknown) => value is DrinkSlot;
 export declare function tableItemFrom(raw: unknown, warnings?: string[]): TableItemSpec | null;
 export declare function drinkFrom(raw: unknown, warnings?: string[]): DrinkSpec | undefined;
+export declare const isFoodSlot: (value: unknown) => value is FoodSlot;
+export declare function foodFrom(raw: unknown, warnings?: string[]): FoodSpec | undefined;
 export declare function sceneObjectFrom(raw: unknown, warnings?: string[]): SeatSceneObject | null;
 export declare function resolvePodcastSetOptions(raw: unknown, warnings?: string[]): ResolvedPodcastSet;
-export declare const PODCAST_OPTION_KEYS: readonly ['chairModel', 'micModel', 'micAdjust', 'items', 'drink', 'scene', 'hiddenItems'];
+export declare const PODCAST_OPTION_KEYS: readonly ['chairModel', 'micModel', 'micAdjust', 'items', 'drink', 'food', 'scene', 'hiddenItems'];
 export declare function resolveSet(input: SetInput | undefined | null, warnings?: string[]): ResolvedSet;
 export declare function setHasPieces(set: ResolvedSet | undefined): boolean;

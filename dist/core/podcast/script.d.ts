@@ -4,7 +4,7 @@ import { type ExpressionId } from '../../contracts/face.js';
 import { type OutfitInput } from '../../contracts/outfit.js';
 import { type PodcastActionKind, type PodcastEyesMode, type PodcastSeat, type PodcastTurnKind } from '../../contracts/podcast.js';
 import { type PodcastScene } from '../../contracts/scene.js';
-import { type DrinkSpec, type PodcastChairId, type PodcastMicAdjust, type PodcastMicId, type TableItemKind, type TableItemSpec } from '../../contracts/set.js';
+import { type DrinkSpec, type FoodSpec, type PodcastChairId, type PodcastMicAdjust, type PodcastMicId, type TableItemKind, type TableItemSpec } from '../../contracts/set.js';
 import type { ScriptWord } from '../../contracts/talk.js';
 import { type PoseId } from '../../presets/poses.js';
 import { type GestureMacro } from '../talk/plan.js';
@@ -83,6 +83,7 @@ export interface PodcastScriptSpeaker {
     micAdjust?: PodcastMicAdjust;
     items?: TableItemSpec[];
     drink?: DrinkSpec;
+    food?: FoodSpec;
 }
 export interface PodcastScriptCamera {
     reactions: boolean;
@@ -114,7 +115,7 @@ export interface PodcastScriptCheck {
 }
 export declare const PODCAST_SCRIPT_FIELDS: {
     readonly script: readonly ['version', 'title', 'topic', 'language', 'seed', 'eyes', 'speakers', 'turns', 'camera', 'pace', 'scene'];
-    readonly speaker: readonly ['character', 'name', 'voice', 'tone', 'outfit', 'personality', 'chair', 'micModel', 'micAdjust', 'items', 'drink'];
+    readonly speaker: readonly ['character', 'name', 'voice', 'tone', 'outfit', 'personality', 'chair', 'micModel', 'micAdjust', 'items', 'drink', 'food'];
     readonly turn: readonly ['id', 'speaker', 'text', 'kind', 'start', 'cut', 'tone', 'expression', 'gestures', 'reaction', 'show', 'camera', 'actions'];
     readonly start: readonly ['gapMs', 'after', 'during', 'on', 'offsetMs'];
     readonly cut: readonly ['after'];
@@ -123,6 +124,7 @@ export declare const PODCAST_SCRIPT_FIELDS: {
     readonly camera: readonly ['reactions', 'minShotMs', 'cutDelayMs', 'style', 'multiSeat', 'zooms'];
     readonly pace: readonly ['gapMs'];
     readonly drink: readonly ['kind', 'slot'];
+    readonly food: readonly ['kind', 'slot', 'bites'];
     readonly cameraIntent: readonly ['on', 'until', 'intent', 'framing', 'seat', 'size', 'move', 'angle', 'transition', 'why'];
     readonly action: readonly ['kind', 'on', 'seat', 'why'];
 };
@@ -152,5 +154,8 @@ export declare const PODCAST_SCRIPT_LIMITS: {
 };
 export declare const PODCAST_REACTION_MACROS: readonly GestureMacro[];
 export declare function parsePodcastScript(raw: unknown): PodcastScriptCheck;
+export declare function calmPace(rawPace: unknown): boolean;
 export declare function seatItemKinds(seat: PodcastSeat, speakers: Readonly<Record<PodcastSeat, Pick<PodcastScriptSpeaker, 'items'>>>, scene?: PodcastScene): Set<TableItemKind>;
-export declare function podcastActionProblem(kind: PodcastActionKind, seat: PodcastSeat, speaker: Pick<PodcastScriptSpeaker, 'drink' | 'micModel'>, items: ReadonlySet<TableItemKind>): string | undefined;
+export declare function podcastActionProblem(kind: PodcastActionKind, seat: PodcastSeat, speaker: Pick<PodcastScriptSpeaker, 'drink' | 'micModel'> & {
+    food?: FoodSpec | undefined;
+}, items: ReadonlySet<TableItemKind>): string | undefined;

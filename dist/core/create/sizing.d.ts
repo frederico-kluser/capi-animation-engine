@@ -1,3 +1,4 @@
+import type { BriefPacingId } from '../../contracts/aspects.js';
 import type { ProfileAspect, VideoProfileId } from '../../contracts/profile.js';
 import { type CreateFormatSpec } from './formats.js';
 export interface CreateSizing {
@@ -10,10 +11,12 @@ export interface CreateSizing {
         min: number;
         max: number;
     };
+    pacing: BriefPacingId;
     words: number;
     parts: number;
     turns?: readonly [number, number];
     points: number;
+    concepts: number;
     facts?: number;
     lenses: number;
     research: Readonly<Record<'quick' | 'deep', {

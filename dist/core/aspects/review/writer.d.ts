@@ -3,7 +3,7 @@ import type { VideoProfileId } from '../../../contracts/profile.js';
 import { type ReviewAnalysis, type ReviewAnalysisMoment, type ReviewAnchor, type ReviewBlockInput, type ReviewMode, type ReviewPointMode, type ReviewReactionInput, type ReviewReactionKind, type ReviewScript, type ReviewSubtitles } from '../../../contracts/review.js';
 import type { ReviewDensity } from '../../talk/config.js';
 import { type ReviewParseResult, type ReviewTaskSpec } from './shared.js';
-export declare const WRITER_PROMPT_VERSION = "review-writer-v3";
+export declare const WRITER_PROMPT_VERSION = "review-writer-v4";
 export declare const REVIEW_DENSITY_RATES: Readonly<Record<ReviewDensity, number>>;
 export declare const WRITER_LIMITS: {
     readonly minGapMs: 2500;
@@ -119,6 +119,8 @@ export declare function buildReviewWriterMessages(input: ReviewWriterInput | Rev
     system: string;
     user: string;
 };
+export declare const FOCUS_RULE = "FOCUS ON THE PICTURE (optional): when a block talks about a SMALL detail you can SEE in the video frame where it is anchored \u2014 a number, a price, a name, a logo, a chart label, the fine print \u2014 that is hard to read in the whole picture, add to that block \"focus\": the box of that detail as FRACTIONS of the video frame (x, y = its top-left corner, 0,0 = the top-left of the picture; width, height). While the block is said the camera shows the picture and zooms into that box. Only what you really see in the attached video at that instant, never a guess; never on \"start\" or \"end\"; at most one per block and about one per minute of video. None is fine.";
+export declare const FOCUS_SCHEMA_NOTE = "A block with a focus (rule 14) carries it inside the block: \"focus\": { \"x\": <0-1>, \"y\": <0-1>, \"width\": <0-1>, \"height\": <0-1>, \"why\": \"<= 8 words\" }";
 export declare const REVIEW_SCRIPT_SCHEMA_TALK = "{\n  \"title\": \"a short title for this review\",\n  \"densityNote\": \"ONLY if the request or the note asks for fewer or more comment blocks than the TARGET: what it asked (<= 15 words)\",\n  \"blocks\": [\n    { \"at\": \"start\", \"why\": \"<= 12 words\", \"text\": \"what the anchor says\" },\n    { \"at\": <seconds>, \"mode\": \"pause\" | \"over\", \"moment\": \"<moment id, optional>\", \"why\": \"<= 12 words\", \"text\": \"what the anchor says\" },\n    { \"at\": \"end\", \"why\": \"<= 12 words\", \"text\": \"verdict + goodbye\" }\n  ],\n  \"reactions\": [ { \"at\": <seconds>, \"expression\": \"<id>\", \"macro\": \"agree|deny|laugh\", \"look\": \"tv|camera\", \"camera\": false, \"why\": \"<= 12 words\" } ]\n}";
 export declare const REVIEW_SCRIPT_SCHEMA_PODCAST = "{\n  \"title\": \"a short title for this review\",\n  \"densityNote\": \"ONLY if the request or the note asks for fewer or more comment blocks than the TARGET: what it asked (<= 15 words)\",\n  \"blocks\": [\n    { \"at\": \"start\" | <seconds> | \"end\", \"mode\": \"pause\" | \"over\", \"moment\": \"<moment id, optional>\", \"why\": \"<= 12 words\",\n      \"turns\": [ { \"speaker\": \"host\" | \"guest\", \"text\": \"\u2026\", \"kind\": \"turn | backchannel | interruption | attempt (omit = turn)\", \"on\": \"<a word of the other's previous turn, only for backchannel/interruption/attempt>\" } ] }\n  ],\n  \"reactions\": [ { \"at\": <seconds>, \"seat\": \"host|guest\", \"expression\": \"<id>\", \"macro\": \"agree|deny|laugh\", \"look\": \"tv|camera|other\", \"camera\": false, \"why\": \"<= 12 words\" } ]\n}";
 export declare const momentLine: (m: ReviewAnalysisMoment) => string;

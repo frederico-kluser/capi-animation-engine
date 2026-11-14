@@ -33,6 +33,7 @@ export interface ListenLayer {
     blinks: BlinkEvent[];
     events: ListenEvent[];
     decisions: string[];
+    turnSpans: Array<[number, number]>;
 }
 export interface ListenInput {
     seat: PodcastSeat;
@@ -47,5 +48,9 @@ export interface ListenInput {
     occupied?: ReadonlyArray<readonly [number, number]>;
     endMs?: number;
     tvLook?: Point;
+    gaze?: {
+        spans: ReadonlyArray<readonly [number, number]>;
+        look: Point;
+    };
 }
 export declare function listenLayer(input: ListenInput): ListenLayer;

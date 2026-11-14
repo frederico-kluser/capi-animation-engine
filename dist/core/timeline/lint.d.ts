@@ -12,5 +12,6 @@ export interface TimelineIssue {
 }
 export interface LintOptions {
     base?: PoseInput;
+    mouthY?: number;
 }
 export declare function lintTimeline(spec: TimelineSpec, options?: LintOptions): TimelineIssue[];

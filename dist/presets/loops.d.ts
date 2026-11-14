@@ -1,10 +1,22 @@
 import type { Pose, PoseInput } from '../contracts/pose.js';
 import { type PoseId } from './poses.js';
+export type LoopGroup = 'head' | 'body' | 'armLeft' | 'armRight';
+export declare const LOOP_GROUPS: readonly ["head", "body", "armLeft", "armRight"];
+export interface LoopTap {
+    atMs: number;
+    part: LoopGroup;
+    amp?: number;
+    ms?: number;
+}
 export interface PoseLoop {
     swing: Pose;
     periodMs: number;
     cycles: number;
+    taps?: readonly LoopTap[];
+    pressMs?: number;
+    sustain?: boolean;
 }
+export declare const LOOP_SUSTAIN_READ_MS = 600;
 export type LoopMode = 'timeline' | 'repeat';
 export declare function mirrorLoop(loop: PoseLoop): PoseLoop;
 export declare const WAVE_RIGHT_SWING: Pose;
@@ -40,21 +52,40 @@ export declare const CALM_DOWN_SWING: Pose;
 export declare const MUSCLE_FLEX_SWING: Pose;
 export declare const BRING_IT_IN_SWING: Pose;
 export declare const DOUBLE_PEACE_SWING: Pose;
+export declare const LAPTOP_TYPING: {
+    periodMs: number;
+    pressMs: number;
+    taps: readonly LoopTap[];
+};
+export declare const LAPTOP_MOUSE_MOVES: {
+    readonly periodMs: number;
+    readonly taps: readonly LoopTap[];
+};
+export declare const LAPTOP_CLICKS: {
+    readonly periodMs: number;
+    readonly taps: readonly LoopTap[];
+};
 export declare const LAPTOP_TYPE_SWING: Pose;
 export declare const LAPTOP_MOUSE_SWING: Pose;
 export declare const LAPTOP_CLICK_SWING: Pose;
+export declare const LAPTOP_LOOK_SWING: Pose;
 export declare const LAPTOP_EXPLAIN_SWING: Pose;
 export declare const LAPTOP_POINT_SWING: Pose;
 export declare const LAPTOP_ALIEN_TYPE_SWING: Pose;
 export declare const LAPTOP_ALIEN_MOUSE_SWING: Pose;
 export declare const LAPTOP_ALIEN_CLICK_SWING: Pose;
+export declare const LAPTOP_ALIEN_LOOK_SWING: Pose;
 export declare const LAPTOP_ALIEN_EXPLAIN_SWING: Pose;
 export declare const LAPTOP_ALIEN_POINT_SWING: Pose;
 export declare const LAPTOP_THINKPAD_TYPE_SWING: Pose;
 export declare const LAPTOP_THINKPAD_MOUSE_SWING: Pose;
 export declare const LAPTOP_THINKPAD_CLICK_SWING: Pose;
+export declare const LAPTOP_THINKPAD_LOOK_SWING: Pose;
 export declare const LAPTOP_THINKPAD_EXPLAIN_SWING: Pose;
 export declare const LAPTOP_THINKPAD_POINT_SWING: Pose;
+export declare const BRUSH_OFF_SWING: Pose;
+export declare const FINGER_WAG_SWING: Pose;
+export declare const TAP_TEMPLE_SWING: Pose;
 export declare const POSE_LOOPS: Partial<Record<PoseId, PoseLoop>>;
 export declare const OFFICIAL_POSE_LOOPS: Readonly<Partial<Record<PoseId, PoseLoop>>>;
 export declare const DERIVED_LOOPS: Readonly<Partial<Record<PoseId, {
@@ -62,5 +93,7 @@ export declare const DERIVED_LOOPS: Readonly<Partial<Record<PoseId, {
 }>>>;
 export declare function buildLoops(official: Readonly<Partial<Record<PoseId, PoseLoop>>>, versions: Readonly<Partial<Record<string, PoseLoop>>>): Partial<Record<PoseId, PoseLoop>>;
 export declare function poseLoop(input: PoseInput | undefined): PoseLoop | undefined;
-export declare function loopWeight(loop: Pick<PoseLoop, 'periodMs' | 'cycles'>, sinceMs: number, mode: LoopMode): number;
+export declare function loopWeight(loop: Pick<PoseLoop, 'periodMs' | 'cycles'> & Partial<Pick<PoseLoop, 'taps' | 'pressMs' | 'sustain'>>, sinceMs: number, mode: LoopMode): number;
+export declare function loopWeights(loop: Pick<PoseLoop, 'periodMs' | 'cycles'> & Partial<Pick<PoseLoop, 'taps' | 'pressMs' | 'sustain'>>, sinceMs: number, mode: LoopMode): Record<LoopGroup, number>;
 export declare function loopDurationMs(loop: Pick<PoseLoop, 'periodMs' | 'cycles'>): number;
+export declare function loopActiveUntilMs(loop: Pick<PoseLoop, 'periodMs' | 'cycles'> & Partial<Pick<PoseLoop, 'sustain'>>, arrivalMs: number, nextAtMs?: number): number;
