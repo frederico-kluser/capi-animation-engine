@@ -1,6 +1,6 @@
 {
   "name": "capi-animation-engine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Motor vetorial 60fps do Capi e do elenco (âncora, capivara, burro, cachorro, gato, papagaio, macaco, leão e Einstein): renderiza animações SVG sincronizadas ao áudio a partir do movement.json encriptado (ChaCha20-ARX) com o áudio embutido, e blindagem anti-engenharia-reversa.",
   "type": "module",
   "main": "./dist/index.js",
