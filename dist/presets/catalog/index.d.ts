@@ -9,7 +9,10 @@ export { EXPRESSION_CARDS, expressionCard, expressionFacts, expressionPoses, pos
 export { CAMERA_BUDGET_KINDS, CAMERA_CARDS, CAMERA_CARD_IDS, CAMERA_CARD_LABELS, CAMERA_FAST_MOVES, CAMERA_NEED_IDS, cameraBudgetPerMinute, cameraCard, cameraCardsMissing, cameraCatalogComplete, cameraResourceOf, cameraShapeOf, cameraShotLimits, cameraVocabulary, checkCameraSequence, fitCameraShape, } from './camera.js';
 export type { CameraBudgetKind, CameraNeedId, CameraShape, CameraVocabulary, CameraVocabularyRequest, SequenceIssue, SequencedIntent } from './camera.js';
 export { CAMERA_CATALOG_SECTIONS, CATALOG_SECTIONS, catalogSection } from './sections.js';
-export { cameraCardsOf, cameraCatalogLegend, cameraCatalogText, catalogTextSize, expressionCatalogText, gestureRecipesText, poseCatalogLegend, poseCatalogText, poseCatalogTextFor } from './text.js';
+export { cameraCardsOf, cameraCatalogLegend, cameraCatalogText, catalogTextSize, expressionCatalogText, gestureFinderText, gestureRecipesText, poseCatalogLegend, poseCatalogText, poseCatalogTextFor } from './text.js';
 export { POSE_EXAMPLES, POSE_MOTION } from './pose-uses.js';
 export { GESTURE_RECIPES } from './gesture-recipes.js';
+export { GESTURE_INTENTS, POSE_COUNTER, poseIntents } from './gesture-intents.js';
+export { foldCue, gestureHintsText, scriptGestureHints } from './hints.js';
+export type { GestureHintOptions, HintWord } from './hints.js';
 export type { CameraCatalogRequest, ExpressionCatalogTextOptions, PoseCatalogTextOptions } from './text.js';

@@ -2,7 +2,7 @@ import type { CharacterId } from './character.js';
 import type { OutfitInput } from './outfit.js';
 import type { PodcastSeat } from './podcast.js';
 import type { VideoProfileId } from './profile.js';
-import type { ReviewAspect, ReviewRect } from './review.js';
+import type { ReviewAnchor, ReviewAspect, ReviewRect } from './review.js';
 export declare const TUTORIAL_PLAN_VERSION = 1;
 export interface TutorialScreen {
     width: number;
@@ -309,10 +309,15 @@ export interface TutorialOverlay {
         enabled?: boolean;
         scale?: number;
     };
+    visits?: TutorialOverlayVisit[];
+    study?: {
+        url: string;
+        blocks: string[];
+    };
 }
 export declare const TUTORIAL_LAPTOP_MODELS: readonly ['orange', 'alien', 'thinkpad'];
 export type TutorialLaptopModel = (typeof TUTORIAL_LAPTOP_MODELS)[number];
-export declare const TUTORIAL_BLOCK_ROLES: readonly ['intro', 'scene', 'announce', 'predict', 'explain', 'card', 'analogy', 'think', 'recap', 'outro'];
+export declare const TUTORIAL_BLOCK_ROLES: readonly ['intro', 'scene', 'visit', 'announce', 'predict', 'explain', 'card', 'analogy', 'think', 'recap', 'outro'];
 export type TutorialBlockRole = (typeof TUTORIAL_BLOCK_ROLES)[number];
 export interface TutorialZoomKey {
     atMs: number;
@@ -320,6 +325,7 @@ export interface TutorialZoomKey {
     cy: number;
     zoom: number;
     transitionMs: number;
+    path?: 'edges';
     why?: string;
 }
 export interface TutorialClickMark {
@@ -350,6 +356,11 @@ export interface CompiledTutorial {
     cards: TutorialCardWindow[];
     steps?: Array<{
         label: string;
+        fromMs: number;
+        toMs: number;
+    }>;
+    study?: Array<{
+        url: string;
         fromMs: number;
         toMs: number;
     }>;
@@ -386,6 +397,10 @@ export interface TutorialFrame {
     dim: number;
     step?: {
         label: string;
+        opacity: number;
+    };
+    study?: {
+        url: string;
         opacity: number;
     };
 }
@@ -433,6 +448,22 @@ export interface TutorialCourseLesson {
     role?: TutorialLessonRole;
     module?: string;
     outline?: TutorialLessonOutline;
+    historicalParticipation?: TutorialHistoricalParticipation;
+}
+export interface TutorialHistoricalPersona {
+    id: string;
+    name: string;
+    living: false;
+    kind?: 'pessoa';
+    bio?: string;
+    cautions?: string[];
+}
+export interface TutorialHistoricalParticipation {
+    mode: 'abre' | 'cartao' | 'ensina' | 'debate';
+    fact?: string;
+    bridge: string;
+    learnerQuestion: string;
+    central: string;
 }
 export interface TutorialCourse {
     version: typeof TUTORIAL_COURSE_VERSION;
@@ -451,6 +482,7 @@ export interface TutorialCourse {
     };
     concepts: TutorialConcept[];
     lessons: TutorialCourseLesson[];
+    historicalPersona?: TutorialHistoricalPersona;
     cast: {
         host: TutorialCastMember;
         guest?: TutorialCastMember | null;
@@ -471,13 +503,44 @@ export interface TutorialCourse {
     modules?: TutorialCourseModule[];
     research?: TutorialCourseResearch;
 }
-export declare const TUTORIAL_SEGMENT_KINDS: readonly ['intro', 'scene', 'step', 'card', 'analogy', 'think', 'recap', 'outro'];
+export declare const TUTORIAL_SEGMENT_KINDS: readonly ['intro', 'scene', 'visit', 'step', 'card', 'analogy', 'think', 'recap', 'outro'];
 export type TutorialSegmentKind = (typeof TUTORIAL_SEGMENT_KINDS)[number];
 export interface TutorialTurn {
     speaker: PodcastSeat;
     text: string;
     tone?: string;
     thinkMs?: number;
+}
+export type TutorialVisitSpeaker = PodcastSeat | 'visitor';
+export interface TutorialVisitTurn extends Omit<TutorialTurn, 'speaker'> {
+    speaker: TutorialVisitSpeaker;
+}
+export interface TutorialVisitor {
+    id: string;
+    name: string;
+    role?: string;
+    introduce?: boolean;
+}
+export interface TutorialVisitorCast extends TutorialVisitor {
+    character: CharacterId;
+    voice?: string;
+    tone?: string;
+    outfit?: OutfitInput;
+    personality?: string;
+}
+export interface TutorialVisitLine {
+    id: string;
+    text: string;
+    tone?: string;
+    thinkMs?: number;
+    at: ReviewAnchor;
+    after?: string;
+}
+export interface TutorialOverlayVisit {
+    segment: string;
+    visitor: TutorialVisitorCast;
+    blocks: string[];
+    lines: TutorialVisitLine[];
 }
 export interface TutorialAnalogy {
     title: string;
@@ -504,6 +567,10 @@ export interface TutorialSegment {
     afterTurns?: TutorialTurn[];
     card?: Omit<TutorialCard, 'id'>;
     focusResult?: string;
+    visit?: {
+        visitor: string;
+        turns: TutorialVisitTurn[];
+    };
     label?: string;
     analogy?: TutorialAnalogy;
     question?: TutorialQuestion;
@@ -527,15 +594,21 @@ export interface TutorialLesson {
         statement: string;
         solution?: string;
     };
+    visitors?: TutorialVisitor[];
     source?: {
         createdAt?: string;
         model?: string;
         note?: string;
+        request?: string;
+        parts?: Record<string, {
+            model?: string;
+            cached?: boolean;
+        }>;
     };
 }
 export declare const TUTORIAL_FIX_KINDS: readonly ['reorder', 'split', 'add-card', 'demonstrate', 'practice', 'declare', 'fix'];
 export type TutorialFixKind = (typeof TUTORIAL_FIX_KINDS)[number];
-export declare const TUTORIAL_GATE_IDS: readonly ['T0-forma', 'T1-ordem', 'T2-termos', 'T3-micro', 'T4-demonstra', 'T5-revisao', 'T6-cartao', 'D1-dupla', 'D2-analogia', 'D3-prever', 'D4-pensar', 'D5-ritmo', 'D6-cena', 'D7-recuperar', 'D8-passos', 'D9-conceito', 'D10-erro', 'D11-direcao', 'E0-entrada', 'O1-esboco', 'O2-pratica'];
+export declare const TUTORIAL_GATE_IDS: readonly ['T0-forma', 'T1-ordem', 'T2-termos', 'T3-micro', 'T4-demonstra', 'T5-revisao', 'T6-cartao', 'D1-dupla', 'D2-analogia', 'D3-prever', 'D4-pensar', 'D5-ritmo', 'D6-cena', 'D7-recuperar', 'D8-passos', 'D9-conceito', 'D10-erro', 'D11-direcao', 'E0-entrada', 'O1-esboco', 'O2-pratica', 'A1-abertura', 'A2-apresentacao', 'A3-visita', 'A4-exercicios', 'A5-compasso', 'A6-numeros'];
 export type TutorialGateId = (typeof TUTORIAL_GATE_IDS)[number];
 export interface TutorialFinding {
     gate: TutorialGateId;
@@ -630,6 +703,7 @@ export interface TutorialCourseBrief {
     lessons?: number;
     tech: TutorialOutlinePlace;
     notes?: string;
+    historicalPersona?: TutorialHistoricalPersona;
     language: string;
     cast: {
         host: TutorialCastMember;

@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import type { CharacterId, EyeStyle } from '../contracts/character.js';
 import type { BrowShape, EyeShape, MouthShape, ResolvedFace } from '../contracts/face.js';
 import type { Point } from '../contracts/pose.js';
+import { type CoatSpec } from './coat.js';
 import { type EyeLidBand } from './eyes.js';
 import type { Palette } from './palette.js';
 export interface AnimalFaceMeasures {
@@ -110,7 +111,17 @@ export type Whiskers = {
     kind: 'dots';
     points: readonly Point[];
     radius: number;
-};
+} | WhiskerStrands;
+export interface WhiskerStrands {
+    kind: 'strands';
+    roots: readonly Point[];
+    angles: readonly number[];
+    lengths: readonly number[];
+    lift: number;
+    droop: number;
+    stroke: number;
+    dots: number;
+}
 export declare const CAPYBARA_FACE: AnimalFaceMeasures;
 export declare const ANIMAL_FACES: Partial<Record<CharacterId, Partial<AnimalFaceMeasures>>>;
 export declare function animalFaceOf(id: CharacterId): AnimalFaceMeasures;
@@ -160,6 +171,29 @@ export declare function FacePatches(props: {
     light: Point;
     jawGap?: number;
 }): ReactElement | null;
+export declare function facePlaneLight(head: {
+    turn: number;
+    nod: number;
+    tilt: number;
+}): Point;
+export interface WhiskerStrand {
+    side: -1 | 1;
+    root: Point;
+    ctrl: Point;
+    tip: Point;
+    ctrlLift: number;
+    tipLift: number;
+    stroke: number;
+}
+export declare function whiskerStrands(whiskers: WhiskerStrands): WhiskerStrand[];
+export declare function WhiskersOver(props: {
+    measures: AnimalFaceMeasures;
+    palette: Palette;
+    head: {
+        turn: number;
+        nod: number;
+    };
+}): ReactElement | null;
 export declare function faceLight(tilt: number): Point;
 export declare function AnimalEyes(props: {
     face: ResolvedFace;
@@ -172,6 +206,8 @@ export declare function AnimalEyes(props: {
         id: string;
         d: string;
     } | undefined;
+    sparkle?: number | undefined;
+    anime?: CoatSpec['eye'];
 }): ReactElement;
 export declare function AnimalBrows(props: {
     face: ResolvedFace;
@@ -193,5 +229,6 @@ export interface CapybaraFaceArtProps {
         d: string;
     } | undefined;
     measures?: AnimalFaceMeasures | undefined;
+    coat?: CoatSpec | undefined;
 }
-export declare function CapybaraFaceArt({ face, palette, eyes: style, ids, head, eyeClip, measures }: CapybaraFaceArtProps): ReactElement;
+export declare function CapybaraFaceArt({ face, palette, eyes: style, ids, head, eyeClip, measures, coat }: CapybaraFaceArtProps): ReactElement;

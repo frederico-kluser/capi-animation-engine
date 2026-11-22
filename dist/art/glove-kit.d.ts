@@ -333,6 +333,75 @@ export declare const HAND_SPECS: {
             readonly out: true;
         };
     };
+    readonly spread: {
+        readonly fingers: readonly [FingerSpec, FingerSpec, FingerSpec, FingerSpec];
+        readonly thumb: {
+            readonly from: readonly [18, -28];
+            readonly to: readonly [30, -86];
+            readonly r: readonly [14.5, 12];
+            readonly bend: -3;
+            readonly out: true;
+        };
+    };
+    readonly beckon: {
+        readonly fingers: readonly [{
+            readonly ext: 0.7;
+            readonly dir: -10;
+            readonly bend: 17;
+            readonly len: 1.2;
+            readonly fat: 1.16;
+        }, FingerSpec, FingerSpec, FingerSpec];
+        readonly thumb: ThumbSpec;
+    };
+    readonly beak: {
+        readonly fingers: readonly [FingerSpec, FingerSpec, FingerSpec, FingerSpec];
+        readonly thumb: {
+            readonly from: readonly [16, -30];
+            readonly to: readonly [110, -47];
+            readonly r: readonly [14.5, 11];
+            readonly bend: -11;
+            readonly out: true;
+        };
+    };
+    readonly rub: {
+        readonly fingers: readonly [{
+            readonly ext: 1;
+            readonly dir: 9;
+            readonly bend: 9;
+            readonly len: 0.9;
+            readonly fat: 1.05;
+        }, {
+            readonly ext: 0.97;
+            readonly dir: 9;
+            readonly bend: 9;
+            readonly len: 0.86;
+            readonly fat: 1.03;
+        }, FingerSpec, FingerSpec];
+        readonly thumb: {
+            readonly from: readonly [16, -32];
+            readonly to: readonly [90, -46];
+            readonly r: readonly [14.5, 11];
+            readonly bend: -12;
+            readonly out: true;
+        };
+    };
+    readonly snap: {
+        readonly fingers: readonly [FingerSpec, {
+            readonly ext: 0.96;
+            readonly dir: 6;
+            readonly bend: 12;
+            readonly len: 0.92;
+            readonly fat: 1.05;
+        }, FingerSpec, FingerSpec];
+        readonly thumb: {
+            readonly from: readonly [16, -32];
+            readonly to: readonly [96, -22];
+            readonly r: readonly [14.5, 11.5];
+            readonly bend: -16;
+            readonly out: true;
+            readonly layer: 'over';
+        };
+    };
 };
 export type RiggedHandShape = keyof typeof HAND_SPECS;
 export declare const GLOVE_KIT_NAMES: readonly ['backDarts', 'BASE', 'bean', 'blob', 'CHIN_PALM', 'creaseShape', 'curled', 'disc', 'ext', 'finger', 'FIST_BACK', 'FIST_BODY', 'FR', 'FRONT_TIP', 'FY', 'gaps', 'glove', 'HAND_FINGERS', 'HAND_PALM', 'HAND_RIG', 'HAND_SPECS', 'knuckleCreases', 'knuckles', 'outlineOf', 'PALM', 'palmCrease', 'piece', 'POINT_R', 'POINT_TIP', 'pointer', 'ring', 'SIDE_FIST', 'smooth', 'TAPER', 'tendons', 'thumb', 'thumbOut', 'together'];

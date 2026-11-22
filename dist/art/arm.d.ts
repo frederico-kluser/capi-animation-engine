@@ -1,5 +1,7 @@
 import type { ReactElement } from 'react';
 import { type Side, type SolvedArm } from '../contracts/pose.js';
+import { type CoatKind } from './coat.js';
+import { type VictorianSleevePattern } from './victorian-dress.js';
 export interface SleeveTone {
     base: string;
     shade: string;
@@ -19,7 +21,7 @@ export type SleevePattern = {
 } | {
     kind: 'stripes';
     color: string;
-};
+} | VictorianSleevePattern;
 export interface SleeveWear {
     tone: SleeveTone;
     pattern?: SleevePattern | undefined;
@@ -33,6 +35,7 @@ export interface SleeveWear {
         } | undefined;
     } | undefined;
     skin: SleeveTone;
+    coat?: CoatKind | undefined;
 }
 export declare const BARE_ARM_SCALE = 0.8;
 export declare const forearmPath: (arm: SolvedArm, sleeve?: SleeveWear) => string;

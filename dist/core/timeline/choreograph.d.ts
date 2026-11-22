@@ -30,6 +30,8 @@ export declare const CHOREOGRAPHY: {
     readonly takeHeadNod: -8;
     readonly takeHeadY: -8;
     readonly takeFaceMs: 140;
+    readonly aimLook: 0.75;
+    readonly aimLookHoldMs: 520;
 };
 export type BeatAccent = 'soft' | 'normal' | 'strong';
 export interface Beat {
@@ -40,6 +42,7 @@ export interface Beat {
     nod?: boolean | number;
     take?: boolean;
     accent?: BeatAccent;
+    aim?: Point;
 }
 export interface ChoreographOptions {
     base?: PoseInput;

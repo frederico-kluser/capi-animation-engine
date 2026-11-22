@@ -29,6 +29,11 @@ export interface SuitTone {
     tie: string;
     tieShade: string;
     tieStripe?: string | undefined;
+    tieDots?: string | undefined;
+    vest?: {
+        base: string;
+        shade: string;
+    } | undefined;
 }
 export interface TorsoProps {
     turn: number;

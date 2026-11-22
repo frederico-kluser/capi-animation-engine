@@ -4,6 +4,7 @@ import type { CaptionStyleId } from './captions.js';
 import type { CharacterId } from './character.js';
 import type { OutfitInput } from './outfit.js';
 import type { VideoProfileId } from './profile.js';
+import type { CompiledReviewVisit } from './review.js';
 import type { PodcastScene } from './scene.js';
 import type { DrinkSpec, FoodSpec, PodcastChairId, PodcastMicAdjust, PodcastMicId, SetPieces, TableItemSpec } from './set.js';
 import type { TimelineSpec } from './timeline.js';
@@ -111,6 +112,52 @@ export interface PodcastScript {
     camera?: PodcastCameraInput;
     pace?: PodcastPaceInput;
     scene?: PodcastScene;
+    visitor?: PodcastVisitorInput;
+}
+export interface PodcastVisitorInput {
+    id?: string;
+    character?: string;
+    name: string;
+    role?: string;
+    voice?: string;
+    tone?: string;
+    outfit?: OutfitInput;
+    personality?: string;
+}
+export interface PodcastVisitTurnInput {
+    id?: string;
+    speaker: 'visitor';
+    text: string;
+    tone?: string;
+}
+export interface PodcastVisitorSpec {
+    id: string;
+    name: string;
+    role?: string;
+    character: CharacterId;
+    outfit?: OutfitInput;
+    voice?: string;
+    tone?: string;
+}
+export interface PodcastVisitLineSpec {
+    id: string;
+    text: string;
+    after?: string;
+    atMs: number;
+    audio: PodcastClip;
+    speechStartMs: number;
+    speechEndMs: number;
+    words: Array<{
+        text: string;
+        startMs: number;
+        endMs: number;
+    }>;
+    visemes: PodcastVisemeSpec[];
+    tone?: string;
+}
+export interface PodcastVisitSpec {
+    visitor: PodcastVisitorSpec;
+    lines: PodcastVisitLineSpec[];
 }
 export interface PodcastWordSpec {
     text: string;
@@ -284,6 +331,7 @@ export interface PodcastSpec {
         score?: number;
         elapsedMs?: number;
     }>;
+    visit?: PodcastVisitSpec;
 }
 export interface PodcastShot extends Partial<Omit<CameraShot, 'fromMs' | 'toMs' | 'seat'>> {
     fromMs: number;
@@ -315,6 +363,7 @@ export interface CompiledPodcast {
     warnings: string[];
     profile?: VideoProfileId;
     cameraFit?: PodcastCameraFit[];
+    visit?: CompiledReviewVisit;
 }
 export interface PodcastCameraFit {
     fromMs: number;

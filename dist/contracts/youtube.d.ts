@@ -1,3 +1,4 @@
+import type { ContentLanguageId } from './languages.js';
 import type { VideoProfileId } from './profile.js';
 export declare const YOUTUBE_PRIVACY: readonly ['private', 'unlisted', 'public'];
 export type YouTubePrivacy = (typeof YOUTUBE_PRIVACY)[number];
@@ -35,7 +36,16 @@ export declare const YOUTUBE_QUOTA: {
         readonly 'captions.insert': 400;
         readonly 'captions.list': 50;
         readonly 'playlistItems.insert': 50;
+        readonly 'playlistItems.list': 1;
+        readonly 'playlists.insert': 50;
+        readonly 'commentThreads.insert': 50;
         readonly 'videos.update': 50;
+        readonly 'captions.update': 450;
+        readonly 'captions.delete': 50;
+        readonly 'captions.download': 200;
+        readonly 'playlistItems.update': 50;
+        readonly 'playlistItems.delete': 50;
+        readonly 'commentThreads.list': 1;
         readonly 'videos.list': 1;
         readonly 'channels.list': 1;
         readonly 'playlists.list': 1;
@@ -58,11 +68,21 @@ export interface YouTubeMetadata {
     embeddable: boolean;
     publicStatsViewable: boolean;
     notifySubscribers: boolean;
+    localizations?: Record<string, YouTubeLocalizedMetadata>;
+}
+export interface YouTubeLocalizedMetadata {
+    title: string;
+    description: string;
 }
 export interface YouTubePublishOptions {
     thumbnail: boolean;
     captions: boolean;
     playlistId?: string;
+    captionLanguages?: string[];
+    metadataLanguages?: string[];
+    comment?: boolean;
+    linkBack?: boolean;
+    seriesPlaylist?: boolean;
 }
 export interface YouTubeDraft {
     version: 1;
@@ -103,6 +123,25 @@ export interface YouTubePublication {
     thumbnail: YouTubeStepOutcome;
     captions: YouTubeStepOutcome;
     playlist: YouTubeStepOutcome;
+    language?: string;
+    translations?: Record<string, YouTubeStepOutcome>;
+    localizations?: string[];
+    comment?: YouTubeStepOutcome;
+    seriesPlaylist?: YouTubeStepOutcome & {
+        playlistId?: string;
+        title?: string;
+    };
+    links?: Array<{
+        videoId: string;
+        title?: string;
+        relation: YouTubeLinkRelation;
+        outcome: YouTubeStepOutcome;
+    }>;
+    dubOf?: {
+        run: string;
+        videoId?: string;
+        language?: string;
+    };
     warnings: string[];
     elapsedMs: number;
     bytes: number;
@@ -114,9 +153,64 @@ export interface YouTubeUploadProgress {
     total: number;
     rate?: number;
 }
-export declare const YOUTUBE_PUBLISH_STAGES: readonly ['prepare', 'render', 'upload', 'thumbnail', 'captions', 'playlist', 'processing', 'record'];
+export declare const YOUTUBE_PUBLISH_STAGES: readonly ['prepare', 'render', 'translate', 'upload', 'thumbnail', 'captions', 'playlist', 'processing', 'comment', 'links', 'record'];
 export type YouTubePublishStage = (typeof YOUTUBE_PUBLISH_STAGES)[number];
 export declare const YOUTUBE_STAGE_LABELS: Readonly<Record<YouTubePublishStage, string>>;
+export declare const YOUTUBE_LINK_RELATIONS: readonly ['next', 'previous', 'translation', 'original', 'related', 'full'];
+export type YouTubeLinkRelation = (typeof YOUTUBE_LINK_RELATIONS)[number];
+export interface YouTubeVideoLink {
+    videoId: string;
+    title: string;
+    url: string;
+    relation: YouTubeLinkRelation;
+    language?: string;
+    why?: string;
+}
+export interface YouTubeCatalogVideo {
+    videoId: string;
+    title: string;
+    summary: string;
+    publishedAt: string;
+    privacy: string;
+    publishAt?: string;
+    durationSec: number | null;
+    format: YouTubeFormat | null;
+    tags: string[];
+    categoryId?: string;
+    audioLanguage?: string;
+    textLanguage?: string;
+    localizations: string[];
+    views?: number;
+    likes?: number;
+    comments?: number;
+    playlists: string[];
+    url: string;
+    run?: string;
+    kind?: YouTubeSourceKind;
+    course?: {
+        id?: string;
+        title?: string;
+        number?: number;
+    };
+    dubOf?: string;
+}
+export interface YouTubeCatalogPlaylist {
+    id: string;
+    title: string;
+    count: number;
+    privacy: string;
+}
+export interface YouTubeCatalog {
+    version: 1;
+    kind: 'capi-youtube-catalog';
+    account: string;
+    channel: YouTubeChannel | null;
+    uploadsPlaylist: string;
+    syncedAt: string;
+    videos: YouTubeCatalogVideo[];
+    playlists: YouTubeCatalogPlaylist[];
+    quota: number;
+}
 export type YouTubePublishEvent = {
     type: 'event';
     stage: YouTubePublishStage;
@@ -162,7 +256,7 @@ export interface YouTubePackaging {
     model?: string;
     cost?: number;
     createdAt: string;
-    language: 'pt-BR';
+    language: ContentLanguageId;
     profile: VideoProfileId;
     durationMs: number;
     titles: string[];
@@ -178,6 +272,23 @@ export interface YouTubePackaging {
     pinnedComment?: string;
     thumbnail: YouTubeThumbnailText;
     warnings: string[];
+    localizations?: Partial<Record<ContentLanguageId, YouTubePackagingLocalization>>;
+    dub?: {
+        of: string;
+        from: ContentLanguageId;
+    };
+}
+export interface YouTubePackagingLocalization {
+    titles: string[];
+    description: string;
+    chapters: string[];
+    hashtags: string[];
+    tags: string[];
+    pinnedComment?: string;
+    thumbnailLines?: string[];
+    source: 'llm';
+    model?: string;
+    createdAt: string;
 }
 export interface YouTubeSetting {
     id: string;
@@ -197,6 +308,10 @@ export interface YouTubeUploadKit {
     profile: VideoProfileId;
     short: boolean;
     durationMs: number;
+    skip?: {
+        atMs: number;
+        spanMs: number;
+    };
     files: {
         video: string[];
         thumbnail?: string;
@@ -218,5 +333,9 @@ export interface YouTubeUploadKit {
     pinnedComment?: string;
     settings: YouTubeSetting[];
     packaging: 'llm' | 'fallback';
+    language?: ContentLanguageId;
+    links?: YouTubeVideoLink[];
+    localizations?: Record<string, YouTubeLocalizedMetadata>;
+    translatedCaptions?: Record<string, string>;
     warnings: string[];
 }

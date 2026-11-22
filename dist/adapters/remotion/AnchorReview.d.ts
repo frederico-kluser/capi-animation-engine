@@ -3,10 +3,12 @@ import type { PodcastAudioClip, PodcastSeat } from '../../contracts/podcast.js';
 import { type Point } from '../../contracts/pose.js';
 import type { VideoProfileId } from '../../contracts/profile.js';
 import type { Scenario } from '../../contracts/scenario.js';
-import type { CompiledReview, CompiledReviewSeat, ReviewAspect, ReviewCommentary, ReviewFrame, ReviewRect, ReviewSegment, ReviewSpec, ReviewStageLayout, SubtitleWord } from '../../contracts/review.js';
+import type { CompiledReview, CompiledReviewSeat, ReviewAspect, ReviewCommentary, ReviewFrame, ReviewRect, ReviewSpec, ReviewStageLayout, SubtitleWord } from '../../contracts/review.js';
 import { type ResolvedAnchorState } from '../../contracts/state.js';
 import type { CompiledTimeline } from '../../contracts/timeline.js';
 import { type ReviewScreenFill } from '../../art/review-stage.js';
+import { tutorialCardRect } from '../../core/tutorial/card.js';
+import { reviewVideoPlan, type ReviewVideoPiece } from '../../core/review/video-plan.js';
 import { type AnchorProps } from '../../render/Anchor.js';
 import { type ScenarioMediaRender } from '../../render/ScenarioBackdrop.js';
 export type ReviewBackground = {
@@ -71,16 +73,8 @@ export interface AnchorReviewProps {
     screen?: 'video' | 'off';
     profile?: VideoProfileId;
 }
-export interface ReviewVideoPiece {
-    kind: 'play' | 'hold';
-    from: number;
-    durationInFrames: number;
-    trimBefore?: number;
-    freezeFrame?: number;
-    fromMs: number;
-    toMs: number;
-}
 export type ReviewSeatAnchorProps = Pick<AnchorProps, 'timeline' | 'frame' | 'fps' | 'seed' | 'character' | 'outfit' | 'mirror' | 'set' | 'pose' | 'expression' | 'title'>;
+export { reviewVideoPlan, type ReviewVideoPiece };
 export declare function reviewAspectOf(spec: Pick<ReviewSpec, 'layout'> | undefined, aspect?: ReviewAspect, profile?: VideoProfileId): ReviewAspect;
 export declare function reviewProfileOf(spec: Pick<ReviewSpec, 'profile'> | undefined, profile?: VideoProfileId): VideoProfileId | undefined;
 export declare function reviewLayoutOf(spec: Pick<ReviewSpec, 'layout' | 'mode' | 'tutorial'> | undefined, commentary: Pick<ReviewCommentary, 'kind'> | undefined, aspect?: ReviewAspect): ReviewStageLayout;
@@ -97,7 +91,6 @@ export declare function reviewSeatAnchorProps(seat: CompiledReviewSeat, timeline
     fps: number;
     title?: string;
 }): ReviewSeatAnchorProps;
-export declare function reviewVideoPlan(segments: readonly ReviewSegment[], fps: number): ReviewVideoPiece[];
 export declare function reviewVideoVolumeAt(compiled: Pick<CompiledReview, 'segments' | 'duck'>, timeMs: number, audio?: {
     videoGainDb?: number;
     duckDb?: number;
@@ -108,6 +101,7 @@ export declare function reviewCommentaryClips(commentary: ReviewCommentary, opti
     tvLook?: Point;
     durationMs?: number;
 }): PodcastAudioClip[];
+export declare function reviewVisitClips(compiled: Pick<CompiledReview, 'visit'>): PodcastAudioClip[];
 export interface ReviewPanelDraw {
     seat: PodcastSeat;
     rect: ReviewRect;
@@ -123,8 +117,7 @@ export declare function reviewPanelDraws(frame: Pick<ReviewFrame, 'panels' | 'cr
     height: number;
 }): ReviewPanelDraw[];
 export declare function screenZoomStyle(view: ReviewRect): CSSProperties;
-export declare function tutorialCardRect(layout: Pick<ReviewStageLayout, 'width' | 'height' | 'seats'>, card?: {
-    overScreen?: boolean;
-}): ReviewRect;
+export { visitHeadTop, visitViewBox } from './VisitCall.js';
+export { tutorialCardRect };
 export declare function ReviewFrameView(props: ReviewFrameViewProps): ReactElement;
 export declare const AnchorReview: (props: AnchorReviewProps) => ReactElement;

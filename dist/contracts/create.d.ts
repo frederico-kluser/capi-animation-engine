@@ -14,6 +14,7 @@ export declare const CREATE_AUDIENCES: readonly ['beginner', 'general', 'expert'
 export type CreateAudience = (typeof CREATE_AUDIENCES)[number];
 export declare const CREATE_UNTIL_STEPS: readonly ['brief', 'script', 'points'];
 export type CreateUntil = (typeof CREATE_UNTIL_STEPS)[number];
+export declare const CREATE_STUDY_FORMATS: readonly ["lesson", "practical-lesson"];
 export interface CreateSourceInput {
     kind: 'text' | 'url';
     value: string;
@@ -54,6 +55,7 @@ export interface CreateRequest {
     varyVoice?: boolean;
     cta?: boolean;
     scenario?: string;
+    study?: boolean;
     video?: string;
     subtitles?: string;
     videos?: CreateVideoInput[];
@@ -172,6 +174,16 @@ export interface CreateDurationPlan {
     reason: string;
     dropped?: string[];
 }
+export interface CreateStudyOutcome {
+    wanted: boolean;
+    state: 'ready' | 'pending' | 'declined' | 'failed';
+    path?: string;
+    url?: string;
+    localUrl?: string;
+    pending?: string;
+    error?: string;
+    cost?: number;
+}
 export interface CreateManifest {
     version: 1;
     name: string;
@@ -186,6 +198,7 @@ export interface CreateManifest {
     reached: CreateUntil | 'done' | 'refused';
     material?: CreateMaterialCheck;
     plan?: CreateDurationPlan;
+    study?: CreateStudyOutcome;
     layers: CreateLayerRecord[];
     counts: {
         sources: number;

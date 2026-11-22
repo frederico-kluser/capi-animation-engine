@@ -1,4 +1,4 @@
-import { type BodyPose, type HeadPose, type PoseChannels, type Point, type Side, type SolvedPose } from '../contracts/pose.js';
+import { type BodyPose, type HandShape, type HeadPose, type PoseChannels, type Point, type Side, type SolvedPose } from '../contracts/pose.js';
 import type { CompiledPoseCue } from '../contracts/timeline.js';
 import { type SolveExtras } from './pose/solve.js';
 export declare const MICRO_MOTION: {
@@ -80,10 +80,13 @@ export declare const GESTURE_POSTURE: {
     readonly beatDip: 2.5;
     readonly beatTilt: 0.9;
     readonly beatRest: 0.35;
+    readonly beatCurl: 0.07;
+    readonly beatCurlMax: 0.38;
     readonly raise: 220;
     readonly reach: 170;
     readonly lateral: 320;
 };
+export declare const BEAT_CURL: Readonly<Partial<Record<HandShape, HandShape>>>;
 export declare function gesturePosture(pose: SolvedPose): {
     body: BodyPose;
 };

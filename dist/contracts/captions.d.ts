@@ -13,6 +13,7 @@ export interface CaptionCue {
     toMs: number;
     words: CaptionWord[];
     seat?: PodcastSeat;
+    speaker?: string;
 }
 export interface CaptionTrack {
     style: CaptionStyleId;
@@ -27,6 +28,7 @@ export interface CaptionFrame {
         strong?: boolean;
     }>>;
     seat?: PodcastSeat;
+    speaker?: string;
     box: CameraBox;
     fontSize: number;
     pop: number;

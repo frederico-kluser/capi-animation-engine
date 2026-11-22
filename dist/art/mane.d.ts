@@ -11,5 +11,19 @@ export declare const MANE_STRANDS: {
     readonly across: readonly [0.12];
     readonly bend: 0.22;
 };
+export declare const MANE_LOCKS: {
+    readonly glint: 2.2;
+    readonly strand: 1.5;
+    readonly strandOpacity: 0.42;
+    readonly shadow: 7;
+};
+export declare const MANE_FLUFF: {
+    readonly edge: 1.7;
+};
+export declare const FRINGE_SEEN: {
+    readonly from: 0.02;
+    readonly full: 0.2;
+};
+export declare function maneFringe(view: OutfitView, shape: ManeShape, grow?: number): string[];
 export declare function maneStrands(view: OutfitView, tuft: ManeTuft, side: EarSide): string[];
 export declare function maneItems(view: OutfitView, dims: BoxDims, palette: Palette, shape: ManeShape, hatOn?: boolean): OutfitItem[];

@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import type { CharacterId, EyeStyle } from '../contracts/character.js';
 import type { MouthShape, ResolvedFace } from '../contracts/face.js';
 import type { Point } from '../contracts/pose.js';
+import { type CoatSpec } from './coat.js';
 import { type AnimalFaceMeasures } from './face-capybara.js';
 import type { Palette } from './palette.js';
 export interface BeakMeasures {
@@ -66,5 +67,6 @@ export interface BirdFaceArtProps {
         d: string;
     } | undefined;
     measures?: BirdFaceMeasures | undefined;
+    coat?: CoatSpec | undefined;
 }
-export declare function BirdFaceArt({ face, palette, eyes: style, ids, head, eyeClip, measures }: BirdFaceArtProps): ReactElement;
+export declare function BirdFaceArt({ face, palette, eyes: style, ids, head, eyeClip, measures, coat }: BirdFaceArtProps): ReactElement;

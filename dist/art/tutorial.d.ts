@@ -12,6 +12,12 @@ export declare function TutorialStepLabelArt(props: {
     opacity: number;
     unit: (fraction: number) => string;
 }): ReactElement;
+export declare function TutorialStudyLinkArt(props: {
+    url: string;
+    opacity: number;
+    unit: (fraction: number) => string;
+    label?: string;
+}): ReactElement;
 export declare function TutorialCardArt(props: {
     card: Pick<TutorialCardWindow, "term" | "definition" | "details" | "example" | "note" | "kind" | "mapping" | "limit" | "overScreen">;
     enter: number;

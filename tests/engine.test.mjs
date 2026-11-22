@@ -258,8 +258,8 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     assert.equal(Object.keys(EXPRESSIONS).length, 29);
     for (const id of ['proud', 'amazed', 'mischievous', 'embarrassed', 'sleepy']) assert.ok(EXPRESSIONS[id], `expressão ${id}`);
     for (const id of ['bite', 'chew', 'chewOpen']) assert.ok(MOUTHS[id], `boca ${id}`);
-    assert.equal(TOP_IDS.length, 17);
-    assert.equal(TOP_COLOR_IDS.length, 15);
+    assert.ok(TOP_IDS.length >= 17, 'as 17 roupas de 2026-11-03 continuam');
+    assert.ok(TOP_COLOR_IDS.length >= 15, 'as 15 cores de 2026-11-03 continuam');
     assert.ok(OUTFIT_PRESET_IDS.includes('scientist') && OUTFIT_PRESET_IDS.includes('biker'));
     assert.deepEqual([...FOOD_PROP_IDS], ['sandwich', 'apple', 'cupcake', 'coxinha', 'popcorn']);
     assert.deepEqual(Object.keys(HEAD_SHAPES), ['rounder'], 'fica só a cabeça Redonda');
@@ -274,7 +274,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
   });
 
   it('o catálogo de 2026-11-14: nove personagens, rostos de ave e de retrato, peças recusadas e 11 poses', () => {
-    assert.deepEqual([...CHARACTER_IDS], ['anchor', 'capybara', 'donkey', 'dog', 'cat', 'parrot', 'monkey', 'lion', 'einstein']);
+    assert.deepEqual([...CHARACTER_IDS].slice(0, 9), ['anchor', 'capybara', 'donkey', 'dog', 'cat', 'parrot', 'monkey', 'lion', 'einstein'], 'os nove de 2026-11-14, pela mesma ordem');
     assert.deepEqual(Object.keys(CHARACTERS), [...CHARACTER_IDS], 'uma ficha por personagem');
     assert.deepEqual([...FACE_KIT_IDS], ['human', 'capybara', 'bird', 'portrait']);
     assert.deepEqual([...CHARACTER_EXTRAS], ['ears', 'mane']);
@@ -304,7 +304,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     for (const id of ['explainOneHand', 'explainWide', 'presentBoth', 'steeple', 'sizeWide', 'pointToSelf', 'brushOff', 'fingerWag', 'tapTemple', 'pointAside', 'raiseLevel']) {
       assert.ok(POSES[id], `pose ${id}`);
     }
-    assert.equal(Object.keys(POSES).length, 124);
+    assert.ok(Object.keys(POSES).length >= 124, 'as 124 poses de 2026-11-14 continuam');
     for (const id of ['brushOff', 'fingerWag', 'tapTemple']) assert.ok(POSE_LOOPS[id], `ciclo ${id}`);
     assert.ok(HAIR_IDS.includes('wild') && HAIR_COLOR_IDS.includes('white'), 'o cabelo do Einstein');
 
@@ -317,6 +317,37 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     for (const character of CHARACTER_IDS) {
       const input = { character, pose: 'fingerWag', expression: 'mischievous', frame: 37, fps: 60 };
       assert.deepEqual(resolveAnchor(input), resolveAnchor(input), `${character} determinístico`);
+    }
+  });
+
+  it('o catálogo de 2026-11-21 (v1.2.0): 14 personagens, 154 poses, 75 ciclos, 31 mãos e a Capi redesenhada', () => {
+    assert.deepEqual([...CHARACTER_IDS], ['anchor', 'capybara', 'donkey', 'dog', 'cat', 'parrot', 'monkey', 'lion', 'einstein', 'torvalds', 'lovelace', 'turing', 'unclebob', 'knuth']);
+    for (const id of ['torvalds', 'lovelace', 'turing', 'unclebob', 'knuth']) {
+      assert.equal(CHARACTERS[id].face, 'portrait', `${id} é um retrato`);
+      assert.equal(CHARACTERS[id].humanoid, true, `${id} é humanoide`);
+    }
+    assert.deepEqual(CHARACTERS.capybara.extras, ['ears', 'mane'], 'a Capi ganhou o topete e os tufos (juba)');
+    assert.equal(Object.keys(POSES).length, 154);
+    assert.equal(Object.keys(POSE_LOOPS).length, 75);
+    for (const id of ['pointDown', 'pointBack', 'fingerGuns', 'comeHere', 'blahBlah', 'moneyRub', 'snapFingers', 'grabIdea', 'boom', 'countFive',
+      'tada', 'whoa', 'bow', 'groove', 'drumRoll', 'rollOn', 'checkWatch', 'wipeBrow', 'lookAhead', 'chopDown', 'soSoHand', 'rubHandsUp',
+      'frameShot', 'pinchPrecise', 'lowerLevel', 'moveOver', 'tableCountOne', 'tableCountTwo', 'tableCountFour', 'tableCountFive']) {
+      assert.ok(POSES[id], `pose ${id}`);
+    }
+    assert.equal(Object.keys(EXPRESSIONS).length, 29);
+    assert.equal(Object.keys(MOUTHS).length, 24);
+    assert.equal(TOP_IDS.length, 18);
+    assert.ok(TOP_IDS.includes('victorianDress'));
+    assert.equal(TOP_COLOR_IDS.length, 16);
+    assert.ok(TOP_COLOR_IDS.includes('mauve'));
+    for (const id of ['sweptBack', 'victorianBraids', 'neatPart', 'sideSwept', 'baldCrown']) assert.ok(HAIR_IDS.includes(id), `cabelo ${id}`);
+    for (const id of ['ash', 'deepBrown', 'ivory']) assert.ok(HAIR_COLOR_IDS.includes(id), `cor de cabelo ${id}`);
+    assert.equal(STOCK_PERSONAS.length, 8);
+
+    // a Capi do elenco (óculos redondos, blazer camelo) a dar dois gestos novos é determinística
+    for (const pose of ['checkWatch', 'drumRoll', 'tada']) {
+      const input = { character: 'capybara', outfit: { glasses: 'round', top: 'blazer', topColor: 'camel' }, pose, expression: 'friendly', frame: 41, fps: 60 };
+      assert.deepEqual(resolveAnchor(input), resolveAnchor(input), `capybara ${pose} determinístico`);
     }
   });
 
@@ -340,7 +371,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
 });
 
 describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', () => {
-  it('dist/ contém exatamente 353 ficheiros .js ofuscados, 352 .d.ts e zero .map/.ts/.tsx', () => {
+  it('dist/ contém exatamente 425 ficheiros .js ofuscados, 424 .d.ts e zero .map/.ts/.tsx', () => {
     const files = walkFiles(DIST_DIR);
     const jsFiles = files.filter((f) => f.endsWith('.js'));
     const dtsFiles = files.filter((f) => f.endsWith('.d.ts'));
@@ -349,8 +380,8 @@ describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', (
       (f) => (f.endsWith('.ts') && !f.endsWith('.d.ts')) || f.endsWith('.tsx')
     );
 
-    assert.equal(jsFiles.length, 353, 'esperados 353 ficheiros .js em dist/');
-    assert.equal(dtsFiles.length, 352, 'esperados 352 ficheiros .d.ts em dist/');
+    assert.equal(jsFiles.length, 425, 'esperados 425 ficheiros .js em dist/');
+    assert.equal(dtsFiles.length, 424, 'esperados 424 ficheiros .d.ts em dist/');
     assert.equal(mapFiles.length, 0, 'zero ficheiros .map permitidos em dist/');
     assert.equal(rawTsFiles.length, 0, 'zero ficheiros .ts/.tsx crus permitidos em dist/');
 

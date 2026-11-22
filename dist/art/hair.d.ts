@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react';
 import type { HairColorId, HairId, HatId } from '../contracts/outfit.js';
 import { type Point3, type TubePoint } from '../core/head/solid.js';
+import { type ManeSpec } from './fur.js';
 import type { PhonesFit } from './headphones.js';
 import { type OutfitItem, type OutfitView, type ShellSpec, type Tone } from './solid.js';
 export interface HairTone extends Tone {
     shine: string;
 }
 export declare const HAIR_TONES: Record<HairColorId, HairTone>;
-export declare const LOOSE_HAIR_IDS: readonly ["mundodev-flame", "wild"];
+export declare const LOOSE_HAIR_IDS: readonly ["mundodev-flame", "wild", "sweptBack", "victorianBraids", "neatPart", "sideSwept", "baldCrown"];
 export type ShellHairId = Exclude<HairId, 'none' | (typeof LOOSE_HAIR_IDS)[number]>;
 export declare function hasHairShell(hair: HairId): hair is ShellHairId;
 export declare const HAIR_SHELLS: Record<ShellHairId, ShellSpec>;
@@ -20,6 +21,8 @@ export interface PlateSolid {
     back: Point3[];
     edge: number;
 }
+export declare const MANES: Partial<Record<HairId, ManeSpec>>;
+export declare function coversScalp(hair: HairId): boolean;
 export declare function hairPlates(hair: HairId, hat?: HatId): PlateSolid[];
 export declare function mergedHairTubes(hair: ShellHairId, hat: HatId): {
     spec: ShellSpec;

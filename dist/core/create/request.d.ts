@@ -42,6 +42,7 @@ export interface NormalizedCreate {
     varyVoice?: boolean;
     cta?: boolean;
     scenario?: string;
+    study?: boolean;
     video?: string;
     subtitles?: string;
     videos?: CreateVideoInput[];
@@ -70,6 +71,10 @@ export interface CreateRequestRead {
     profileBy: 'request' | 'text' | 'default';
     hints: ProfileHints;
 }
+export declare function isStudyFormat(format: string): boolean;
+export declare function studyChoiceLabel(request: {
+    study?: boolean | undefined;
+}): string;
 export declare function normalizeCreateRequest(raw: unknown, readOptions?: NormalizeCreateOptions): CreateRequestRead;
 export declare function createRequestRecord(n: NormalizedCreate, options?: NormalizeCreateOptions): CreateRequest;
 export declare function voiceChoiceLabel(request: {

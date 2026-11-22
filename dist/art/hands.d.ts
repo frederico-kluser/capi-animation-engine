@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { type HandShape, type Point, type Side, type SolvedArm } from '../contracts/pose.js';
 import { type GloveLayer, type GloveVersion } from './glove-kit.js';
+import { type CoatKind } from './coat.js';
 import { type Palette } from './palette.js';
 export declare const OFFICIAL_GLOVES: {
     readonly palm: Readonly<Record<HandShape, readonly GloveLayer[]>>;
@@ -13,10 +14,11 @@ export interface HandArtProps {
     side: Side;
     ids: (local: string) => string;
     palette?: Palette | undefined;
+    coat?: CoatKind | undefined;
 }
 export declare function rollWidth(arm: SolvedArm): number;
 export declare function pitchLength(arm: SolvedArm): number;
-export declare function HandArt({ arm, side, ids, palette }: HandArtProps): ReactElement;
+export declare function HandArt({ arm, side, ids, palette, coat }: HandArtProps): ReactElement;
 export declare function GloveSilhouette({ arm }: {
     arm: SolvedArm;
 }): ReactElement;

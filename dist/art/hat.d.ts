@@ -42,5 +42,5 @@ export declare function visorGeometry(attach: {
     z: number;
 }, dir: 1 | -1, pitch: number, backwards: boolean): Visor;
 export declare function capVisorOutline(hair: HairId, nod: number, backwards?: boolean): Point3[];
-export declare function hatItems(view: OutfitView, hat: HatId, hair: HairId, hairColor: HairColorId): OutfitItem[];
+export declare function hatItems(view: OutfitView, hat: HatId, hair: HairId, hairColor: HairColorId, scalp?: string): OutfitItem[];
 export {};

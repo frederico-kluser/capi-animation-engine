@@ -92,5 +92,6 @@ export interface CharacterVoice {
 }
 export declare function characterVoice(input: CharacterVoiceInput): CharacterVoice;
 export declare const ELEVEN_USD_PER_MILLION: Readonly<Record<string, number>>;
+export declare const CLONE_USD_PER_MILLION: Readonly<Record<string, number>>;
 export declare function voiceCostUsd(model: string, chars: number): number | undefined;
 export declare function emotionVoiceWarning(voice: string | undefined, emotion: VoiceEmotion | undefined): string | undefined;

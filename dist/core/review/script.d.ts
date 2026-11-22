@@ -66,6 +66,10 @@ export declare function toTalkBlocks(normalized: Pick<ReviewScriptCheck, 'blocks
         id: string;
         at: ReviewAnchor;
         mode: ReviewBlockMode;
+        aim?: {
+            x: number;
+            y: number;
+        };
     }>;
 };
 export {};

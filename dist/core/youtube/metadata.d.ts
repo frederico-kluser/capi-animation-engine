@@ -82,6 +82,10 @@ export declare function checkMetadata(meta: YouTubeMetadata, context?: YouTubeCh
 export declare function videoResource(meta: YouTubeMetadata): {
     snippet: Record<string, unknown>;
     status: Record<string, unknown>;
+    localizations?: Record<string, {
+        title: string;
+        description: string;
+    }>;
 };
 export declare function youtubeUrls(videoId: string, format: YouTubeFormat): {
     url: string;

@@ -6,6 +6,7 @@ export interface CaptionSourceWord {
     fromMs: number;
     toMs: number;
     seat?: PodcastSeat;
+    speaker?: string;
     clauseEnd?: boolean;
     sentenceEnd?: boolean;
     prominence?: number;

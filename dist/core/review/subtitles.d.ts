@@ -35,6 +35,7 @@ export declare function cuesToOutput(cues: readonly SubtitleCue[], timeline: Pic
 export interface CommentaryWord extends SubtitleWord {
     seat?: PodcastSeat;
     group?: string;
+    speaker?: string;
 }
 export declare function commentaryCaptions(words: readonly CommentaryWord[], options?: Partial<SubtitleBuildOptions> & {
     names?: Partial<Record<PodcastSeat, string>>;

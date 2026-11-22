@@ -23,6 +23,7 @@ export interface OverlayWatchOptions {
     leaveMs?: number;
     lookMs?: number;
     headMs?: number;
+    trackId?: string;
 }
 export declare function overlayWatch(spec: TimelineSpec, windows: readonly ReviewSpan[], options: OverlayWatchOptions): TimelineSpec;
 export declare function retargetTvGlances(spec: TimelineSpec, from: Point | undefined, to: Point | undefined): TimelineSpec;
