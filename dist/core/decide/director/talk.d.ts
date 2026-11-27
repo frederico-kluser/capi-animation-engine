@@ -1,6 +1,7 @@
 import type { ScriptWord } from '../../../contracts/talk.js';
 import type { PoseId } from '../../../presets/poses.js';
 import { type SentenceKind, type TalkAspectContext } from '../../aspects/talk/context.js';
+import { type FingerCount } from '../../talk/counting.js';
 import type { JevAnswer, JevChoiceAnswer, JevNoulAnswer, JevRequest, JevScoreAnswer } from '../jev.js';
 import { type CameraKeyStyle, type DirectorQuestionSet, type DirectorRubricDetail } from './questions.js';
 export interface TalkDirectorSlot {
@@ -43,7 +44,7 @@ export declare function rankedOptions(answer: JevChoiceAnswer | undefined): Arra
     p: number;
 }>;
 export declare function slotSalience(decision: TalkDirectorDecision | undefined): number;
-export declare function ordinalOf(words: readonly ScriptWord[], slot: Pick<TalkDirectorSlot, 'first' | 'last'>): number | undefined;
+export declare function ordinalOf(words: readonly ScriptWord[], slot: Pick<TalkDirectorSlot, 'first' | 'last'>): FingerCount | undefined;
 export declare const DIRECTOR_VARIETY: {
     readonly minShare: 0.3;
     readonly minP: 0.05;

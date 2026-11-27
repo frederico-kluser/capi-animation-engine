@@ -1,7 +1,9 @@
-import type { TutorialCastMember, TutorialCourseBrief } from '../../contracts/tutorial.js';
+import type { TutorialCastMember, TutorialCourseBrief, TutorialHistoricalPersona } from '../../contracts/tutorial.js';
 import type { TutorialReadResult } from './lesson.js';
-export declare const TUTORIAL_RESEARCH_PROMPT_VERSION = 2;
+export declare const TUTORIAL_RESEARCH_PROMPT_VERSION = 3;
 export declare const TUTORIAL_LEARNER_PERSONALITY = "nunca programou; curioso, faz as perguntas de quem est\u00E1 come\u00E7ando e aprende fazendo";
+export declare const TUTORIAL_CAST_PERSONALITY_MAX = 720;
+export declare function learnerPersonality(own: string | undefined, name?: string): string;
 export declare const TUTORIAL_DEFAULT_AUDIENCE = "quem nunca programou";
 export declare const TUTORIAL_BRIEF_LIMITS: {
     readonly topic: 240;
@@ -28,6 +30,7 @@ export interface CourseBriefInput {
         host: TutorialCastMember;
         guest: TutorialCastMember;
     };
+    historicalPersona?: TutorialHistoricalPersona;
     video?: TutorialCourseBrief['video'];
 }
 export declare function newCourseBrief(input: CourseBriefInput, createdAt: string): TutorialCourseBrief;
@@ -95,7 +98,9 @@ export interface ResearchDocumentCheck {
 }
 export declare const RESEARCH_DOCUMENT_MAX_CHARS = 1500000;
 export declare function checkResearchDocument(text: string): ResearchDocumentCheck;
-export declare function courseResearchPrompt(brief: TutorialCourseBrief): string;
+export declare function courseResearchPrompt(brief: TutorialCourseBrief, options?: {
+    historicalCatalogue?: readonly TutorialHistoricalPersona[];
+}): string;
 export interface ResearchPromptRequirement {
     id: string;
     title: string;

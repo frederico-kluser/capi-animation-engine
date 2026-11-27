@@ -1,3 +1,4 @@
+import type { ReviewRect, ReviewStageLayout } from '../../contracts/review.js';
 import type { TutorialCard } from '../../contracts/tutorial.js';
 export declare const TUTORIAL_CARD_TYPE: {
     readonly padY: 0.034;
@@ -80,4 +81,23 @@ export declare function tutorialCardScale(card: CardShape, box: {
     width: number;
     height: number;
 }): number;
+export declare function tutorialCardRect(layout: Pick<ReviewStageLayout, 'width' | 'height' | 'seats'>, card?: {
+    overScreen?: boolean;
+}): ReviewRect;
+export declare const TUTORIAL_STEP_LABEL_TYPE: {
+    readonly size: 0.026;
+    readonly line: 1.2;
+    readonly padY: 0.011;
+    readonly padX: 0.02;
+    readonly border: 0.0022;
+    readonly radius: 0.014;
+    readonly gapEm: 0.6;
+    readonly headEm: 0.82;
+    readonly tracking: 0.08;
+    readonly headWeight: 800;
+    readonly tailWeight: 700;
+    readonly slack: 1;
+};
+export declare function tutorialStepLabelBox(layout: Pick<ReviewStageLayout, 'width' | 'height'>): ReviewRect;
+export declare function tutorialStepLabelRect(label: string, layout: Pick<ReviewStageLayout, 'width' | 'height'>): ReviewRect;
 export {};

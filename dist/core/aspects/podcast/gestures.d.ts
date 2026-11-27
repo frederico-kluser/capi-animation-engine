@@ -19,6 +19,7 @@ export declare function buildGesturesMessages(ctx: PodcastAspectContext, seat: P
     user: string;
 };
 export declare function parseGestures(content: string, ctx: PodcastAspectContext, seat: PodcastSeat): AspectParseResult<GesturesAspectValue>;
+export declare function fitTableCounts(gestures: readonly PodcastPlannedGesture[], ctx: Pick<PodcastAspectContext, 'turns'>, problems?: string[]): PodcastPlannedGesture[];
 export declare function scoreGestures(value: GesturesAspectValue, ctx: PodcastAspectContext, problems?: readonly string[]): number;
 export declare function heldTooLong(value: Pick<GesturesAspectValue, 'seat' | 'gestures'>, ctx: Pick<PodcastAspectContext, 'turns'>): PodcastPlannedGesture[];
 export interface GesturesTaskOptions {

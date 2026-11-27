@@ -1,3 +1,4 @@
+import { type ContentLanguageId } from '../../contracts/languages.js';
 import { type YouTubeFormat, type YouTubeLicense, type YouTubePrivacy, type YouTubeSourceKind } from '../../contracts/youtube.js';
 import type { PlannerEffort } from '../talk/config.js';
 import { type YouTubeDefaults } from './metadata.js';
@@ -20,7 +21,8 @@ export interface YouTubeConfig {
     shortsHashtag: boolean;
     thumbnail: boolean;
     captions: boolean;
-    playlists: Partial<Record<YouTubeFormat | YouTubeSourceKind, string>>;
+    shortCaptions: boolean;
+    playlists: Partial<Record<YouTubeFormat | YouTubeSourceKind | ContentLanguageId, string>>;
     waitProcessing: boolean;
     processingMinutes: number;
     auto: boolean;
@@ -32,6 +34,14 @@ export interface YouTubeConfig {
     imageResolution: YouTubeImageResolution;
     checkModel: string | null;
     scenes: number;
+    languages: ContentLanguageId[];
+    captionLanguages: ContentLanguageId[];
+    translateModel: string;
+    comment: boolean;
+    links: boolean;
+    linkBack: boolean;
+    seriesPlaylists: boolean;
+    seriesPrivacy: YouTubePrivacy;
     channels: Record<string, Partial<Omit<YouTubeConfig, 'account' | 'channels'>>>;
 }
 export declare const DEFAULT_YOUTUBE_CONFIG: YouTubeConfig;
@@ -60,4 +70,4 @@ export declare function validateYouTubeConfig(raw: unknown, origin?: string): {
 export declare function mergeYouTubeConfig(base: YouTubeConfig, ...layers: ReadonlyArray<Partial<YouTubeConfig> | undefined>): YouTubeConfig;
 export declare function configForAccount(config: YouTubeConfig, account: string): YouTubeConfig;
 export declare function youtubeDefaults(config: YouTubeConfig): YouTubeDefaults;
-export declare function playlistFor(config: Pick<YouTubeConfig, 'playlists'>, kind: YouTubeSourceKind, format: YouTubeFormat): string | undefined;
+export declare function playlistFor(config: Pick<YouTubeConfig, 'playlists'>, kind: YouTubeSourceKind, format: YouTubeFormat, language?: ContentLanguageId): string | undefined;

@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-26
+
+Sincronizado com o código do capi-animation-studio (`packages/anchor`) pelo `scripts/build-capi-engine.mjs`.
+
+### Features
+
+- **A Capi redesenhada**: pelagem (`coat`), topete esculpido e tufos na silhueta, bochechas fofas, olho «anime» com
+  segundo brilho, blush em três traços e sombreado suave com luz de recorte; bigodes 3D nos outros animais.
+- **5 personagens novos** (retratos humanoides): `torvalds`, `lovelace`, `turing`, `unclebob`, `knuth` — 14 no total.
+- **30 poses novas** (153 no total, 74 com ciclo próprio): `pointDown pointBack fingerGuns comeHere blahBlah moneyRub
+  snapFingers grabIdea boom countFive tada whoa bow groove drumRoll rollOn checkWatch wipeBrow lookAhead chopDown
+  soSoHand rubHandsUp frameShot pinchPrecise lowerLevel moveOver tableCountOne tableCountTwo tableCountFour tableCountFive`.
+- **«Anotar no ar» (`writeAir`) redesenhada**: o indicador escreve uma assinatura curta e um sublinhado ao lado do
+  rosto, com a outra mão parada; uma frase de 1500 ms em vez de três vaivéns de 300 ms. O ciclo aceita um **percurso
+  por poses-chave** (`keyframes`) além da outra ponta (`swing`) e da partitura (`taps`).
+- **Notícias**: os cartões do short de uma notícia (`core/news`), a capa com «Encaixar»/«Preencher» e o contrato do
+  artigo.
+- **Curso automático**: a autoridade durável do curso, o DAG curso/aula e a admissão por memória/API (`core/course-auto`).
+- **Miniaturas de aula**: as peças de texto do terminal (`core/thumbs/lesson`, `terminal`) e os portões que saem antes
+  do render (`core/tutorial/gate-exits`).
+- **5 formas de luva novas** (31 no total): `spread`, `beckon`, `beak`, `rub`, `snap`.
+- Apontar para um alvo (o ângulo do braço calculado a partir de um ponto ou zona) e contar pelos dedos o número dito.
+- Visual: óculos `wire`; cabelos `sweptBack`, `victorianBraids`, `neatPart`, `sideSwept`, `baldCrown`; cores de cabelo
+  `ash`, `deepBrown`, `ivory`; roupa `victorianDress`; cor `mauve`.
+- «Visita» (um convidado histórico numa videochamada que vira a cabeça para quem fala), clonagem de voz, verificação
+  de deriva da voz, léxico de pronúncia pt-BR e o contrato de cena por frame para o renderizador nativo.
+
+### Changed
+
+- `dist/`: 445 módulos `.js` ofuscados e 444 `.d.ts` (eram 353 e 352 na v1.1.0). Os formatos `anchor-embed` v1 e o
+  envelope v1 não mudaram: um `movement.json` da v1.0.0 continua a abrir.
+- A pose `namaste` saiu do catálogo a pedido do dono (153 poses, 74 com ciclo): quem a pedisse por nome passa a
+  receber o erro de pose desconhecida.
+
 ## [1.1.0] - 2026-11-14
 
 ### Features

@@ -1,0 +1,23 @@
+export declare const STUDY_SLUG: RegExp;
+export declare const STUDY_SLUG_MAX = 80;
+export declare const STUDY_RESERVED_SEGMENTS: readonly string[];
+export declare const STUDY_SHORT_CODE: RegExp;
+export declare const STUDY_SHORT_URL_MAX = 40;
+export declare const isStudyShortCode: (code: string) => boolean;
+export declare const isStudySlug: (slug: string) => boolean;
+export declare function studyPath(track: string, lesson: string): string;
+export declare function parseStudyPath(path: string): {
+    track: string;
+    lesson: string;
+} | null;
+export declare function studyUrl(path: string, base?: string): string;
+export declare const studyShortPath: (code: string) => string;
+export declare function studyShortUrl(code: string, base?: string): string;
+export declare function parseStudyShortPath(path: string): string | null;
+export declare function studyLessonNumber(lesson: string): number | null;
+export declare function studyLocalUrl(path: string, port?: number): string;
+export declare function studyBase(env?: Readonly<Record<string, string | undefined>>): string;
+export declare function studyPort(env?: Readonly<Record<string, string | undefined>>): number;
+export declare function studySlugify(text: string, max?: number): string;
+export declare function createStudySlug(runName: string, format?: string): string;
+export declare function uniqueStudySlug(slug: string, taken: ReadonlySet<string>): string;

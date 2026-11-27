@@ -156,14 +156,14 @@ Mesmo quando o `movement.json` vem assinado e encriptado, `<AnchorLivePlayer>` p
 
 | Modificador | Valores |
 | :--- | :--- |
-| `character` | 9 personagens — `anchor`, `capybara`, `donkey`, `dog`, `cat`, `parrot`, `monkey`, `lion`, `einstein` (ver a tabela seguinte) |
-| `outfit.top` | 17 roupas: `suit`, `hoodie`, `tshirt`, `polo`, `sweater`, `shirt`, `blazer`, `bomber`, `turtleneck`, `jersey`, `vest`, `cardigan`, `denimJacket`, `leatherJacket`, `flannel`, `labCoat`, `trackJacket` |
-| `outfit.topColor` | 15 cores: `navy`, `black`, `grey`, `white`, `lilac`, `burgundy`, `coral`, `mustard`, `teal`, `orange`, `red`, `pink`, `camel`, `sky`, `denim` |
+| `character` | 14 personagens — `anchor`, `capybara`, `donkey`, `dog`, `cat`, `parrot`, `monkey`, `lion`, `einstein`, `torvalds`, `lovelace`, `turing`, `unclebob`, `knuth` (ver a tabela seguinte) |
+| `outfit.top` | 18 roupas (inclui `victorianDress`): `suit`, `hoodie`, `tshirt`, `polo`, `sweater`, `shirt`, `blazer`, `bomber`, `turtleneck`, `jersey`, `vest`, `cardigan`, `denimJacket`, `leatherJacket`, `flannel`, `labCoat`, `trackJacket` |
+| `outfit.topColor` | 16 cores (inclui `mauve`): `navy`, `black`, `grey`, `white`, `lilac`, `burgundy`, `coral`, `mustard`, `teal`, `orange`, `red`, `pink`, `camel`, `sky`, `denim` |
 | `outfit.preset` | 7 visuais prontos (a cabeça e a roupa): `mundodev`, `casual`, `streamer`, `sporty`, `tech`, `scientist` (a bata de laboratório), `biker` (o casaco de cabedal) |
 | `outfit.hair` / `hairColor` | 8 cabelos (`none`, `tuft`, `spiky`, `curly`, `sidePart`, `bun`, `mundodev-flame`, `wild`) e 7 cores — **só em humanoides** (`anchor`, `einstein`) |
 | `outfit.glasses` · `hat` · `headphones` | `none`, `round`, `square`, `sunglasses`, `mundodev-glasses` · `none`, `cap`, `capBackwards` · `none`, `over`, `headset`, `mundodev-headphones` |
 
-### 5. O elenco: 9 personagens, o mesmo corpo
+### 5. O elenco: 14 personagens, o mesmo corpo
 
 Todos partilham o corpo, as poses, as expressões, os visemas e as animações; muda o que se vê — o desenho do rosto, as cores, a forma da cabeça e os elementos presos a ela. O `movement.json` leva a **base** (o id abaixo); trocar de personagem não regenera nada.
 
@@ -195,7 +195,7 @@ No estúdio, cada base dá **personas** do elenco (nome, estilos, voz): Índice,
 
 ### 6. O que o motor desenha (o catálogo de 2026-11-14)
 
-- **124 poses** (54 com ciclo próprio), 26 formas de luva e 13 objetos na mão, nos nove personagens. **11 poses novas**: `explainOneHand`, `explainWide`, `presentBoth`, `steeple` (mãos em tenda), `sizeWide`, `pointToSelf`, `brushOff`, `fingerWag`, `tapTemple`, `pointAside`, `raiseLevel` — `brushOff`, `fingerWag` e `tapTemple` com ciclo.
+- **154 poses** (75 com ciclo próprio), 31 formas de luva e 13 objetos na mão, nos catorze personagens (v1.2.0: mais 30 poses — `pointDown`, `checkWatch`, `drumRoll`, `tada`, `groove`, `wipeBrow`… — e as mãos `spread`, `beckon`, `beak`, `rub`, `snap`). **11 poses novas**: `explainOneHand`, `explainWide`, `presentBoth`, `steeple` (mãos em tenda), `sizeWide`, `pointToSelf`, `brushOff`, `fingerWag`, `tapTemple`, `pointAside`, `raiseLevel` — `brushOff`, `fingerWag` e `tapTemple` com ciclo.
 - **Mãos de cinco dedos** refeitas, com a viragem da mão, braços e corpo refeitos.
 - **Digitar no portátil** — as 27 poses `laptop*` (três modelos: o portátil, o «alien» e o ThinkPad): as duas mãos digitam por trás da tampa ao ritmo de uma pessoa (cada tecla ≈ 116 ms carregada, ≈ 150–176 ms entre teclas dentro da palavra, ≈ 5,8 teclas/s), o clique e ler o ecrã com os olhos nele; o ciclo dura **enquanto a pose durar** e o portátil entra e sai pelo colo. Com o portátil na mesa, **o rato está sempre à vista**.
 - **Comer e mastigar** — 5 comidas (`sandwich`, `apple`, `cupcake`, `coxinha`, `popcorn`) na mesa do podcast e na mão (`prop: { id, hand, bites }`), as bocas `bite`, `chew` e `chewOpen`, a ação `eat` no podcast e `snackHold`/`snackBite` no modo fala.
@@ -264,7 +264,7 @@ Os ficheiros `movement.json` produzidos para consumo no player web usam o format
 ### Motor de Renderização Blindado & Pipeline de Ofuscação
 
 - **Determinismo a 60 fps**: cinemática inversa de braços (`solveElbow`), mistura de expressões faciais (`mixExpression`, `mixMouth`), respiração e micro-movimentos (`sampleAutoIdle`, `sampleMicroMotion`) são funções puras do tempo/frame; o próprio build é determinístico (recompilar o mesmo estúdio dá os mesmos bytes).
-- **Distribuição blindada (`dist/`)**: o pacote público distribui exclusivamente os 353 módulos `.js` ofuscados (com cofres de strings XOR/base64, control-flow mangling e remoção total de comentários) acompanhados dos 352 ficheiros de definição de tipos `.d.ts`, sem ficheiros `.ts`/`.tsx` crus nem sourcemaps (`.map`), validados continuamente por `scripts/verify-dist.mjs` e por `tests/engine.test.mjs`.
+- **Distribuição blindada (`dist/`)**: o pacote público distribui exclusivamente os 425 módulos `.js` ofuscados (com cofres de strings XOR/base64, control-flow mangling e remoção total de comentários) acompanhados dos 352 ficheiros de definição de tipos `.d.ts`, sem ficheiros `.ts`/`.tsx` crus nem sourcemaps (`.map`), validados continuamente por `scripts/verify-dist.mjs` e por `tests/engine.test.mjs`.
 
 ### Skill Global para Agentes de IA (`skills/capi-engine-agent-skill`)
 
@@ -278,7 +278,7 @@ Contribuições seguem o fluxo GitHub Flow com Commits Convencionais e validaç�
 
 ## Versão e estado
 
-- **Versão atual**: `v1.1.0` ([Releases](https://github.com/frederico-kluser/capi-animation-engine/releases) · [npm](https://www.npmjs.com/package/capi-animation-engine))
+- **Versão atual**: `v1.2.0` ([Releases](https://github.com/frederico-kluser/capi-animation-engine/releases) · [npm](https://www.npmjs.com/package/capi-animation-engine))
 - **Estado**: `stable`
 - **Política de versões suportadas e reporte de vulnerabilidades**: consulte [`SECURITY.md`](SECURITY.md) e [`CHANGELOG.md`](CHANGELOG.md).
 

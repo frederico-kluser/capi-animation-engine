@@ -15,7 +15,7 @@ interface SleeveStyle {
     };
     cuff: 'shirt' | 'fabric' | 'rib' | 'none';
     fabric?: 'shirt' | undefined;
-    pattern?: 'check' | 'stripes' | undefined;
+    pattern?: 'check' | 'stripes' | 'victorian' | undefined;
 }
 export declare const TOP_SLEEVES: Record<TopId, SleeveStyle>;
 export interface Wear {
@@ -37,14 +37,24 @@ export interface Wear {
     };
     sleeve: SleeveWear;
     suit?: SuitTone | undefined;
+    badge?: ChestBadgeId | undefined;
 }
+export type ChestBadgeId = 'tux';
 export interface CharacterWardrobe {
-    color: TopColorId;
-    tie: {
-        base: string;
-        shade: string;
+    suit?: {
+        color: TopColorId;
+        tie: {
+            base: string;
+            shade: string;
+        };
+        tieStripe?: string;
+        tieDots?: string;
+        vest?: {
+            base: string;
+            shade: string;
+        };
     };
-    tieStripe?: string;
+    badge?: ChestBadgeId;
 }
 export declare const CHARACTER_WARDROBE: Partial<Record<CharacterId, CharacterWardrobe>>;
 export declare function wearOf(outfit: Pick<Outfit, 'top' | 'topColor'> | undefined, palette?: Palette, character?: CharacterId): Wear | undefined;

@@ -1,5 +1,8 @@
-import { type ThumbAspect, type ThumbLayout, type ThumbScheme, type ThumbSource, type ThumbVariant } from '../../contracts/thumbs.js';
+import type { ExpressionId } from '../../contracts/face.js';
+import { type ThumbAspect, type ThumbCast, type ThumbLayout, type ThumbScheme, type ThumbSource, type ThumbVariant } from '../../contracts/thumbs.js';
 import type { ThumbMoodId, YouTubeThumbnailText } from '../../contracts/youtube.js';
+import { type PoseId } from '../../presets/poses.js';
+import { type ThumbSlot } from './layout.js';
 export declare const THUMB_MOODS: {
     readonly shock: {
         readonly poses: readonly ["mindBlown", "oops", "facepalm", "peekEyes"];
@@ -45,6 +48,10 @@ export declare function thumbHighlight(text: string): string | undefined;
 export declare function sourceMood(source: ThumbSource): ThumbMoodId;
 export declare function layoutCandidates(source: ThumbSource, text?: Pick<YouTubeThumbnailText, 'number' | 'versus'>): ThumbLayout[];
 export declare function chooseLayouts(candidates: readonly ThumbLayout[], r: () => number): ThumbLayout[];
+export declare function placeCast(m: ThumbSource['cast'][number], pose: PoseId, expression: ExpressionId, slot: ThumbSlot, facing: 'left' | 'right', lookAt: {
+    x: number;
+    y: number;
+} | null, aspect: ThumbAspect): ThumbCast;
 export interface PlanThumbsOptions {
     plates?: readonly string[];
     scheme?: ThumbScheme;

@@ -3,6 +3,7 @@ import { type CatalogDetail } from '../../contracts/catalog.js';
 import { type CameraStyle } from '../../contracts/camera.js';
 import { type CaptionStyleId } from '../../contracts/captions.js';
 import { type CharacterId } from '../../contracts/character.js';
+import { type LlmRoles } from '../../contracts/llm-roles.js';
 import { type Outfit, type OutfitPresetId, type OutfitSlot } from '../../contracts/outfit.js';
 import { type VideoProfileId } from '../../contracts/profile.js';
 import { type ReviewVideoFraming } from '../../contracts/review.js';
@@ -31,6 +32,12 @@ export interface TalkConfig {
             enabled: boolean;
             models: string[];
             maxWer: number;
+            language?: boolean;
+        };
+        drift?: {
+            check: boolean;
+            judge?: string;
+            repairs: number;
         };
     };
     planner: {
@@ -85,6 +92,7 @@ export interface TalkConfig {
     };
     review: ReviewConfig;
     tutorial: TutorialAuthorConfig;
+    llmRoles?: LlmRoles;
 }
 export interface TutorialAuthorConfig {
     model: string;
@@ -98,7 +106,15 @@ export interface TutorialAuthorConfig {
     };
     reviewModel?: string;
     reviewEffort?: PlannerEffort;
+    fixEffort?: PlannerEffort;
+    pipeline?: TutorialPipeline;
+    reviewByParts?: boolean;
+    productionContract?: TutorialProductionContract;
 }
+export declare const TUTORIAL_PRODUCTION_CONTRACTS: readonly ['legacy', 'strict'];
+export type TutorialProductionContract = (typeof TUTORIAL_PRODUCTION_CONTRACTS)[number];
+export declare const TUTORIAL_PIPELINES: readonly ['parts', 'single'];
+export type TutorialPipeline = (typeof TUTORIAL_PIPELINES)[number];
 export declare const DEFAULT_TUTORIAL_AUTHOR: TutorialAuthorConfig;
 export declare const TUTORIAL_MAX_TOKENS_LIMIT = 262144;
 export declare const REVIEW_DENSITIES: readonly ['light', 'normal', 'heavy'];
@@ -154,6 +170,7 @@ export type PartialTalkConfig = {
         [P in keyof TalkConfig[K]]?: TalkConfig[K][P] extends object ? Partial<TalkConfig[K][P]> : TalkConfig[K][P];
     } : TalkConfig[K];
 };
+export declare const DEFAULT_DRIFT_JUDGE = "google/gemini-3.8-flash";
 export declare const DEFAULT_CONFIG: TalkConfig;
 export declare function describeReviewConfig(c: Pick<TalkConfig, 'planner' | 'review'>): string;
 export declare function mergeConfig(base: TalkConfig, ...layers: readonly PartialTalkConfig[]): TalkConfig;
@@ -182,6 +199,7 @@ export declare const CONFIG_ENUMS: {
     readonly reviewDuringVideo: readonly ["stage", "tv", "auto"];
     readonly reviewSttProvider: readonly ["openrouter", "openai"];
     readonly director: readonly ["llm", "jev"];
+    readonly llmTier: readonly ['cheap', 'strong'];
 };
 export declare const REVIEW_CONFIG_KEYS: {
     readonly analysis: readonly ['effort', 'chunkMinutes', 'proxyHeight', 'proxyFps', 'maxProxyMb', 'maxImages', 'frameSeconds', 'samples'];

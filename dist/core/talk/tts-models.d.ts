@@ -18,6 +18,8 @@ export interface TtsModelInfo {
     apiModel?: string;
     audioTags?: boolean;
     languageCode?: boolean;
+    generation?: string;
+    contextText?: boolean;
     voiceIds?: boolean;
     voices: readonly string[];
     defaultVoice: string;
@@ -33,6 +35,7 @@ export interface TtsModelInfo {
     toneLimits?: Partial<Record<ToneId, string>>;
     rates?: Partial<Record<ToneId, number>>;
     inferred?: boolean;
+    cloning?: boolean;
 }
 export interface VoiceInfo {
     id: string;
@@ -50,6 +53,8 @@ export declare const ALL_VOICE_IDS: readonly string[];
 export declare const MAI_VOICE_IDS: readonly string[];
 export declare const ELEVEN_TONE_TAGS: Readonly<Record<ToneId, string>>;
 export declare const TTS_MODELS: readonly TtsModelInfo[];
+export declare const CLONE_TTS_MODELS: readonly TtsModelInfo[];
+export declare const CLONE_MODEL_IDS: readonly string[];
 export declare const KNOWN_VOICE_IDS: readonly string[];
 export interface TranscribeModelInfo {
     id: string;

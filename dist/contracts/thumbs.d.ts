@@ -4,13 +4,16 @@ import type { OutfitInput } from './outfit.js';
 import type { ThumbMoodId, YouTubeThumbnailText } from './youtube.js';
 export declare const THUMB_LAYOUTS: readonly ['hero', 'duo', 'screen', 'reaction', 'versus', 'number', 'tv'];
 export type ThumbLayout = (typeof THUMB_LAYOUTS)[number];
-export declare const THUMB_SCHEMES: readonly ['night', 'lilac', 'sun', 'coral'];
+export declare const THUMB_SCHEMES: readonly ['night', 'lilac', 'sun', 'coral', 'teal'];
 export type ThumbScheme = (typeof THUMB_SCHEMES)[number];
+export declare const THUMB_ROTATION_SCHEMES: readonly ThumbScheme[];
 export declare const THUMB_ASPECTS: readonly ['16:9', '9:16'];
 export type ThumbAspect = (typeof THUMB_ASPECTS)[number];
 export declare const THUMB_IDS: readonly ['a', 'b', 'c'];
 export type ThumbId = (typeof THUMB_IDS)[number];
-export declare const THUMB_SOURCE_KINDS: readonly ['talk', 'podcast', 'review', 'tutorial'];
+export declare const THUMB_ACCENTS: readonly ['question', 'exclaim', 'check', 'cross', 'arrow', 'bulb'];
+export type ThumbAccent = (typeof THUMB_ACCENTS)[number];
+export declare const THUMB_SOURCE_KINDS: readonly ['talk', 'podcast', 'review', 'tutorial', 'news'];
 export type ThumbSourceKind = (typeof THUMB_SOURCE_KINDS)[number];
 export interface ThumbCrop {
     x: number;
@@ -48,6 +51,21 @@ export interface ThumbBackground {
         y: number;
     };
 }
+export interface ThumbCuratedPose {
+    pose: string;
+    expression: ExpressionId;
+}
+export interface ThumbCurated {
+    title: string;
+    highlight?: string;
+    terminal?: string[];
+    accentLine?: number;
+    teacher?: ThumbCuratedPose;
+    second?: (ThumbCuratedPose & {
+        who?: string;
+    }) | null;
+    accent?: ThumbAccent | null;
+}
 export interface ThumbSource {
     kind: ThumbSourceKind;
     title: string;
@@ -55,10 +73,13 @@ export interface ThumbSource {
     topic?: string;
     number?: number;
     code?: string;
+    terminal?: string[];
+    curated?: ThumbCurated;
     cast: Array<{
         character: CharacterId;
         name?: string;
         outfit?: OutfitInput;
+        id?: string;
     }>;
     packaging?: YouTubeThumbnailText;
     screenImage?: string;
@@ -73,13 +94,16 @@ export interface ThumbSpec {
     kicker?: string;
     badge?: string;
     code?: string;
+    terminal?: string[];
+    accentLine?: number;
+    series?: string;
     panel?: string;
     number?: {
         value: string;
         label: string;
     };
     versus?: [string, string];
-    accent?: 'question' | 'exclaim' | 'arrow' | 'none';
+    accent?: ThumbAccent | 'none';
     mood?: ThumbMoodId;
     background?: ThumbBackground;
     screenImage?: string;

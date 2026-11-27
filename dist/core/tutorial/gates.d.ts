@@ -1,4 +1,9 @@
-import type { TutorialConcept, TutorialCourse, TutorialFinding, TutorialGateReport, TutorialLesson, TutorialSegment, TutorialTurn } from '../../contracts/tutorial.js';
+import type { TutorialConcept, TutorialCourse, TutorialFinding, TutorialGateReport, TutorialLesson, TutorialPlanCheck, TutorialSegment, TutorialTurn } from '../../contracts/tutorial.js';
+import { type LessonStructureOptions } from './structure.js';
+export declare const TUTORIAL_REPL_EXIT_ATOMS: ReadonlySet<string>;
+export declare function replExitAtom(code: string): string | null;
+export declare const RECAP_SYNTAX_ATOM_PREFIXES: readonly ['cmd:', 'global:'];
+export declare function atomSyntax(atom: string): string | null;
 export declare const TUTORIAL_STRUCTURAL_ATOMS: ReadonlySet<string>;
 export declare function practiceAtoms(concept: Pick<TutorialConcept, 'atoms'>): string[];
 export declare const TUTORIAL_GATE_LIMITS: {
@@ -27,22 +32,33 @@ export declare const TUTORIAL_DIDACTIC_LIMITS: {
     readonly maxCopyShare: 0.7;
     readonly maxCopyRun: 6;
 };
-export type TutorialDidacticCourse = Pick<TutorialCourse, 'cast'> & Partial<Pick<TutorialCourse, 'concepts' | 'lessons' | 'entry'>>;
-export declare function checkTutorialDidactics(lesson: TutorialLesson, course: TutorialDidacticCourse): TutorialFinding[];
+export type TutorialDidacticCourse = Pick<TutorialCourse, 'cast'> & Partial<Pick<TutorialCourse, 'concepts' | 'lessons' | 'entry' | 'historicalPersona'>>;
+export declare function checkTutorialDidactics(lesson: TutorialLesson, course: TutorialDidacticCourse, opts?: {
+    long?: boolean;
+}): TutorialFinding[];
 export declare function segmentTurns(s: TutorialSegment): TutorialTurn[];
 export declare function segmentSpeech(s: TutorialSegment): string;
 export declare function foldText(text: string): string;
 export declare function mentions(folded: string, term: string): boolean;
+export declare function withoutCourseName(folded: string, title: unknown): string;
 export declare function screenCodeOf(lesson: Pick<TutorialLesson, 'segments'>): Array<{
     segment: string;
     lang: 'python' | 'shell';
     code: string;
 }>;
 export declare function shellAtoms(code: string): string[];
+export declare function planCheckLines(check: unknown): string[];
+export interface TutorialRoadmapFacts {
+    check?: Partial<TutorialPlanCheck> | null;
+    previousPublic?: boolean | null;
+}
+export declare function withLessonRoadmapFacts(course: TutorialCourse, lessonId: string, facts: TutorialRoadmapFacts | null | undefined): TutorialCourse;
+export declare function checkLessonRoadmapFacts(lesson: TutorialLesson | unknown, plan: unknown): TutorialFinding[];
 export interface TutorialGateInput {
     course: TutorialCourse;
     lessons: Partial<Record<string, TutorialLesson>>;
     atoms: Partial<Record<string, Partial<Record<string, string[]>>>>;
     only?: string;
+    structure?: true | Partial<Record<string, Omit<LessonStructureOptions, 'course'>>>;
 }
 export declare function checkTutorialCourse(input: TutorialGateInput): TutorialGateReport;

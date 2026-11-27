@@ -29,6 +29,10 @@ export interface LoopVariantData<P = unknown> {
     swing: P;
     periodMs: number;
     cycles: number;
+    keyframes?: readonly {
+        atMs: number;
+        pose: P;
+    }[];
 }
 export interface ApprovedVariant<T> {
     id: VersionId;

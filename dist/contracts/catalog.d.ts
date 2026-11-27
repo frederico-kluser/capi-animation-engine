@@ -38,6 +38,23 @@ export interface GestureRecipeStep {
     word: string;
     pose: string;
     why: string;
+    aim?: string;
+}
+export interface GestureIntent<Id extends string = string> {
+    id: string;
+    when: string;
+    poses: readonly Id[];
+    needs?: readonly Id[];
+}
+export interface PoseCounterCase<Id extends string = string> {
+    line: string;
+    instead: Id;
+    why: string;
+}
+export interface GestureHint<Id extends string = string> {
+    word: number;
+    poses: readonly Id[];
+    cue: string;
 }
 export interface GestureRecipe {
     id: string;

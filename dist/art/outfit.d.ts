@@ -12,7 +12,10 @@ export interface OutfitScene {
     back: OutfitItem[];
     front: OutfitItem[];
     eyeWindow: string | null;
+    silhouette: string[];
+    silhouetteEdge: string[];
 }
+export declare const SILHOUETTE_EDGE = 2;
 export interface SceneCharacter {
     spec: CharacterSpec;
     palette: Palette;

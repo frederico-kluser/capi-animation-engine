@@ -18,3 +18,5 @@ export declare const TABLE_ONLY_POSES: readonly PoseId[];
 export declare function isTableOnlyPose(id: PoseId): boolean;
 export declare const REVIEW_ONLY_POSES: readonly PoseId[];
 export declare function isReviewOnlyPose(id: PoseId): boolean;
+export declare const AIMABLE_POSES: readonly PoseId[];
+export declare function isAimablePose(id: PoseId): boolean;

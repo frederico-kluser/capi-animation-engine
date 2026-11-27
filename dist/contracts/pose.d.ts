@@ -66,8 +66,8 @@ export declare const STANCE: {
         readonly turn: 14;
     };
 };
-export type HandShape = 'relaxed' | 'open' | 'point' | 'fist' | 'grip' | 'thumbsUp' | 'peace' | 'three' | 'ok' | 'lShape' | 'palmUp' | 'flat' | 'middleFinger' | 'hangLoose' | 'pointFront' | 'pointSide' | 'chinGrip' | 'four' | 'rockOn' | 'fingersCrossed' | 'pinch' | 'quote' | 'cupHand' | 'typing' | 'mouseGrip' | 'mouseClick';
-export declare const HAND_SHAPES: readonly ["relaxed", "open", "point", "fist", "grip", "thumbsUp", "peace", "three", "ok", "lShape", "palmUp", "flat", "middleFinger", "hangLoose", "pointFront", "pointSide", "chinGrip", "four", "rockOn", "fingersCrossed", "pinch", "quote", "cupHand", "typing", "mouseGrip", "mouseClick"];
+export type HandShape = 'relaxed' | 'open' | 'point' | 'fist' | 'grip' | 'thumbsUp' | 'peace' | 'three' | 'ok' | 'lShape' | 'palmUp' | 'flat' | 'middleFinger' | 'hangLoose' | 'pointFront' | 'pointSide' | 'chinGrip' | 'four' | 'rockOn' | 'fingersCrossed' | 'pinch' | 'quote' | 'cupHand' | 'typing' | 'mouseGrip' | 'mouseClick' | 'spread' | 'beckon' | 'beak' | 'rub' | 'snap';
+export declare const HAND_SHAPES: readonly ["relaxed", "open", "point", "fist", "grip", "thumbsUp", "peace", "three", "ok", "lShape", "palmUp", "flat", "middleFinger", "hangLoose", "pointFront", "pointSide", "chinGrip", "four", "rockOn", "fingersCrossed", "pinch", "quote", "cupHand", "typing", "mouseGrip", "mouseClick", "spread", "beckon", "beak", "rub", "snap"];
 export type HandView = 'palm' | 'back';
 export declare const HAND_VIEWS: readonly ["palm", "back"];
 export type LaptopPropId = 'laptopOrange' | 'laptopAlien' | 'laptopThinkpad';

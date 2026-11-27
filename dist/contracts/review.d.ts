@@ -247,6 +247,7 @@ export interface ReviewScript {
     focus?: ReviewFocusInput[];
     camera?: ReviewCameraInput;
     subtitles?: ReviewSubtitleOptions;
+    captionsAt?: 'top' | 'bottom';
     audio?: ReviewAudioOptions;
     layout?: {
         aspect?: ReviewAspect;
@@ -433,6 +434,7 @@ export interface ReviewSpec {
         aspect: ReviewAspect;
         side: ReviewSide;
     };
+    captionsAt?: 'top' | 'bottom';
     camera: {
         style: CameraStyle;
         duringVideo: ReviewVideoFraming;
@@ -484,7 +486,84 @@ export type ReviewCommentary = {
     kind: 'podcast';
     spec: PodcastSpec;
     dir: string;
+    visit?: ReviewVisitTrack;
 };
+export interface ReviewVisitLineAudio {
+    id: string;
+    visitor: string;
+    text: string;
+    src: string;
+    durationMs: number;
+    speechStartMs: number;
+    speechEndMs: number;
+    words: SubtitleWord[];
+    visemes: Array<{
+        startMs: number;
+        endMs: number;
+        viseme: string;
+        intensity?: number;
+    }>;
+    voice?: string;
+    tone?: string;
+    model?: string;
+    cached?: boolean;
+    fake?: boolean;
+    chars?: number;
+}
+export interface ReviewVisitTrack {
+    version: 1;
+    lines: ReviewVisitLineAudio[];
+}
+export interface CompiledVisitor {
+    id: string;
+    name: string;
+    role?: string;
+    character: CharacterId;
+    outfit?: OutfitInput;
+}
+export interface CompiledVisitCall {
+    segment: string;
+    visitor: CompiledVisitor;
+    fromMs: number;
+    toMs: number;
+    card: {
+        fromMs: number;
+        toMs: number;
+    };
+    lines: Array<{
+        id: string;
+        fromMs: number;
+        toMs: number;
+        speechFromMs: number;
+        speechToMs: number;
+        src: string;
+        text: string;
+        replyTo?: PodcastSeat;
+    }>;
+    timeline: TimelineSpec;
+    seed: number;
+    duo?: VisitDuoSpeech[];
+    viewWidth?: number;
+}
+export interface CompiledReviewVisit {
+    calls: CompiledVisitCall[];
+}
+export interface VisitDuoSpeech {
+    speaker: PodcastSeat;
+    speechStartMs: number;
+    speechEndMs: number;
+}
+export interface ReviewFrameVisit {
+    call: CompiledVisitCall;
+    enter: number;
+    exit: number;
+    card: number;
+    zoom: number;
+    live: number;
+    speaking: boolean;
+    headTurn?: number;
+    lookingAt?: PodcastSeat | 'visitor' | null;
+}
 export interface CompiledReviewSeat {
     seat: PodcastSeat;
     timeline: TimelineSpec;
@@ -514,6 +593,7 @@ export interface CompiledReview {
     warnings: string[];
     profile?: VideoProfileId;
     tutorial?: CompiledTutorial;
+    visit?: CompiledReviewVisit;
 }
 export interface ReviewPanel {
     seat: PodcastSeat;
@@ -564,4 +644,5 @@ export interface ReviewFrame {
     opacity?: number;
     screenView?: ReviewRect;
     tutorial?: TutorialFrame;
+    visit?: ReviewFrameVisit;
 }

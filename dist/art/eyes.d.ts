@@ -22,6 +22,19 @@ export interface SpotEyeProps {
     palette: Palette;
     clipId: string;
     light?: Point | undefined;
+    iris?: {
+        pupil: number;
+        ring: number;
+    } | undefined;
+    rim?: string | undefined;
+    dim?: number | undefined;
+    spot?: number | undefined;
+    sparkle?: number | undefined;
+    anime?: {
+        dark?: boolean | undefined;
+        spot?: number | undefined;
+        glow?: number | undefined;
+    } | undefined;
 }
 export declare const SPOT_PART: {
     readonly catchlight: 'catchlight';

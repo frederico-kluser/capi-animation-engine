@@ -21,5 +21,6 @@ export interface FaceKitProps {
 export interface FaceKit {
     Art: (props: FaceKitProps) => ReactElement;
     eye: (spec: CharacterSpec) => Point;
+    over?: (props: FaceKitProps) => ReactElement | null;
 }
 export declare const FACE_KITS: Record<FaceKitId, FaceKit>;

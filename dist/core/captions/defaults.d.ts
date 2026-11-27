@@ -145,6 +145,7 @@ export declare const CAPTION_DEFAULTS: {
         readonly ringSteps: 16;
         readonly growInner: 0.7;
         readonly originY: 58;
+        readonly speakerEm: 0.42;
     };
     readonly srt: {
         readonly maxChars: 42;

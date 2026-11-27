@@ -8,7 +8,8 @@ export interface PoseCatalogTextOptions {
     aspects?: readonly ProfileAspect[];
     faces?: boolean;
 }
-export declare function gestureRecipesText(allowed: readonly string[], limit?: number): string;
+export declare function gestureRecipesText(allowed: readonly string[], limit?: number, prefer?: readonly string[]): string;
+export declare function gestureFinderText(allowed: readonly string[], perLine?: number): string;
 export declare function poseCatalogText(ids?: readonly PoseId[], options?: PoseCatalogTextOptions): string;
 export declare function poseCatalogTextFor(mode: CatalogMode, options?: PoseCatalogTextOptions): string;
 export declare function poseCatalogLegend(detail?: CatalogDetail): string;

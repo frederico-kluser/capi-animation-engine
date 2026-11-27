@@ -8,6 +8,8 @@ import type { CompiledTimeline } from '../../contracts/timeline.js';
 import type { ResolvedAnchorState } from '../../contracts/state.js';
 import { type CameraFrameOptions } from '../../core/camera/frame.js';
 import { type AnchorProps } from '../../render/Anchor.js';
+import type { ReviewFrameVisit, ReviewRect } from '../../contracts/review.js';
+import { type VisitUiUnits } from '../../art/visit.js';
 import { talkBackgroundStyle, type TalkAspectId, type TalkBackground } from './AnchorTalk.js';
 export type PodcastAspectId = TalkAspectId;
 export declare const PODCAST_ASPECTS: Record<PodcastAspectId, {
@@ -23,6 +25,10 @@ export interface AnchorPodcastProps {
     background?: PodcastBackground;
     profile?: VideoProfileId;
     captions?: CaptionStyleId;
+    size?: {
+        width: number;
+        height: number;
+    };
 }
 export type PodcastAnchorProps = Omit<AnchorProps, 'width' | 'height' | 'state' | 'debug' | 'idPrefix' | 'className' | 'decorative' | 'characterSpec'>;
 export interface PodcastPanelView {
@@ -46,6 +52,11 @@ export interface PodcastFrame {
     under?: PodcastPanelView[];
     profile: VideoProfileId;
     caption?: CaptionFrame;
+    visit?: {
+        state: ReviewFrameVisit;
+        frame: number;
+        fps: number;
+    };
 }
 export interface PodcastFrameRequest {
     frame: number;
@@ -62,7 +73,11 @@ export interface PodcastClipPlan {
 }
 export declare function podcastAspectId(spec: PodcastSpec, aspect?: PodcastAspectId, profile?: VideoProfileId): PodcastAspectId;
 export declare function podcastDurationMs(spec: PodcastSpec, profile?: VideoProfileId): number;
-export declare function podcastMetadata(props: Pick<AnchorPodcastProps, 'spec' | 'aspect' | 'profile'>): {
+export declare function podcastFrameSize(props: Pick<AnchorPodcastProps, 'spec' | 'aspect' | 'profile' | 'size'>): {
+    width: number;
+    height: number;
+};
+export declare function podcastMetadata(props: Pick<AnchorPodcastProps, 'spec' | 'aspect' | 'profile' | 'size'>): {
     durationInFrames: number;
     fps: number;
     width: number;
@@ -78,6 +93,23 @@ export declare function podcastAnchorProps(spec: PodcastSpec, compiled: Compiled
 }): PodcastAnchorProps;
 export declare function podcastCameraShots(compiled: CompiledPodcast): CameraShot[];
 export declare function podcastFrameAt(spec: PodcastSpec, compiled: CompiledPodcast, timelines: PodcastTimelines, request: PodcastFrameRequest): PodcastFrame;
+export interface PodcastVisitLayout {
+    window: ReviewRect;
+    screenAspect: number;
+    framed: boolean;
+    cardRect: ReviewRect;
+    cardUi?: VisitUiUnits;
+    zoomShare: number;
+}
+export declare function podcastVisitLayout(size: {
+    width: number;
+    height: number;
+}): PodcastVisitLayout;
+export declare function podcastVisitZoom(layout: Pick<PodcastVisitLayout, 'zoomShare'>, zoom: number): number;
+export declare function podcastVisitPanel(visit: Pick<ReviewFrameVisit, 'call' | 'zoom'>, size: {
+    width: number;
+    height: number;
+}): CameraPanel;
 export interface PodcastSeamBridge {
     seat: PodcastSeat;
     rect: CameraBox;

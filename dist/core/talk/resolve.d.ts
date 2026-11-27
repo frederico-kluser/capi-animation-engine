@@ -6,6 +6,8 @@ import { type Beat } from '../timeline/choreograph.js';
 import { type TimelineIssue } from '../timeline/lint.js';
 import type { PoseId } from '../../presets/poses.js';
 import type { GestureMacro, TalkPlan } from './plan.js';
+import { type AimSurface } from '../pose/aim.js';
+import { type CountFamily } from './counting.js';
 export interface ResolveOptions {
     leadInMs?: number;
     energy?: number;
@@ -19,6 +21,8 @@ export interface ResolveOptions {
         from: number;
         to: number;
     }[];
+    aimSurface?: AimSurface;
+    counting?: CountFamily;
 }
 export type GestureStatus = 'kept' | 'moved' | 'pose-dropped' | 'dropped';
 export interface ResolvedGesture {

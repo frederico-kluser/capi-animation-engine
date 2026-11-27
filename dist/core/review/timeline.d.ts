@@ -4,6 +4,8 @@ export interface ReviewBlockTiming {
     at: ReviewAnchor;
     mode: ReviewBlockMode;
     durationMs: number;
+    padBeforeMs?: number;
+    padAfterMs?: number;
 }
 export interface PlanReviewTimelineOptions extends Partial<ReviewTimingOptions> {
     videoDurationMs: number;

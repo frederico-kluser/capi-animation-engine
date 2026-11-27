@@ -1,5 +1,6 @@
 import type { ExpressionId } from '../../contracts/face.js';
 import type { Point } from '../../contracts/pose.js';
+import { type AimInput } from '../pose/aim.js';
 import type { BeatAccent } from '../timeline/choreograph.js';
 import { type PoseId } from '../../presets/poses.js';
 export type GestureMacro = 'wave' | 'agree' | 'deny' | 'laugh';
@@ -13,6 +14,7 @@ export interface TalkGesture {
     take?: boolean;
     look?: 'camera' | 'hold' | Point;
     macro?: GestureMacro;
+    aim?: AimInput;
     priority: number;
     why?: string;
 }

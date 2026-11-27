@@ -1,6 +1,8 @@
 export { REVIEW_DEFAULTS } from './defaults.js';
 export { duckGainAt, outputTimeOfVideo, planReviewTimeline, playWindows, segmentAt, videoTimeAt } from './timeline.js';
 export type { PlanReviewTimelineOptions, ReviewBlockTiming } from './timeline.js';
+export { reviewPieceVideoFrame, reviewVideoFrameAt, reviewVideoPlan } from './video-plan.js';
+export type { ReviewVideoPiece } from './video-plan.js';
 export { podcastBlockSpans, retimePodcastTurns } from './retime.js';
 export type { PodcastBlockSpan, PodcastReviewBlock } from './retime.js';
 export { commentaryCaptions, cueAt, cuesFromWords, cuesToOutput, parseSubtitleTime, parseSubtitles, serializeSrt, serializeVtt, subtitlesFromWords, } from './subtitles.js';

@@ -10,6 +10,7 @@ export interface AnchorProps extends AnchorInput {
     idPrefix?: string;
     className?: string;
     debug?: boolean;
+    headTurn?: number;
     viewBox?: string;
     characterSpec?: CharacterSpec;
     assetUrl?: (src: string) => string;

@@ -13,6 +13,10 @@ export interface PoseLoop {
     periodMs: number;
     cycles: number;
     taps?: readonly LoopTap[];
+    keyframes?: readonly {
+        atMs: number;
+        pose: Pose;
+    }[];
     pressMs?: number;
     sustain?: boolean;
 }
@@ -43,9 +47,9 @@ export declare const TINY_BIT_SWING: Pose;
 export declare const CUP_EAR_SWING: Pose;
 export declare const MIND_BLOWN_SWING: Pose;
 export declare const SCALES_BALANCE_SWING: Pose;
-export declare const NAMASTE_SWING: Pose;
 export declare const CHEF_KISS_SWING: Pose;
 export declare const WRITE_AIR_SWING: Pose;
+export declare const WRITE_AIR_KEYFRAMES: NonNullable<PoseLoop['keyframes']>;
 export declare const CALL_ME_SWING: Pose;
 export declare const FIST_BUMP_SWING: Pose;
 export declare const CALM_DOWN_SWING: Pose;
@@ -86,6 +90,32 @@ export declare const LAPTOP_THINKPAD_POINT_SWING: Pose;
 export declare const BRUSH_OFF_SWING: Pose;
 export declare const FINGER_WAG_SWING: Pose;
 export declare const TAP_TEMPLE_SWING: Pose;
+export declare const POINT_DOWN_SWING: Pose;
+export declare const POINT_BACK_SWING: Pose;
+export declare const FINGER_GUNS_SWING: Pose;
+export declare const COME_HERE_SWING: Pose;
+export declare const BLAH_BLAH_SWING: Pose;
+export declare const MONEY_RUB_SWING: Pose;
+export declare const SNAP_FINGERS_SWING: Pose;
+export declare const GRAB_IDEA_SWING: Pose;
+export declare const BOOM_SWING: Pose;
+export declare const TADA_SWING: Pose;
+export declare const BOW_SWING: Pose;
+export declare const GROOVE_SWING: Pose;
+export declare const DRUM_ROLL_SWING: Pose;
+export declare const DRUM_ROLL: {
+    periodMs: number;
+    pressMs: number;
+    taps: readonly LoopTap[];
+};
+export declare const ROLL_ON_SWING: Pose;
+export declare const WIPE_BROW_SWING: Pose;
+export declare const LOOK_AHEAD_SWING: Pose;
+export declare const CHOP_DOWN_SWING: Pose;
+export declare const SO_SO_HAND_SWING: Pose;
+export declare const RUB_HANDS_UP_SWING: Pose;
+export declare const PINCH_PRECISE_SWING: Pose;
+export declare const MOVE_OVER_SWING: Pose;
 export declare const POSE_LOOPS: Partial<Record<PoseId, PoseLoop>>;
 export declare const OFFICIAL_POSE_LOOPS: Readonly<Partial<Record<PoseId, PoseLoop>>>;
 export declare const DERIVED_LOOPS: Readonly<Partial<Record<PoseId, {
