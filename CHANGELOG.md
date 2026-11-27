@@ -5,6 +5,15 @@ All notable changes to **capi-animation-engine** will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/frederico-kluser/capi-animation-engine/compare/v1.2.0...v1.3.0) (2026-11-27)
+
+
+### Features
+
+* **engine:** nove personagens, mãos de cinco dedos e assets (v1.1.0) ([#2](https://github.com/frederico-kluser/capi-animation-engine/issues/2)) ([3ab03f4](https://github.com/frederico-kluser/capi-animation-engine/commit/3ab03f4be92adbb9eb1f916b7ffdf437913bafad))
+* **engine:** publica motor ofuscado com movement.json encriptado ([0fbee6b](https://github.com/frederico-kluser/capi-animation-engine/commit/0fbee6b4c405315f019a27aa5177d2f7421d1847))
+* **engine:** sincroniza o estúdio com o novo Anotar no ar e as notícias ([#3](https://github.com/frederico-kluser/capi-animation-engine/issues/3)) ([e8e3269](https://github.com/frederico-kluser/capi-animation-engine/commit/e8e32692625c121175c2e8b6d967ab52e91db886))
+
 ## [Unreleased]
 
 ## [1.2.0] - 2026-11-26
