@@ -21,6 +21,7 @@ export interface YouTubeConfig {
     shortsHashtag: boolean;
     thumbnail: boolean;
     captions: boolean;
+    shortCaptions: boolean;
     playlists: Partial<Record<YouTubeFormat | YouTubeSourceKind | ContentLanguageId, string>>;
     waitProcessing: boolean;
     processingMinutes: number;

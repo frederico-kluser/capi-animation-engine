@@ -29,6 +29,14 @@ export interface ThumbGeometry {
 }
 export declare const THUMB_TIMESTAMP_ZONE: ThumbBox;
 export declare const THUMB_SHORT_CORE: ThumbBox;
-export declare function thumbGeometry(layout: ThumbLayout, aspect: ThumbAspect, flip?: boolean): ThumbGeometry;
+export declare const THUMB_SERIES_BADGE: Record<ThumbAspect, {
+    x: number;
+    y: number;
+    size: number;
+}>;
+export declare function thumbGeometry(layout: ThumbLayout, aspect: ThumbAspect, flip?: boolean, options?: {
+    series?: boolean;
+    cast?: number;
+}): ThumbGeometry;
 export declare function castSlotOf(geo: ThumbGeometry, index: number, count: number): ThumbSlot;
 export declare function isLateral(layout: ThumbLayout, aspect: ThumbAspect): boolean;

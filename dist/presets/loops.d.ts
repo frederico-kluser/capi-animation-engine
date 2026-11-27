@@ -13,6 +13,10 @@ export interface PoseLoop {
     periodMs: number;
     cycles: number;
     taps?: readonly LoopTap[];
+    keyframes?: readonly {
+        atMs: number;
+        pose: Pose;
+    }[];
     pressMs?: number;
     sustain?: boolean;
 }
@@ -43,9 +47,9 @@ export declare const TINY_BIT_SWING: Pose;
 export declare const CUP_EAR_SWING: Pose;
 export declare const MIND_BLOWN_SWING: Pose;
 export declare const SCALES_BALANCE_SWING: Pose;
-export declare const NAMASTE_SWING: Pose;
 export declare const CHEF_KISS_SWING: Pose;
 export declare const WRITE_AIR_SWING: Pose;
+export declare const WRITE_AIR_KEYFRAMES: NonNullable<PoseLoop['keyframes']>;
 export declare const CALL_ME_SWING: Pose;
 export declare const FIST_BUMP_SWING: Pose;
 export declare const CALM_DOWN_SWING: Pose;

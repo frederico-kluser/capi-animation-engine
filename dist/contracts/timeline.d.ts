@@ -115,6 +115,10 @@ export interface CompiledPoseLoop {
         amp?: number;
         ms?: number;
     }[];
+    keyframes?: readonly {
+        atMs: number;
+        pose: PoseChannels;
+    }[];
     pressMs?: number;
     sustain?: boolean;
 }

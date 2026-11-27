@@ -247,6 +247,7 @@ export interface ReviewScript {
     focus?: ReviewFocusInput[];
     camera?: ReviewCameraInput;
     subtitles?: ReviewSubtitleOptions;
+    captionsAt?: 'top' | 'bottom';
     audio?: ReviewAudioOptions;
     layout?: {
         aspect?: ReviewAspect;
@@ -433,6 +434,7 @@ export interface ReviewSpec {
         aspect: ReviewAspect;
         side: ReviewSide;
     };
+    captionsAt?: 'top' | 'bottom';
     camera: {
         style: CameraStyle;
         duringVideo: ReviewVideoFraming;

@@ -3,7 +3,7 @@ import { type VideoProfileId } from '../../contracts/profile.js';
 import type { CompiledReview, ReviewCommentary, ReviewSpec, ReviewStageLayout, SubtitleWord } from '../../contracts/review.js';
 import type { SetInput } from '../../contracts/set.js';
 export declare const TUTORIAL_VISIT_TRACK = "tutorial-visit";
-export declare function reviewSpecLayout(spec: Pick<ReviewSpec, 'tutorial'> | undefined, mode: 'talk' | 'podcast', aspect: ReviewSpec['layout']['aspect'], side: ReviewSpec['layout']['side']): ReviewStageLayout;
+export declare function reviewSpecLayout(spec: Pick<ReviewSpec, 'tutorial' | 'captionsAt'> | undefined, mode: 'talk' | 'podcast', aspect: ReviewSpec['layout']['aspect'], side: ReviewSpec['layout']['side']): ReviewStageLayout;
 export interface CompileReviewOptions {
     layout?: ReviewStageLayout;
     talkWords?: readonly SubtitleWord[];

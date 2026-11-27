@@ -412,6 +412,7 @@ export interface TutorialConcept {
     atoms?: string[];
     terms?: string[];
     requires?: string[];
+    from?: string;
 }
 export declare const TUTORIAL_CAST_ROLES: readonly ['teacher', 'learner'];
 export type TutorialCastRole = (typeof TUTORIAL_CAST_ROLES)[number];
@@ -449,6 +450,14 @@ export interface TutorialCourseLesson {
     module?: string;
     outline?: TutorialLessonOutline;
     historicalParticipation?: TutorialHistoricalParticipation;
+    check?: TutorialPlanCheck;
+    previousPublic?: boolean;
+}
+export interface TutorialPlanCheck {
+    kind?: string;
+    prompt: string;
+    expected?: string;
+    misconceptionAnswer?: string;
 }
 export interface TutorialHistoricalPersona {
     id: string;
@@ -608,7 +617,7 @@ export interface TutorialLesson {
 }
 export declare const TUTORIAL_FIX_KINDS: readonly ['reorder', 'split', 'add-card', 'demonstrate', 'practice', 'declare', 'fix'];
 export type TutorialFixKind = (typeof TUTORIAL_FIX_KINDS)[number];
-export declare const TUTORIAL_GATE_IDS: readonly ['T0-forma', 'T1-ordem', 'T2-termos', 'T3-micro', 'T4-demonstra', 'T5-revisao', 'T6-cartao', 'D1-dupla', 'D2-analogia', 'D3-prever', 'D4-pensar', 'D5-ritmo', 'D6-cena', 'D7-recuperar', 'D8-passos', 'D9-conceito', 'D10-erro', 'D11-direcao', 'E0-entrada', 'O1-esboco', 'O2-pratica', 'A1-abertura', 'A2-apresentacao', 'A3-visita', 'A4-exercicios', 'A5-compasso', 'A6-numeros'];
+export declare const TUTORIAL_GATE_IDS: readonly ['T0-forma', 'T1-ordem', 'T2-termos', 'T3-micro', 'T4-demonstra', 'T5-revisao', 'T6-cartao', 'D1-dupla', 'D2-analogia', 'D3-prever', 'D4-pensar', 'D5-ritmo', 'D6-cena', 'D7-recuperar', 'D8-passos', 'D9-conceito', 'D10-erro', 'D11-direcao', 'E0-entrada', 'O1-esboco', 'O2-pratica', 'O3-roadmap', 'A1-abertura', 'A2-apresentacao', 'A3-visita', 'A4-exercicios', 'A5-compasso', 'A6-numeros'];
 export type TutorialGateId = (typeof TUTORIAL_GATE_IDS)[number];
 export interface TutorialFinding {
     gate: TutorialGateId;

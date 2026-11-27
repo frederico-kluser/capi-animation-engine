@@ -90,6 +90,8 @@ export interface YouTubeDraft {
     metadata: Partial<YouTubeMetadata>;
     options?: Partial<YouTubePublishOptions>;
     short?: Partial<Pick<YouTubeMetadata, 'title' | 'description' | 'tags'>>;
+    optionsByFormat?: Partial<Record<YouTubeFormat, Partial<YouTubePublishOptions>>>;
+    optionsByAccount?: Record<string, Partial<Record<YouTubeFormat, Partial<YouTubePublishOptions>>>>;
     updatedAt: string;
 }
 export interface YouTubeStepOutcome {
@@ -115,14 +117,21 @@ export interface YouTubePublication {
     url: string;
     studioUrl: string;
     channel: YouTubeChannel | null;
+    account?: string;
     uploadedAt: string;
     metadata: YouTubeMetadata;
     privacy: YouTubePrivacy;
     uploadStatus?: string;
     problem?: string;
-    thumbnail: YouTubeStepOutcome;
+    thumbnail: YouTubeStepOutcome & {
+        sha256?: string;
+    };
     captions: YouTubeStepOutcome;
-    playlist: YouTubeStepOutcome;
+    playlist: YouTubeStepOutcome & {
+        playlistId?: string;
+        refused?: string;
+        refusedBy?: string;
+    };
     language?: string;
     translations?: Record<string, YouTubeStepOutcome>;
     localizations?: string[];

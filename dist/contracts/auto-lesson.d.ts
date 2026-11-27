@@ -1,10 +1,8 @@
 import type { AutoLessonEdits } from './auto-lesson-edit.js';
 import type { AutoLessonRefinements } from './auto-lesson-refine.js';
-export declare const AUTO_LESSON_MODEL = "openai/gpt-6.2-sol";
-export declare const AUTO_LESSON_EFFORT = "max";
-export declare const AUTO_LESSON_FIX_EFFORT = "max";
-export declare const AUTO_LESSON_MODES: readonly ['economico', 'potencia'];
+export declare const AUTO_LESSON_MODES: readonly ['economico'];
 export type AutoLessonMode = (typeof AUTO_LESSON_MODES)[number];
+export declare const AUTO_LESSON_MODE: AutoLessonMode;
 export declare const AUTO_LESSON_MODE_LABELS: Readonly<Record<AutoLessonMode, string>>;
 export interface AutoLessonModePreset {
     readonly label: string;
@@ -19,7 +17,19 @@ export interface AutoLessonModePreset {
     };
 }
 export declare const AUTO_LESSON_MODE_PRESETS: Readonly<Record<AutoLessonMode, AutoLessonModePreset>>;
+export declare const AUTO_LESSON_WRITER: AutoLessonModePreset;
+export declare const AUTO_LESSON_MODEL: string;
+export declare const AUTO_LESSON_EFFORT = "max";
+export declare const AUTO_LESSON_MAX_TOKENS: number;
+export declare const AUTO_LESSON_FIX_EFFORT = "max";
 export declare const isAutoLessonMode: (value: unknown) => value is AutoLessonMode;
+export declare const RETIRED_AUTO_LESSON_MODES: readonly ['potencia'];
+export type RetiredAutoLessonMode = (typeof RETIRED_AUTO_LESSON_MODES)[number];
+export type AutoLessonRecordedMode = AutoLessonMode | RetiredAutoLessonMode;
+export declare const RETIRED_AUTO_LESSON_MODE_REASONS: Readonly<Record<RetiredAutoLessonMode, string>>;
+export declare const isRetiredAutoLessonMode: (value: unknown) => value is RetiredAutoLessonMode;
+export declare function autoLessonModeProblem(value: unknown): string | null;
+export declare function autoLessonModeLabel(mode: AutoLessonRecordedMode): string;
 export declare const AUTO_LESSON_DIR = "automatico";
 export declare const AUTO_LESSON_STAGE_IDS: readonly ['prepare', 'outline', 'doubts', 'script', 'record', 'study', 'quiz', 'video', 'thumbs-video', 'short', 'thumbs-short', 'youtube', 'publish-kit'];
 export type AutoLessonStageId = (typeof AUTO_LESSON_STAGE_IDS)[number];
@@ -86,7 +96,7 @@ export interface AutoLessonManifest {
     title: string;
     model: string;
     effort: string;
-    mode?: AutoLessonMode;
+    mode?: AutoLessonRecordedMode;
     video: AutoLessonVideoRoute;
     videoAsked?: boolean;
     short: boolean;
@@ -165,5 +175,6 @@ export interface AutoLessonOutputs {
     published?: {
         site?: string;
         at?: string;
+        error?: string;
     };
 }

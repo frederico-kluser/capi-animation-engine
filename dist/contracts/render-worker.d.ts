@@ -167,7 +167,7 @@ export interface AttemptObjectScope {
 export interface ResponseJournalItem {
     requestKey: string;
     seq: number;
-    kind: 'request' | 'delta' | 'complete' | 'usage' | 'validation';
+    kind: 'request' | 'delta' | 'complete' | 'usage' | 'validation' | 'telemetry';
     text?: string;
     data?: unknown;
     generationId?: string;

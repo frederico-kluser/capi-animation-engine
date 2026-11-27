@@ -116,6 +116,18 @@ export declare function readLessonSpine(raw: unknown): {
     errors: string[];
 };
 export declare function echoOutput(command: string): string | null;
+export interface SpineCommandBudget {
+    check: string[];
+    kept: string[];
+    replaced: string[];
+    overflow: number;
+}
+export declare function spineCommandBudget(input: {
+    check: readonly string[];
+    outline?: readonly string[];
+    maxRuns: number;
+    plumbing?: RegExp;
+}): SpineCommandBudget;
 export interface SpineCheckContext {
     maxRuns: number;
     maxLabelChars: number;
@@ -185,11 +197,51 @@ export interface StitchEdit {
     text: string;
 }
 export declare function stitchSlots(joined: Pick<JoinedLesson, 'lesson' | 'owner'>, perEdge?: number): StitchSlot[];
+export declare function stitchSlotsChanged(before: readonly StitchSlot[], after: readonly StitchSlot[]): StitchSlot[];
 export declare function applyStitchEdits(joined: Pick<JoinedLesson, 'lesson' | 'owner'>, edits: unknown, maxWords?: number): {
     lesson: Record<string, unknown>;
     applied: StitchEdit[];
     rejected: string[];
 };
+export interface PartSegmentAddress {
+    part: LessonPartId;
+    index: number;
+    kind: string;
+}
+export declare function partSegmentAddresses(joined: Pick<JoinedLesson, 'lesson' | 'owner'>, parts: Partial<Record<LessonPartId, LessonPartOutput | null>>): Map<string, PartSegmentAddress>;
+export interface SegmentPatchEntry {
+    id: string;
+    index: number;
+    segment: Record<string, unknown>;
+}
+export interface SegmentPatchResult {
+    parts: Partial<Record<LessonPartId, LessonPartOutput>>;
+    applied: SegmentPatchEntry[];
+    rejected: Array<{
+        id: string;
+        reason: string;
+    }>;
+    missing: string[];
+}
+export declare function replacePartSegments(parts: Partial<Record<LessonPartId, LessonPartOutput>>, part: LessonPartId, entries: readonly Pick<SegmentPatchEntry, 'index' | 'segment'>[]): Partial<Record<LessonPartId, LessonPartOutput>>;
+export declare function applySegmentPatch(joined: Pick<JoinedLesson, 'lesson' | 'owner'>, parts: Partial<Record<LessonPartId, LessonPartOutput>>, part: LessonPartId, ids: readonly string[], patch: unknown): SegmentPatchResult;
+export declare const gateAnchorKey: (finding: Pick<TutorialFinding, 'gate' | 'segment'>) => string;
+export declare function brokenGateAnchors(before: readonly TutorialFinding[], after: readonly TutorialFinding[]): TutorialFinding[];
+export interface SpineStepChange {
+    index: number;
+    errorStep: boolean;
+    before: LessonSpineStep;
+    after: LessonSpineStep;
+}
+export interface SpineRepairDelta {
+    body: boolean;
+    closing: boolean;
+    steps: SpineStepChange[];
+    commands: string[];
+}
+export declare function spineRepairDelta(before: LessonSpine, after: LessonSpine): SpineRepairDelta;
+export type SpineDrag = 'whole' | string[];
+export declare function spineDependentSegments(joined: Pick<JoinedLesson, 'lesson' | 'owner'>, before: LessonSpine, delta: SpineRepairDelta): Record<'corpo' | 'fecho', SpineDrag>;
 export declare function lessonTranscript(lesson: unknown, opts?: {
     owner?: Readonly<Record<string, LessonPartId>>;
     names?: Readonly<Record<string, string>>;

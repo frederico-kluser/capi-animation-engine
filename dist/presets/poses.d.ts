@@ -1392,39 +1392,6 @@ export declare const POSES: {
         };
         readonly front: 'right';
     };
-    readonly namaste: {
-        readonly head: {
-            readonly nod: 6;
-            readonly tilt: -3;
-        };
-        readonly armLeft: {
-            readonly hand: {
-                readonly x: 474;
-                readonly y: 648;
-            };
-            readonly elbow: {
-                readonly x: 336;
-                readonly y: 732;
-            };
-            readonly shape: 'flat';
-            readonly angle: -84;
-            readonly view: 'back';
-        };
-        readonly armRight: {
-            readonly hand: {
-                readonly x: 526;
-                readonly y: 648;
-            };
-            readonly elbow: {
-                readonly x: 664;
-                readonly y: 732;
-            };
-            readonly shape: 'flat';
-            readonly angle: -96;
-            readonly view: 'back';
-        };
-        readonly front: 'right';
-    };
     readonly chefKiss: {
         readonly head: {
             readonly turn: 12;
@@ -1447,34 +1414,22 @@ export declare const POSES: {
     };
     readonly writeAir: {
         readonly head: {
-            readonly nod: 6;
+            readonly nod: 1;
             readonly tilt: -5;
         };
         readonly armLeft: {
             readonly hand: {
-                readonly x: 420;
-                readonly y: 598;
+                readonly x: 214;
+                readonly y: 438;
             };
             readonly elbow: {
-                readonly x: 306;
-                readonly y: 714;
+                readonly x: 270;
+                readonly y: 646;
             };
-            readonly shape: 'pinch';
-            readonly angle: -44;
+            readonly shape: 'point';
+            readonly angle: -96;
         };
-        readonly armRight: {
-            readonly hand: {
-                readonly x: 556;
-                readonly y: 648;
-            };
-            readonly elbow: {
-                readonly x: 684;
-                readonly y: 726;
-            };
-            readonly shape: 'flat';
-            readonly angle: -152;
-            readonly view: 'back';
-        };
+        readonly armRight: ArmPose;
         readonly front: 'left';
     };
     readonly callMe: {

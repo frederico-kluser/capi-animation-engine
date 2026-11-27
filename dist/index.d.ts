@@ -158,7 +158,7 @@ export { ATTACHMENT_ACCEPT, ATTACHMENT_LABEL, docxText, readAttachment } from '.
 export type { AttachmentRead } from './core/create/index.js';
 export { CREATE_MODEL_ROLES, LLM_DESIGN_CATEGORIES, LLM_EFFORTS } from './contracts/models.js';
 export type { CreateModelChoices, CreateModelRole, LlmBenchmarks, LlmCatalogEntry, LlmDesignCategory, LlmEffort } from './contracts/models.js';
-export { AZURE_LLM_ID, DEFAULT_LLM_MODEL, LLM_CATALOG, LLM_CATALOG_DATE, LLM_CATALOG_SOURCES, LLM_ID, LLM_METRIC_LABELS, LLM_SORTS, MODEL_ROLES, MODEL_ROLE_GROUPS, azureModelChoices, changedModelChoices, completeModelChoices, defaultModelChoices, filterLlms, llmBestFor, llmById, llmEffort, llmFamilies, llmFit, llmFitOf, llmLabel, llmMetrics, llmShortLabel, llmSupportsVideo, modelChoicesField, modelRole, } from './core/create/index.js';
+export { DEFAULT_LLM_MODEL, LLM_CATALOG, LLM_CATALOG_DATE, LLM_CATALOG_SOURCES, LLM_ID, LLM_METRIC_LABELS, LLM_SORTS, MODEL_ROLES, MODEL_ROLE_GROUPS, changedModelChoices, completeModelChoices, defaultModelChoices, filterLlms, llmBestFor, llmById, llmEffort, llmFamilies, llmFit, llmFitOf, llmLabel, llmMetrics, llmShortLabel, llmSupportsVideo, modelChoicesField, modelRole, } from './core/create/index.js';
 export type { LlmFilter, LlmFit, LlmFitMetric, LlmSort, ModelRoleGroup, ModelRoleSpec } from './core/create/index.js';
 export { JEV_BANDS, JEV_LIMITS, JEV_MODEL, checkJevRequest, jevBand, jevCertainty, jevScore01, jevYes, readJevAnswers } from './core/decide/jev.js';
 export type { JevAnswer, JevBand, JevQuestion, JevRequest } from './core/decide/jev.js';

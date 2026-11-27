@@ -129,7 +129,7 @@ export interface SealedCameraFrame {
     caption?: CaptionFrame;
 }
 export type SealedReviewLayer = Omit<ReviewFrameLayer, 'shot'>;
-export interface SealedReviewFrame extends Omit<ReviewFrame, 'shot' | 'segment' | 'under' | 'timeMs' | 'videoVolume'> {
+export interface SealedReviewFrame extends Omit<ReviewFrame, 'shot' | 'segment' | 'under' | 'timeMs' | 'videoVolume' | 'visit'> {
     under?: SealedReviewLayer;
     states: Partial<Record<PodcastSeat, SealedState>>;
     underStates?: Partial<Record<PodcastSeat, SealedState>>;

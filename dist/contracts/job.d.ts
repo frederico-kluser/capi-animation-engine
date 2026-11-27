@@ -1,4 +1,4 @@
-export declare const JOB_TYPES: readonly ['aula-auto', 'aula-render', 'aula-editar', 'aula-refinar', 'aula-publicar', 'curso', 'criar', 'fala', 'podcast', 'review', 'youtube', 'dobragem', 'simulacao'];
+export declare const JOB_TYPES: readonly ['aula-auto', 'aula-render', 'aula-editar', 'aula-refinar', 'aula-publicar', 'curso', 'criar', 'fala', 'podcast', 'review', 'youtube', 'dobragem', 'simulacao', 'noticia'];
 export type JobType = (typeof JOB_TYPES)[number];
 export type JobStatus = 'queued' | 'starting' | 'running' | 'done' | 'failed' | 'stopped' | 'interrupted';
 export declare const JOB_QUEUE_LANES: readonly ['geracao', 'render'];

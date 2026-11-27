@@ -120,4 +120,5 @@ export declare function screenZoomStyle(view: ReviewRect): CSSProperties;
 export { visitHeadTop, visitViewBox } from './VisitCall.js';
 export { tutorialCardRect };
 export declare function ReviewFrameView(props: ReviewFrameViewProps): ReactElement;
+export declare function ReviewFrameSealedView(props: ReviewFrameViewProps): ReactElement;
 export declare const AnchorReview: (props: AnchorReviewProps) => ReactElement;

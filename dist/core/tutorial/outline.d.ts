@@ -1,4 +1,4 @@
-import type { TutorialCourse, TutorialGateReport, TutorialLesson, TutorialLessonOutline } from '../../contracts/tutorial.js';
+import type { TutorialConcept, TutorialCourse, TutorialFinding, TutorialGateReport, TutorialLesson, TutorialLessonOutline } from '../../contracts/tutorial.js';
 import { printsNothing } from './dupla.js';
 import { practiceAtoms } from './gates.js';
 export { practiceAtoms };
@@ -37,6 +37,18 @@ export declare const isPlumbingCommand: (command: string) => boolean;
 export declare function outlineScreen(outline: Pick<TutorialLessonOutline, 'where' | 'steps'>): Pick<TutorialLesson, 'segments'>;
 export { printsNothing };
 export declare function outlineSpeech(outline: TutorialLessonOutline): string;
+export interface OutlineRoadmap {
+    code?: string;
+    lessons: ReadonlyArray<{
+        id: string;
+        title: string;
+    }>;
+    inherited?: {
+        concepts: readonly TutorialConcept[];
+        courses: readonly string[];
+        missing?: readonly string[];
+    };
+}
 export interface CourseOutlineGateInput {
     course: TutorialCourse;
     atoms: Partial<Record<string, Partial<Record<string, string[]>>>>;
@@ -46,6 +58,10 @@ export interface CourseOutlineGateInput {
         code: string;
         error: string;
     }>;
+    roadmap?: Pick<OutlineRoadmap, 'code' | 'lessons'> | null;
 }
+export declare function roadmapLessonsFinding(lessons: ReadonlyArray<{
+    id: string;
+}>, roadmap: Pick<OutlineRoadmap, 'code' | 'lessons'> | null | undefined): TutorialFinding | null;
 export declare function checkCourseOutline(input: CourseOutlineGateInput): TutorialGateReport;
 export declare function outlineForAuthor(course: TutorialCourse, lessonId: string): string | null;

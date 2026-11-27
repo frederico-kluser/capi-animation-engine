@@ -16,6 +16,19 @@ export interface NewAutoLessonInput {
     mode?: AutoLessonMode;
     now: string;
 }
+export interface AutoLessonWriter {
+    readonly mode: AutoLessonMode;
+    readonly model: string;
+    readonly effort: string;
+    readonly maxTokens: number;
+    readonly notice?: string;
+}
+export declare function autoLessonWriter(input?: {
+    mode?: unknown;
+    recorded?: unknown;
+    model?: string;
+    effort?: string;
+}): AutoLessonWriter;
 export declare function plannedStages(video: AutoLessonVideoRoute, short: boolean, _render?: 'later'): AutoLessonStageId[];
 export declare function newAutoLessonManifest(input: NewAutoLessonInput): AutoLessonManifest;
 export declare function autoLessonVideoRoute(input: {

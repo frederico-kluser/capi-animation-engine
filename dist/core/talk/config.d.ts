@@ -108,6 +108,7 @@ export interface TutorialAuthorConfig {
     reviewEffort?: PlannerEffort;
     fixEffort?: PlannerEffort;
     pipeline?: TutorialPipeline;
+    reviewByParts?: boolean;
     productionContract?: TutorialProductionContract;
 }
 export declare const TUTORIAL_PRODUCTION_CONTRACTS: readonly ['legacy', 'strict'];

@@ -320,15 +320,15 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
     }
   });
 
-  it('o catálogo de 2026-11-21 (v1.2.0): 14 personagens, 154 poses, 75 ciclos, 31 mãos e a Capi redesenhada', () => {
+  it('o catálogo de 2026-11-26 (v1.3.0): 14 personagens, 153 poses, 74 ciclos, 31 mãos e a Capi redesenhada', () => {
     assert.deepEqual([...CHARACTER_IDS], ['anchor', 'capybara', 'donkey', 'dog', 'cat', 'parrot', 'monkey', 'lion', 'einstein', 'torvalds', 'lovelace', 'turing', 'unclebob', 'knuth']);
     for (const id of ['torvalds', 'lovelace', 'turing', 'unclebob', 'knuth']) {
       assert.equal(CHARACTERS[id].face, 'portrait', `${id} é um retrato`);
       assert.equal(CHARACTERS[id].humanoid, true, `${id} é humanoide`);
     }
     assert.deepEqual(CHARACTERS.capybara.extras, ['ears', 'mane'], 'a Capi ganhou o topete e os tufos (juba)');
-    assert.equal(Object.keys(POSES).length, 154);
-    assert.equal(Object.keys(POSE_LOOPS).length, 75);
+    assert.equal(Object.keys(POSES).length, 153);
+    assert.equal(Object.keys(POSE_LOOPS).length, 74);
     for (const id of ['pointDown', 'pointBack', 'fingerGuns', 'comeHere', 'blahBlah', 'moneyRub', 'snapFingers', 'grabIdea', 'boom', 'countFive',
       'tada', 'whoa', 'bow', 'groove', 'drumRoll', 'rollOn', 'checkWatch', 'wipeBrow', 'lookAhead', 'chopDown', 'soSoHand', 'rubHandsUp',
       'frameShot', 'pinchPrecise', 'lowerLevel', 'moveOver', 'tableCountOne', 'tableCountTwo', 'tableCountFour', 'tableCountFive']) {
@@ -371,7 +371,7 @@ describe('capi-animation-engine · Motor Determinístico, Presets e Timeline', (
 });
 
 describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', () => {
-  it('dist/ contém exatamente 425 ficheiros .js ofuscados, 424 .d.ts e zero .map/.ts/.tsx', () => {
+  it('dist/ contém exatamente 445 ficheiros .js ofuscados, 444 .d.ts e zero .map/.ts/.tsx', () => {
     const files = walkFiles(DIST_DIR);
     const jsFiles = files.filter((f) => f.endsWith('.js'));
     const dtsFiles = files.filter((f) => f.endsWith('.d.ts'));
@@ -380,8 +380,8 @@ describe('capi-animation-engine · Blindagem Anti-Engenharia-Reversa (dist/)', (
       (f) => (f.endsWith('.ts') && !f.endsWith('.d.ts')) || f.endsWith('.tsx')
     );
 
-    assert.equal(jsFiles.length, 425, 'esperados 425 ficheiros .js em dist/');
-    assert.equal(dtsFiles.length, 424, 'esperados 424 ficheiros .d.ts em dist/');
+    assert.equal(jsFiles.length, 445, 'esperados 445 ficheiros .js em dist/');
+    assert.equal(dtsFiles.length, 444, 'esperados 444 ficheiros .d.ts em dist/');
     assert.equal(mapFiles.length, 0, 'zero ficheiros .map permitidos em dist/');
     assert.equal(rawTsFiles.length, 0, 'zero ficheiros .ts/.tsx crus permitidos em dist/');
 

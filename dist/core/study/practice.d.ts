@@ -61,3 +61,13 @@ export declare function checkStudyExam(json: StudyExamJson, context: StudyPracti
     exercises?: readonly StudyCodeTask[];
 }): StudyFinding[];
 export declare function practiceFindingsText(findings: readonly StudyFinding[]): string;
+export interface PracticeRepairMerge {
+    tasks: StudyCodeTask[];
+    fresh: number[];
+    discarded: StudyFinding[];
+}
+export declare function mergePracticeRepair(tasks: readonly StudyCodeTask[], refused: readonly number[], candidates: readonly StudyCodeTask[], opts: {
+    wanted: number;
+    kept: readonly number[];
+    prefix: string;
+}): PracticeRepairMerge;
